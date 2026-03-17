@@ -140,7 +140,7 @@ button {
 }
 
 input, textarea {
-  display: White;
+  display: block;
   width: 100%;
   background: none;
   font: inherit;
