@@ -1884,25 +1884,31 @@ textarea.form-input::-webkit-resizer { display: none; }
 /* 底部座右铭极简样式 */
 .hero-quote {
   width: 100%;
+  padding: 80px 20px;
+  background: #000; /* 黑底 */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quote-box {
   text-align: center;
-  padding: 40px 0 20px 0;
-  border-top: 1px solid var(--jet);
-  margin-top: 20px;
+  color: #fff;
 }
 
-.quote-box .en {
-  color: #FFFFFF !important;
-  font-family: var(--ff-poppins);
-  font-size: 11px;
+/* 英文 */
+.quote-box h1 {
+  font-size: 18px;
+  font-weight: 400;
   letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-  opacity: 0.8;
+  margin-bottom: 10px;
+  opacity: 0.85;
 }
 
-.quote-box .ch {
-  color: #FFFFFF !important;
-  font-size: 10px;
-  letter-spacing: 4px;
+/* 中文 */
+.quote-box p {
+  font-size: 12px;
+  letter-spacing: 3px;
   opacity: 0.5;
 }
