@@ -465,7 +465,7 @@ main {
   border: 1px solid var(--jet);
   border-radius: 0 0 12px 12px; /* 👈 改这里（原来是顶部圆角） */
   box-shadow: var(--shadow-2);
-  z-index: 999; /* 👈 提高层级 */
+  z-index: 5; /* 👈 提高层级 */
 }
 
 /* 手机端：底部导航 */
