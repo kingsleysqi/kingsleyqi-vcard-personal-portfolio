@@ -1880,3 +1880,39 @@ textarea.form-input::-webkit-resizer { display: none; }
   .timeline-text { max-width: 700px; }
 
 }
+
+/**
+	 * 座右铭
+	 */
+.hero-quote {
+  height: 100vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quote-box {
+  text-align: center;
+  color: #fff;
+}
+
+/* 英文主句 */
+.quote-box h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+
+  /* 灵魂：微光效果 */
+  text-shadow: 0 0 20px rgba(255,255,255,0.15);
+}
+
+/* 中文副句 */
+.quote-box p {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  opacity: 0.6;
+  letter-spacing: 4px;
+}
