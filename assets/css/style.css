@@ -1881,30 +1881,28 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 }
 
-/* 页面底部座右铭 - 极简风格 */
+/* 底部座右铭极简样式 */
 .hero-quote {
   width: 100%;
   text-align: center;
-  padding: 40px 0 20px 0; /* 增加顶部间距，减少底部间距 */
+  padding: 40px 0 20px 0;
+  border-top: 1px solid var(--jet);
   margin-top: 20px;
-  border-top: 1px solid var(--jet); /* 加一条细线与上方内容分割 */
 }
 
-.quote-box h1 {
+.quote-box .en {
+  color: #FFFFFF !important;
   font-family: var(--ff-poppins);
-  font-size: var(--fs-8); /* 使用定义的最小字号 */
-  font-weight: var(--fw-400);
-  color: var(--white-1); /* 修改为纯白色 */
-  letter-spacing: 1px;
-  margin-bottom: 5px;
+  font-size: 11px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  opacity: 0.8; /* 稍微透明显得更高级，不刺眼 */
+  margin-bottom: 4px;
+  opacity: 0.8;
 }
 
-.quote-box p {
-  font-size: 10px; /* 手动指定更小的中文字号 */
-  color: var(--white-1); /* 修改为纯白色 */
-  letter-spacing: 2px;
-  font-weight: var(--fw-300);
-  opacity: 0.6;
+.quote-box .ch {
+  color: #FFFFFF !important;
+  font-size: 10px;
+  letter-spacing: 4px;
+  opacity: 0.5;
 }
