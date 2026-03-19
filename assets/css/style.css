@@ -1882,10 +1882,18 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 /* 底部座右铭极简样式 */
+/* ===== 座右铭模块（修正版）===== */
+
 .hero-quote {
-  width: 100%;
-  padding: 80px 20px;
-  background: #000; /* 黑底 */
+  position: relative;
+
+  /* 抵消 main 的 margin */
+  margin-left: -12px;
+  margin-right: -12px;
+  margin-bottom: -75px;
+
+  padding: 120px 20px;
+  background: #000;
 
   display: flex;
   justify-content: center;
@@ -1899,16 +1907,20 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 /* 英文 */
 .quote-box h1 {
-  font-size: 18px;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
   font-weight: 400;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
-  opacity: 0.85;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+
+  text-shadow: 0 0 20px rgba(255,255,255,0.15);
+  opacity: 0.9;
 }
 
 /* 中文 */
 .quote-box p {
+  font-family: 'Noto Serif SC', serif;
   font-size: 12px;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   opacity: 0.5;
 }
