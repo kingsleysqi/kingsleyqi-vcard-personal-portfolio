@@ -1927,20 +1927,22 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 
 
-/* PC端 */
-@media (min-width: 768px) {
-  .navbar {
-    top: 0 !important;
-    bottom: auto !important;
-    border-radius: 0 0 12px 12px;
-  }
+/* ===== 自己控制的 navbar（最终版本） ===== */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  bottom: auto;
+  width: 100%;
+  z-index: 999;
+  border-radius: 0 0 12px 12px;
 }
 
 /* 手机端 */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .navbar {
-    top: auto !important;
-    bottom: 0 !important;
+    top: auto;
+    bottom: 0;
     border-radius: 12px 12px 0 0;
   }
 }
