@@ -449,42 +449,45 @@ main {
 
 
 
-/-----------------------------------\
-#NAVBAR
-*-----------------------------------*/
+/*-----------------------------------*\
+  #NAVBAR
+\*-----------------------------------*/
 
+/* PC端：顶部导航 */
 .navbar {
-position: fixed;
-bottom: 0;
-left: 0;
-width: 100%;
-background: hsla(240, 1%, 17%, 0.75);
-backdrop-filter: blur(10px);
-border: 1px solid var(--jet);
-border-radius: 12px 12px 0 0;
-box-shadow: var(--shadow-2);
-z-index: 5;
+  position: fixed;
+  top: 0;
+  bottom: auto;
+  left: 0;
+  width: 100%;
+  background: hsla(240, 1%, 17%, 0.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--jet);
+  border-radius: 0 0 12px 12px; /* 👈 改这里（原来是顶部圆角） */
+  box-shadow: var(--shadow-2);
+  z-index: 999; /* 👈 提高层级 */
 }
 
-.navbar-list {
-display: flex;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-padding: 0 10px;
+/* 手机端：底部导航 */
+@media (max-width: 768px) {
+  .navbar {
+    top: auto;
+    bottom: 0;
+    border-radius: 12px 12px 0 0; /* 👈 恢复底部样式 */
+  }
 }
 
-.navbar-link {
-color: var(--light-gray);
-font-size: var(--fs-8);
-padding: 20px 7px;
-transition: color var(--transition-1);
+/* 内容防止被遮挡（很关键！） */
+body {
+  padding-top: 80px;
 }
 
-.navbar-link:hover,
-.navbar-link:focus { color: var(--light-gray-70); }
-
-.navbar-link.active { color: var(--orange-yellow-crayola); }
+@media (max-width: 768px) {
+  body {
+    padding-top: 0;
+    padding-bottom: 80px;
+  }
+}
 
 
 /*-----------------------------------*\
