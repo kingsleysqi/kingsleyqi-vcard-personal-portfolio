@@ -1881,42 +1881,30 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 }
 
-/* 修改后的座右铭样式 - 确保绝对居中 */
+/* 页面底部座右铭 - 极简风格 */
 .hero-quote {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;    /* 水平居中 */
-  justify-content: center; /* 垂直居中 */
   text-align: center;
-  padding: 60px 20px;     /* 增加上下间距代替 100vh */
-  margin-bottom: 20px;
-  background: var(--bg-gradient-jet);
-  border-radius: 20px;
-  border: 1px solid var(--jet);
-  box-shadow: var(--shadow-2);
-}
-
-.quote-box {
-  max-width: 600px;
-  margin: 0 auto; /* 兜底居中 */
+  padding: 40px 0 20px 0; /* 增加顶部间距，减少底部间距 */
+  margin-top: 20px;
+  border-top: 1px solid var(--jet); /* 加一条细线与上方内容分割 */
 }
 
 .quote-box h1 {
   font-family: var(--ff-poppins);
-  font-size: var(--fs-2);
-  font-weight: var(--fw-600);
-  color: var(--white-2);
-  letter-spacing: 2px;
-  margin-bottom: 15px;
+  font-size: var(--fs-8); /* 使用定义的最小字号 */
+  font-weight: var(--fw-400);
+  color: var(--white-1); /* 修改为纯白色 */
+  letter-spacing: 1px;
+  margin-bottom: 5px;
   text-transform: uppercase;
-  text-shadow: 0 0 15px hsla(45, 100%, 72%, 0.3);
+  opacity: 0.8; /* 稍微透明显得更高级，不刺眼 */
 }
 
 .quote-box p {
-  font-size: var(--fs-7);
-  color: var(--light-gray-70);
-  letter-spacing: 4px;
+  font-size: 10px; /* 手动指定更小的中文字号 */
+  color: var(--white-1); /* 修改为纯白色 */
+  letter-spacing: 2px;
   font-weight: var(--fw-300);
-  margin: 0;
+  opacity: 0.6;
 }
