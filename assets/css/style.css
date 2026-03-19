@@ -1881,32 +1881,42 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 }
 
-/* 修改后的座右铭样式 */
-.quote-box {
+/* 修改后的座右铭样式 - 确保绝对居中 */
+.hero-quote {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;    /* 水平居中 */
+  justify-content: center; /* 垂直居中 */
   text-align: center;
-  padding: 40px 20px; /* 取消 100vh，改为内边距撑开 */
-  margin-bottom: 30px;
-  background: var(--bg-gradient-jet); /* 使用项目自带的渐变色 */
+  padding: 60px 20px;     /* 增加上下间距代替 100vh */
+  margin-bottom: 20px;
+  background: var(--bg-gradient-jet);
   border-radius: 20px;
   border: 1px solid var(--jet);
+  box-shadow: var(--shadow-2);
+}
+
+.quote-box {
+  max-width: 600px;
+  margin: 0 auto; /* 兜底居中 */
 }
 
 .quote-box h1 {
-  /* 使用项目已有字体，通过字重和间距营造高级感 */
-  font-family: var(--ff-poppins); 
+  font-family: var(--ff-poppins);
   font-size: var(--fs-2);
   font-weight: var(--fw-600);
   color: var(--white-2);
-  letter-spacing: 1px;
-  margin-bottom: 12px;
-  /* 调整微光效果，使其更柔和 */
-  text-shadow: 0 0 15px hsla(45, 100%, 72%, 0.3); 
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  text-shadow: 0 0 15px hsla(45, 100%, 72%, 0.3);
 }
 
 .quote-box p {
   font-size: var(--fs-7);
   color: var(--light-gray-70);
-  opacity: 0.8;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   font-weight: var(--fw-300);
+  margin: 0;
 }
