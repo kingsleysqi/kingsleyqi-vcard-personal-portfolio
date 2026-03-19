@@ -449,43 +449,43 @@ main {
 
 
 
+/-----------------------------------\
+#NAVBAR
+*-----------------------------------*/
 
-/* 顶部导航 */
 .navbar {
-  position: fixed;
-  top: 0;
-  bottom: auto;
-  width: 100%;
-  z-index: 999;
-  border-radius: 0 0 12px 12px;
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+background: hsla(240, 1%, 17%, 0.75);
+backdrop-filter: blur(10px);
+border: 1px solid var(--jet);
+border-radius: 12px 12px 0 0;
+box-shadow: var(--shadow-2);
+z-index: 5;
 }
 
-/* 主内容下移 */
-main {
-  margin-top: 80px;
+.navbar-list {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+padding: 0 10px;
 }
 
-/* sidebar防重叠 */
-.sidebar {
-  top: 100px;
+.navbar-link {
+color: var(--light-gray);
+font-size: var(--fs-8);
+padding: 20px 7px;
+transition: color var(--transition-1);
 }
 
-/* 手机恢复底部 */
-@media (max-width: 768px) {
-  .navbar {
-    top: auto;
-    bottom: 0;
-    border-radius: 12px 12px 0 0;
-  }
+.navbar-link:hover,
+.navbar-link:focus { color: var(--light-gray-70); }
 
-  main {
-    margin-top: 0;
-  }
+.navbar-link.active { color: var(--orange-yellow-crayola); }
 
-  .sidebar {
-    top: 0;
-  }
-}
 
 /*-----------------------------------*\
   #ABOUT
