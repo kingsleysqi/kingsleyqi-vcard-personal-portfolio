@@ -1884,16 +1884,14 @@ textarea.form-input::-webkit-resizer { display: none; }
 /* 底部座右铭极简样式 */
 /* ===== 座右铭模块（修正版）===== */
 
-.hero-quote {
+..hero-quote {
   position: relative;
-
-  /* 抵消 main 的 margin */
-  margin-left: -12px;
-  margin-right: -12px;
-  margin-bottom: -75px;
-
-  padding: 120px 20px;
-  background: #000;
+  width: 100%;
+  
+  /* 保持你的位移逻辑，但移除背景色 */
+  margin-top: 40px; 
+  padding: 60px 20px;
+  background: transparent; /* 移除 #000，改为透明 */
 
   display: flex;
   justify-content: center;
@@ -1902,25 +1900,30 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 .quote-box {
   text-align: center;
-  color: #fff;
 }
 
-/* 英文 */
+/* 英文：高级感金色 */
 .quote-box h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 400;
   letter-spacing: 3px;
   margin-bottom: 12px;
-
-  text-shadow: 0 0 20px rgba(255,255,255,0.15);
+  
+  /* 修改这里：高级暗金色 */
+  color: #c5a059 !important; 
+  
+  text-shadow: 0 0 10px rgba(197, 160, 89, 0.2);
   opacity: 0.9;
 }
 
-/* 中文 */
+/* 中文：浅白色/灰色 */
 .quote-box p {
   font-family: 'Noto Serif SC', serif;
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 4px;
-  opacity: 0.5;
+  
+  /* 修改这里：纯白色带透明度 */
+  color: #ffffff !important;
+  opacity: 0.4;
 }
