@@ -1925,5 +1925,5 @@ textarea.form-input::-webkit-resizer { display: none; }
   
   /* 修改这里：纯白色带透明度 */
   color: #ffffff !important;
-  opacity: 1;
+  opacity: 0.8;
 }
