@@ -1689,7 +1689,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
 
-
+<!--
   /**
    * NAVBAR
    */
@@ -1713,6 +1713,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .navbar-link { font-weight: var(--fw-500); }
 
+-->
 
 
   /**
