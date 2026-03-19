@@ -7,10 +7,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KINGSLEY QI</title>
 
+  <!--
+    - favicon
+  -->
   <link rel="shortcut icon" href="./assets/images/favicon.svg" type="image/x-icon">
 
+  <!--
+    - custom css link
+  -->
   <link rel="stylesheet" href="./assets/css/style.css">
 
+  <!--
+    - google font link
+  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -18,168 +27,1319 @@
 
 <body>
 
+  <!--
+    - #MAIN
+  -->
+
   <main>
 
+    <!--
+      - #SIDEBAR
+    -->
+
     <aside class="sidebar" data-sidebar>
+
       <div class="sidebar-info">
+
         <figure class="avatar-box">
-          <img src="./assets/images/favicon.svg" alt="Kingsley Qi" width="80">
+          <img src="./assets/images/favicon.svg" alt="Richard hanrick" width="80">
         </figure>
 
         <div class="info-content">
-          <h1 class="name" title="Kingsley Qi">Kingsley Qi</h1>
-          <p class="title">自动化工程师 | 架构师 | IT工程师</p>
-          <p class="title">Automation Engineer<br> Architect | IT Engineer</p>
+          <h1 class="name" title="Richard hanrick">Kingsley Qi</h1>
+
+ <p class="title">自动化工程师 | 架构师 | IT工程师</p>
+<p class="title">Automation Engineer<br> Architect | IT Engineer</p>
         </div>
 
         <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
+          <span>Kingsley Qi</span>
+
           <ion-icon name="chevron-down"></ion-icon>
         </button>
+
       </div>
 
       <div class="sidebar-info_more">
+
         <div class="separator"></div>
+
         <ul class="contacts-list">
+
           <li class="contact-item">
-            <div class="icon-box"><ion-icon name="mail-outline"></ion-icon></div>
+
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+
             <div class="contact-info">
               <p class="contact-title">Email</p>
+
               <a href="mailto:i@kingsleyqi.com" class="contact-link">i@kingsleyqi.com</a>
             </div>
+
           </li>
+
           <li class="contact-item">
-            <div class="icon-box"><ion-icon name="phone-portrait-outline"></ion-icon></div>
+
+            <div class="icon-box">
+              <ion-icon name="phone-portrait-outline"></ion-icon>
+            </div>
+
             <div class="contact-info">
               <p class="contact-title">Phone</p>
-              <a href="tel:+63960864508" class="contact-link">+63 960864508*</a>
+
+              <a href="tel:+63 960864508*" class="contact-link">+63 960864508*</a>
             </div>
+
           </li>
+
           <li class="contact-item">
-            <div class="icon-box"><ion-icon name="calendar-outline"></ion-icon></div>
+
+            <div class="icon-box">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+
             <div class="contact-info">
               <p class="contact-title">Birthday</p>
+
               <time datetime="1992-08-29">Aug 29, 1992</time>
             </div>
+
           </li>
+
           <li class="contact-item">
-            <div class="icon-box"><ion-icon name="location-outline"></ion-icon></div>
+
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+
             <div class="contact-info">
               <p class="contact-title">Location</p>
+
               <address>Batangas, Philippines</address>
             </div>
+
           </li>
+
         </ul>
+
         <div class="separator"></div>
+<!--
+        <ul class="social-list">
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+
+          <li class="social-item">
+            <a href="#" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+-->
       </div>
+
     </aside>
+
+
+
+
+
+    <!--
+      - #main-content
+    -->
 
     <div class="main-content">
 
+      <!--
+        - #NAVBAR
+      -->
+
       <nav class="navbar">
+
         <ul class="navbar-list">
-          <li class="navbar-item"><button class="navbar-link active" data-nav-link>About</button></li>
-          <li class="navbar-item"><button class="navbar-link" data-nav-link>Path</button></li>
-          <li class="navbar-item"><button class="navbar-link" data-nav-link>Network</button></li>
-          <li class="navbar-item"><button class="navbar-link" data-nav-link>Systems</button></li>
-          <li class="navbar-item"><button class="navbar-link" data-nav-link>Contact</button></li>
+
+          <li class="navbar-item">
+            <button class="navbar-link  active" data-nav-link>About</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Path</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Network</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Systems</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Contact</button>
+          </li>
+
         </ul>
+
       </nav>
 
-      <article class="about active" data-page="about">
+
+    </div>
+  </section>
+
+
+
+      <!--
+        - #ABOUT
+      -->
+
+      <article class="about  active" data-page="about">
+
         <header>
           <h2 class="h2 article-title">About me</h2>
         </header>
+
         <section class="about-text">
-          <p><strong>自动化工程师 | 架构师 | IT工程师</strong><br>工业自动化 & 工业互联网 & 办公自动化实践者<br>现居菲律宾八大雁省</p>
-          <p><strong>Automation Engineer | Architect | IT Engineer</strong><br>Practitioner in Industrial Automation, Industrial Internet & Office Automation<br>Currently based in Cavite Province, Philippines</p>
-          <p>网络工程 + 机械工程双背景，专注企业级信息化基础设施、非标自动化设备研发与产线落地、办公自动化系统搭建。</p>
-          <p>Dual background in Network Engineering + Mechanical Engineering, specializing in enterprise-grade information infrastructure, non-standard automation equipment R&D and production line implementation, and office automation system development & deployment.</p>
-          <p><strong>核心能力：</strong><br>• 项目全链路独立交付：立项 → 规划 → 设计 → 研发 → 样机 / 系统搭建 → 量产/上线 → 持续优化<br>• 企业级服务器集群 / 网络高可用架构设计与多类型矩阵运维<br>• 非标自动化设备结构优化、现场调试、产线导入与效率提升<br>• 办公自动化（OA）系统搭建：需求调研、流程引擎设计、表单/审批自动化、低代码/开源平台选型与私有化部署、与ERP/CRM/网络基础设施集成</p>
-          <p><strong>Core Competencies:</strong><br>• Full-stack independent project delivery: Initiation → Planning → Design → R&D → Prototype / System Build → Mass Production/Go-Live → Continuous Optimization<br>• Enterprise server cluster / High-availability network architecture design and multi-type matrix operations & maintenance<br>• Non-standard automation equipment: structural optimization, on-site debugging, production line implementation and efficiency improvement<br>• Office Automation (OA) system implementation: requirements analysis, process engine design, form/approval automation, low-code/open-source platform selection & private deployment, integration with ERP/CRM/network infrastructure</p>
+  <p>
+  <strong>自动化工程师 | 架构师 | IT工程师</strong><br>
+  工业自动化 & 工业互联网 & 办公自动化实践者<br>
+  现居菲律宾八大雁省
+</p>
+<p>
+  <strong>Automation Engineer | Architect | IT Engineer</strong><br>
+  Practitioner in Industrial Automation, Industrial Internet & Office Automation<br>
+  Currently based in Cavite Province, Philippines
+</p>
+
+<p>
+  网络工程 + 机械工程双背景，专注企业级信息化基础设施、非标自动化设备研发与产线落地、办公自动化系统搭建。
+</p>
+<p>
+  Dual background in Network Engineering + Mechanical Engineering, specializing in enterprise-grade information infrastructure, non-standard automation equipment R&D and production line implementation, and office automation system development & deployment.
+</p>
+
+<p>
+  <strong>核心能力：</strong><br>
+  • 项目全链路独立交付：立项 → 规划 → 设计 → 研发 → 样机 / 系统搭建 → 量产/上线 → 持续优化<br>
+  • 企业级服务器集群 / 网络高可用架构设计与多类型矩阵运维<br>
+  • 非标自动化设备结构优化、现场调试、产线导入与效率提升<br>
+  • 办公自动化（OA）系统搭建：需求调研、流程引擎设计、表单/审批自动化、低代码/开源平台选型与私有化部署、与ERP/CRM/网络基础设施集成
+</p>
+<p>
+  <strong>Core Competencies:</strong><br>
+  • Full-stack independent project delivery: Initiation → Planning → Design → R&D → Prototype / System Build → Mass Production/Go-Live → Continuous Optimization<br>
+  • Enterprise server cluster / High-availability network architecture design and multi-type matrix operations & maintenance<br>
+  • Non-standard automation equipment: structural optimization, on-site debugging, production line導入 and efficiency improvement<br>
+  • Office Automation (OA) system implementation: requirements analysis, process engine design, form/approval automation, low-code/open-source platform selection & private deployment, integration with ERP/CRM/network infrastructure
+</p>
+
+<p>
+  <strong>为东南亚制造企业、海外工厂提供：</strong><br>
+  • 信息化全栈落地（网络 + 服务器 + OA + 工业互联网）<br>
+  • 高可用服务器/网络集群建设<br>
+  • 非标自动化产线改造、瓶颈突破与成本优化<br>
+  • OA办公自动化系统从0搭建/升级（审批流程自动化、协同办公、无纸化、移动端集成）
+</p>
+<p>
+  <strong>Services for Manufacturing Enterprises & Overseas Factories in Southeast Asia:</strong><br>
+  • Full-stack informationization implementation (Network + Server + OA + Industrial Internet)<br>
+  • High-availability server/network cluster construction<br>
+  • Non-standard automation production line transformation, bottleneck resolution & cost optimization<br>
+  • OA office automation system build from scratch / upgrade (approval workflow automation, collaborative office, paperless, mobile integration)
+</p>
+
+<p>
+  擅长解决工厂常见的“网络不稳、设备卡顿、办公低效”三大痛点，欢迎讨论技术深度或落地挑战的项目。
+</p>
+<p>
+  Specialized in solving the three major pain points commonly found in factories: “unstable network, equipment stuttering, inefficient office workflows”. Welcome to discuss technically in-depth or challenging implementation projects.
+</p>
+
         </section>
+
+
+        <!--
+          - service
+        -->
+
+        <section class="service">
+<!--
+          <h3 class="h3 service-title">What i'm doing</h3>
+
+          <ul class="service-list">
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-design.svg
+                " alt="design icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Web design</h4>
+
+                <p class="service-item-text">
+                  The most modern and high-quality design made at a professional level.
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-dev.svg" alt="Web development icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Web development</h4>
+
+                <p class="service-item-text">
+                  High-quality development of sites at the professional level.
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-app.svg" alt="mobile app icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Mobile apps</h4>
+
+                <p class="service-item-text">
+                  Professional development of applications for iOS and Android.
+                </p>
+              </div>
+
+            </li>
+
+            <li class="service-item">
+
+              <div class="service-icon-box">
+                <img src="./assets/images/icon-photo.svg" alt="camera icon" width="40">
+              </div>
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Photography</h4>
+
+                <p class="service-item-text">
+                  I make high-quality photos of any category at a professional level.
+                </p>
+              </div>
+
+            </li>
+
+          </ul>
+
+        </section>
+
+-->
+
+        <!--
+          - testimonials
+        -->
+<!--
+        <section class="Testimonials">
+
+          <h3 class="h3 testimonials-title">Testimonials</h3>
+
+          <ul class="testimonials-list has-scrollbar">
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Daniel lewis</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                    lot of experience
+                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                    consectetur adipiscing
+                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-2.png" alt="Jessica miller" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Jessica miller</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                    lot of experience
+                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                    consectetur adipiscing
+                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-3.png" alt="Emily evans" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily evans</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                    lot of experience
+                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                    consectetur adipiscing
+                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
+                  <img src="./assets/images/avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                    lot of experience
+                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                    consectetur adipiscing
+                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </section>
+-->
+
+        <!--
+          - testimonials modal
+        -->
+
+        <div class="modal-container" data-modal-container>
+
+          <div class="overlay" data-overlay></div>
+
+          <section class="testimonials-modal">
+
+            <button class="modal-close-btn" data-modal-close-btn>
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+
+            <div class="modal-img-wrapper">
+              <figure class="modal-avatar-box">
+                <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
+              </figure>
+
+              <img src="./assets/images/icon-quote.svg" alt="quote icon">
+            </div>
+
+            <div class="modal-content">
+
+              <h4 class="h3 modal-title" data-modal-title>Daniel lewis</h4>
+
+              <time datetime="2021-06-14">14 June, 2021</time>
+
+              <div data-modal-text>
+                <p>
+                  Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
+                  lot of experience
+                  and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
+                  consectetur adipiscing
+                  elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
+                </p>
+              </div>
+
+            </div>
+
+          </section>
+
+        </div>
+
+
+        <!--
+          - clients
+        -->
+<!--
+        <section class="clients">
+
+          <h3 class="h3 clients-title">Clients</h3>
+
+          <ul class="clients-list has-scrollbar">
+
+            <li class="clients-item">
+              <a href="#">
+                <img src="./assets/images/logo-1-color.png" alt="client logo">
+              </a>
+            </li>
+
+            <li class="clients-item">
+              <a href="#">
+                <img src="./assets/images/logo-2-color.png" alt="client logo">
+              </a>
+            </li>
+
+            <li class="clients-item">
+              <a href="#">
+                <img src="./assets/images/logo-3-color.png" alt="client logo">
+              </a>
+            </li>
+
+            <li class="clients-item">
+              <a href="#">
+                <img src="./assets/images/logo-4-color.png" alt="client logo">
+              </a>
+            </li>
+
+            <li class="clients-item">
+              <a href="#">
+                <img src="./assets/images/logo-5-color.png" alt="client logo">
+              </a>
+            </li>
+
+            <li class="clients-item">
+              <a href="#">
+                <img src="./assets/images/logo-6-color.png" alt="client logo">
+              </a>
+            </li>
+
+          </ul>
+
+        </section>
+-->
       </article>
 
-      <article class="Path" data-page="path">
-        <header><h2 class="h2 article-title">人生轨迹</h2></header>
-        <section class="timeline">
-          <div class="title-wrapper"><div class="icon-box"><ion-icon name="book-outline"></ion-icon></div><h3 class="h3">学院时代</h3></div>
-          <ol class="timeline-list">
-            <li class="timeline-item"><h4 class="h4 timeline-item-title">聊城大学</h4><span>2021 — 2023</span><p class="timeline-text">教育学 本科</p></li>
-            <li class="timeline-item"><h4 class="h4 timeline-item-title">山东交通职业学院</h4><span>2010 — 2013</span><p class="timeline-text">计算机网络技术 全日制专科</p></li>
-          </ol>
-        </section>
-        <section class="timeline">
-          <div class="title-wrapper"><div class="icon-box"><ion-icon name="briefcase-outline"></ion-icon></div><h3 class="h3">职场生涯</h3></div>
-          <ol class="timeline-list">
-            <li class="timeline-item"><h4 class="h4 timeline-item-title">非标自动化设备工程师</h4><span>2025年9月 — 至今</span><p class="timeline-text">Tyco Electronics AMP青岛有限公司</p></li>
-            <li class="timeline-item"><h4 class="h4 timeline-item-title">设备维护与调试工程师</h4><span>2018年7月 — 2024年3月</span><p class="timeline-text">歌尔声学股份有限公司（潍坊）</p></li>
-          </ol>
-        </section>
-      </article>
+
+
+
+
+   <article class="Path" data-page="path">
+
+  <header>
+    <h2 class="h2 article-title">人生轨迹</h2>
+  </header>
+
+  <section class="timeline">
+
+    <div class="title-wrapper">
+      <div class="icon-box">
+        <ion-icon name="book-outline"></ion-icon>
+      </div>
+      <h3 class="h3">学院时代</h3>
+    </div>
+
+    <ol class="timeline-list">
+
+      <li class="timeline-item">
+        <h4 class="h4 timeline-item-title">聊城大学</h4>
+        <span>2021 — 2023</span>
+        <p class="timeline-text">
+          教育学    本科
+        </p>
+      </li>
+
+      <li class="timeline-item">
+        <h4 class="h4 timeline-item-title">山东交通职业学院</h4>
+        <span>2010 — 2013</span>
+        <p class="timeline-text">
+          计算机网络技术　全日制专科
+        </p>
+      </li>
+
+    </ol>
+
+  </section>
+
+  <section class="timeline">
+
+    <div class="title-wrapper">
+      <div class="icon-box">
+        <ion-icon name="briefcase-outline"></ion-icon>
+      </div>
+      <h3 class="h3">职场生涯</h3>
+    </div>
+
+    <ol class="timeline-list">
+
+      <li class="timeline-item">
+        <h4 class="h4 timeline-item-title">非标自动化设备工程师</h4>
+        <span>2025年9月 — 至今</span>
+        <p class="timeline-text">
+          Tyco Electronics AMP青岛有限公司
+        </p>
+      </li>
+
+      <li class="timeline-item">
+        <h4 class="h4 timeline-item-title">设备维护与调试工程师</h4>
+        <span>2018年7月 — 2024年3月</span>
+        <p class="timeline-text">
+          歌尔声学股份有限公司（潍坊）<br>
+          负责自动化生产线维护与调试，包括自动上下料及筛料机、自动点胶机、电机驱动烘干机、小型气动压合模组等设备的日常维护、故障排除与改善。
+        </p>
+      </li>
+
+    </ol>
+
+  </section>
+
+  <section class="skill">
+
+    <h3 class="h3 skills-title">专业技能</h3>
+
+    <ul class="skills-list content-card">
+
+      <li class="skills-item">
+        <div class="title-wrapper">
+          <h5 class="h5">工业自动化 & 智能产线</h5>
+          <data value="90">熟练</data>
+        </div>
+        <div class="skill-progress-bg">
+          <div class="skill-progress-fill" style="width: 90%;"></div>
+        </div>
+      </li>
+
+      <li class="skills-item">
+        <div class="title-wrapper">
+          <h5 class="h5">非标自动化机械设备调试维护</h5>
+          <data value="85">熟练</data>
+        </div>
+        <div class="skill-progress-bg">
+          <div class="skill-progress-fill" style="width: 85%;"></div>
+        </div>
+      </li>
+
+      <li class="skills-item">
+        <div class="title-wrapper">
+          <h5 class="h5">工业互联网&网络工程 & IT基础设施</h5>
+          <data value="85">熟练</data>
+        </div>
+        <div class="skill-progress-bg">
+          <div class="skill-progress-fill" style="width: 85%;"></div>
+        </div>
+      </li>
+
+      <li class="skills-item">
+        <div class="title-wrapper">
+          <h5 class="h5">控制系统 & PLC基础</h5>
+          <data value="75">良好</data>
+        </div>
+        <div class="skill-progress-bg">
+          <div class="skill-progress-fill" style="width: 75%;"></div>
+        </div>
+      </li>
+
+      <li class="skills-item">
+        <div class="title-wrapper">
+          <h5 class="h5">气动点胶设备调试与维护</h5>
+          <data value="90">熟练</data>
+        </div>
+        <div class="skill-progress-bg">
+          <div class="skill-progress-fill" style="width: 90%;"></div>
+        </div>
+      </li>
+
+    </ul>
+
+  </section>
+
+</article>
+
+
+      <!--
+        - #PORTFOLIO
+      -->
 
       <article class="Network" data-page="network">
-        <header><h2 class="h2 article-title">Kingsley Network</h2></header>
-        <ul class="project-list">
-          <li class="project-item active" data-filter-item data-category="Web development">
-            <a href="https://kingsleyqi.com">
-              <figure class="project-img"><img src="./assets/images/project-1.jpg" alt="kingsleyqi.com"></figure>
-              <h3 class="project-title">Website / 国际站：kingsleyqi.com</h3>
-              <p class="project-category">这里凝聚着我的思想</p>
-            </a>
-          </li>
-          <li class="project-item active" data-filter-item data-category="Web development">
-            <a href="https://kingsleyqi.cn">
-              <figure class="project-img"><img src="./assets/images/project-2.jpg" alt="kingsleyqi.cn"></figure>
-              <h3 class="project-title">Website / 中国站：Kingsleyqi.cn</h3>
-              <p class="project-category">这里记录着我的一切与生活态度</p>
-            </a>
-          </li>
-        </ul>
+
+        <header>
+          <h2 class="h2 article-title">Kingsley Network</h2>
+        </header>
+
+        <section class="projects">
+
+          <ul class="filter-list">
+
+            <li class="filter-item">
+              <button class="active" data-filter-btn>All</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Web design</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Applications</button>
+            </li>
+
+            <li class="filter-item">
+              <button data-filter-btn>Web development</button>
+            </li>
+
+          </ul>
+
+          <div class="filter-select-box">
+
+            <button class="filter-select" data-select>
+
+              <div class="select-value" data-selecct-value>Select category</div>
+
+              <div class="select-icon">
+                <ion-icon name="chevron-down"></ion-icon>
+              </div>
+
+            </button>
+
+            <ul class="select-list">
+
+              <li class="select-item">
+                <button data-select-item>All</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Web design</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Applications</button>
+              </li>
+
+              <li class="select-item">
+                <button data-select-item>Web development</button>
+              </li>
+
+            </ul>
+
+          </div>
+
+          <ul class="project-list">
+
+            <li class="project-item  active" data-filter-item data-category="Web development">
+              <a href="https://kingsleyqi.com">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-1.jpg" alt="finance" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Website / 国际站：kingsleyqi.com</h3>
+
+                <p class="project-category">这里凝聚着我的思想</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="Web development">
+              <a href="https://kingsleyqi.cn">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-2.jpg" alt="orizon" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Website / 中国站：Kingsleyqi.cn</h3>
+
+                <p class="project-category">这里记录着我的一切与生活态度</p>
+
+              </a>
+            </li>
+<!--
+            <li class="project-item  active" data-filter-item data-category="web design">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-3.jpg" alt="fundo" loading="lazy">
+                </figure>
+<p>
+                <h3 class="project-title">Fundo</h3>
+
+                <p class="project-category">Web design</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="applications">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-4.png" alt="brawlhalla" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Brawlhalla</h3>
+
+                <p class="project-category">Applications</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web design">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-5.png" alt="dsm." loading="lazy">
+                </figure>
+
+                <h3 class="project-title">DSM.</h3>
+
+                <p class="project-category">Web design</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web design">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-6.png" alt="metaspark" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">MetaSpark</h3>
+
+                <p class="project-category">Web design</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web development">
+              <a href="#">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-7.png" alt="summary" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Summary</h3>
+
+                <p class="project-category">Web development</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="applications">
+              <a href="Kingsleyqi.com">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-8.jpg" alt="task manager" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Task Manager</h3>
+
+                <p class="project-category">Applications</p>
+
+              </a>
+            </li>
+
+            <li class="project-item  active" data-filter-item data-category="web development">
+              <a href="Kingsleyqi.cn">
+
+                <figure class="project-img">
+                  <div class="project-item-icon-box">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </div>
+
+                  <img src="./assets/images/project-9.png" alt="arrival" loading="lazy">
+                </figure>
+
+                <h3 class="project-title">Arrival</h3>
+
+                <p class="project-category">Web development</p>
+
+              </a>
+            </li>
+-->
+          </ul>
+
+        </section>
+
       </article>
 
-      <article class="Systems" data-page="systems">
-        <header><h2 class="h2 article-title">Systems & Infrastructure</h2></header>
-        <ul class="blog-posts-list">
-          <li class="blog-post-item">
-            <a href="#">
-              <div class="blog-content">
-                <h3 class="h3 blog-item-title">Manufacturing Group · Digital Workplace Transformation</h3>
-                <p class="blog-text">为制造业集团构建无纸化办公体系，涵盖机房建设、企业网络架构等。</p>
-              </div>
-            </a>
-          </li>
-        </ul>
+
+
+
+
+      <!--
+        - #systems
+      -->
+<article class="Systems" data-page="systems">
+<ul class="blog-posts-list">
+
+  <!-- 01 制造业 -->
+  <li class="blog-post-item">
+    <a href="https://www.kingsleyqi.cn/article/30fb6394-e3f5-8042-aacd-f14d06d3420b">
+
+      <figure class="blog-banner-box">
+        <img src="./assets/images/blog-1.jpg" alt="Manufacturing Digital Transformation" loading="lazy">
+      </figure>
+
+      <div class="blog-content">
+
+        <div class="blog-meta">
+          <p class="blog-category">
+            Systems & Infrastructure<br>
+            系统与基础设施
+          </p>
+          <span class="dot"></span>
+          <time datetime="2025">2025 · CN / Shandong</time>
+        </div>
+
+        <h3 class="h3 blog-item-title">
+          Manufacturing Group · Digital Workplace Transformation<br>
+          制造业集团 · 数字化办公转型
+        </h3>
+
+        <p class="blog-text">
+          Built a paperless office system for a manufacturing group in Shandong (2 industrial parks, 5 subsidiaries), covering data center setup, enterprise network architecture (VLAN / VPN), DingTalk workflow integration, and cross-site connectivity.
+          <br>
+          为山东某制造业集团（2园区/5子公司）构建无纸化办公体系，涵盖机房建设、企业网络架构、钉钉流程集成及跨园区互联。
+        </p>
+
+      </div>
+
+    </a>
+  </li>
+
+  <!-- 02 房地产 -->
+  <li class="blog-post-item">
+    <a href="https://www.kingsleyqi.cn/article/30fb6394-e3f5-80aa-a924-e465c2ff1b23">
+
+      <figure class="blog-banner-box">
+        <img src="./assets/images/blog-2.jpg" alt="Real Estate OA System" loading="lazy">
+      </figure>
+
+      <div class="blog-content">
+
+        <div class="blog-meta">
+          <p class="blog-category">
+            Organization & Workflow<br>
+            组织与流程
+          </p>
+          <span class="dot"></span>
+          <time datetime="2025">2025 · CN / Shandong</time>
+        </div>
+
+        <h3 class="h3 blog-item-title">
+          Real Estate Group · OA System Implementation<br>
+          房地产集团 · 无纸化办公转型
+        </h3>
+
+        <p class="blog-text">
+          Implemented OA system for a real estate group in Shandong (8 subsidiaries), including infrastructure setup, workflow standardization, approval logic redesign, and role-based permission control.
+          <br>
+          为山东某房地产集团（8子公司）设计并实施泛微OA无纸化办公转型升级。完成基础设施建设、审批流程标准化、流程逻辑重构及角色权限体系设计，服务器机房的标准化管理。
+        </p>
+
+      </div>
+
+    </a>
+  </li>
+
+  <!-- 03 教育集团 -->
+  <li class="blog-post-item">
+    <a href="#">
+
+      <figure class="blog-banner-box">
+        <img src="./assets/images/blog-3.jpg" alt="Education Digital Ecosystem" loading="lazy">
+      </figure>
+
+      <div class="blog-content">
+
+        <div class="blog-meta">
+          <p class="blog-category">
+            Business Architecture<br>
+            业务架构
+          </p>
+          <span class="dot"></span>
+          <time datetime="2024">2024 · CN / Shandong</time>
+        </div>
+
+        <h3 class="h3 blog-item-title">
+          Education Group · Digital Ecosystem Design<br>
+          教育集团 · 数字化生态体系设计
+        </h3>
+
+        <p class="blog-text">
+          Designed an end-to-end digital ecosystem for an education group in Shandong, integrating ERP (Kingdee), e-commerce (Youzan), and content platforms (Douyin), connecting marketing, sales, courses, and logistics.
+          <br>
+          设计山东某教育集团全链路数字化体系，整合金蝶ERP、有赞电商、抖音平台，打通营销、销售、网课与物流（项目因战略变动止于选型阶段）。
+        </p>
+
+      </div>
+
+    </a>
+  </li>
+
+<!-- 04 省属学校信息化管理（管理体系与团队） -->
+<li class="blog-post-item">
+  <a href="#">
+
+    <figure class="blog-banner-box">
+      <img src="./assets/images/blog-5.jpg" alt="Provincial School Campus Management System" loading="lazy">
+    </figure>
+
+    <div class="blog-content">
+
+      <div class="blog-meta">
+        <p class="blog-category">
+          Education & Campus Management<br>
+          教育与校园管理
+        </p>
+
+        <span class="dot"></span>
+
+        <time datetime="2025">2025 · CN / Shandong</time>
+      </div>
+
+      <h3 class="h3 blog-item-title">
+        Provincial School · Comprehensive Campus Management Framework<br>
+        省属学校 · 校园信息化综合管理体系
+      </h3>
+
+      <p class="blog-text">
+        Led a dedicated core team to establish a comprehensive campus management framework for a provincial school in Shandong, integrating administrative operations, multimedia classrooms, server room facilities, surveillance systems, and desktop computing environments.
+        <br>
+        带领精英团队，为山东省属某学校建立全方位校园信息化管理体系，整合行政办公、多媒体教室、机房设施、监控设施及桌面办公环境等，进行全方位管理。
+        <br><br>
+        Coordinated governance, workflows, and infrastructure across the campus, streamlining management processes, enhancing resource efficiency, and supporting high-performance teaching and administrative operations.
+        <br>
+        协调校园治理、管理流程及基础设施，实现管理流程优化，提高资源利用率，并支持高效的教学与行政运作。
+      </p>
+
+    </div>
+
+  </a>
+</li>
+
+<!-- 05 外企连接器项目（携团队深度参与） -->
+<li class="blog-post-item">
+  <a href="#">
+
+    <figure class="blog-banner-box">
+      <img src="./assets/images/blog-4.jpg" alt="High-End Connector Equipment Commissioning" loading="lazy">
+    </figure>
+
+    <div class="blog-content">
+
+      <div class="blog-meta">
+        <p class="blog-category">
+          Advanced Manufacturing & Automation<br>
+          高端制造与自动化
+        </p>
+
+        <span class="dot"></span>
+
+        <time datetime="2026">2026 · PH / Foreign Enterprise</time>
+      </div>
+
+      <h3 class="h3 blog-item-title">
+        High-End Connector Project · Equipment Commissioning & Product Introduction<br>
+        高端连接器项目 · 设备调试与产品导入
+      </h3>
+
+      <p class="blog-text">
+        Collaborating with a core team at a Fortune 500 connector manufacturer in the Philippines, deeply engaged in the introduction of a new high-end connector from prototype to production. Responsibilities included commissioning automated production lines, trial runs of sample and production equipment, defect resolution, process refinement, and capacity improvement.
+        <br>
+        携核心团队为世界五百强连接器制造公司菲律宾工厂提供技术支持。从样品到量产的全生命周期做支撑，涵盖自动化生产线调试、样机及设备调试运行、产品不良处理、工艺优化及产能提升。
+        <br><br>
+        Hands-on collaboration ensured reliable equipment operation, optimized workflows, and scalable production, bridging engineering design with practical manufacturing.
+        <br>
+        通过携手团队亲身操作与优化，确保设备稳定运行、流程高效顺畅及产能可扩展，实现工程设计与实际制造的有效衔接。
+      </p>
+
+    </div>
+
+  </a>
+</li>
+
+
+<!--
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-2.jpg" alt="Best fonts every designer" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Best fonts every designer</h3>
+
+                  <p class="blog-text">
+                    Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-3.jpg" alt="Design digest #80" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Design digest #80</h3>
+
+                  <p class="blog-text">
+                    Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam corporis suscipit.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-4.jpg" alt="UI interactions of the week" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">UI interactions of the week</h3>
+
+                  <p class="blog-text">
+                    Enim ad minim veniam, consectetur adipiscing elit, quis nostrud exercitation ullamco laboris nisi.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
+
+                  <p class="blog-text">
+                    Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+
+            <li class="blog-post-item">
+              <a href="#">
+
+                <figure class="blog-banner-box">
+                  <img src="./assets/images/blog-6.jpg" alt="Design digest #79" loading="lazy">
+                </figure>
+
+                <div class="blog-content">
+
+                  <div class="blog-meta">
+                    <p class="blog-category">Design</p>
+
+                    <span class="dot"></span>
+
+                    <time datetime="2022-02-23">Fab 23, 2022</time>
+                  </div>
+
+                  <h3 class="h3 blog-item-title">Design digest #79</h3>
+
+                  <p class="blog-text">
+                    Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.
+                  </p>
+
+                </div>
+
+              </a>
+            </li>
+-->
+          </ul>
+
+        </section>
+
       </article>
+
+
+
+
+
+      <!--
+        - #CONTACT
+      -->
 
       <article class="contact" data-page="contact">
-        <header><h2 class="h2 article-title">Contact</h2></header>
-        <section class="mapbox"><figure><iframe src="https://www.google.com/maps/embed?pb=..." width="400" height="300" loading="lazy"></iframe></figure></section>
+
+        <header>
+          <h2 class="h2 article-title">Contact</h2>
+        </header>
+
+<section class="mapbox" data-mapbox>
+  <figure>
+    <iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d494843.43734057865!2d120.84048704257855!3d13.89437151046416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd062973752e25%3A0x16348967919864e4!2sBatangas%2C%20Philippines!5e0!3m2!1sen!2s!4v1710000000000!5m2!1sen!2s"
+  width="400" height="300" loading="lazy">
+</iframe>
+  </figure>
+</section>
+
         <section class="contact-form">
+
           <h3 class="h3 form-title">Contact Form</h3>
+
           <form action="#" class="form" data-form>
+
             <div class="input-wrapper">
               <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
+
               <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
             </div>
+
             <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
-            <button class="form-btn" type="submit" disabled data-form-btn><span>Send Message</span></button>
+
+            <button class="form-btn" type="submit" disabled data-form-btn>
+              <ion-icon name="paper-plane"></ion-icon>
+              <span>Send Message</span>
+            </button>
+
           </form>
+
         </section>
+
       </article>
 
-      <footer class="hero-quote">
-        <div class="quote-box">
-          <p class="en">Exit the logic, Enter the life.</p>
-          <p class="ch">走出逻辑，进入生活。</p>
-        </div>
-      </footer>
+<section class="hero-quote">
+    <div class="quote-box">
+       <p>Exit the logic, Enter the life.</p>
+    <p>走出逻辑，进入生活。</p>
+</section>
+    </div>
 
-    </div> </main>
+  </main>
 
+
+
+
+
+
+  <!--
+    - custom js link
+  -->
   <script src="./assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
+
 </html>
