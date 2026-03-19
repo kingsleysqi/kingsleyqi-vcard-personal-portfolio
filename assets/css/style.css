@@ -450,43 +450,40 @@ main {
 
 
 
-/*-----------------------------------*\
-  #NAVBAR
-\*-----------------------------------*/
-
-/* PC端：顶部导航 */
+/* 顶部导航 */
 .navbar {
   position: fixed;
   top: 0;
   bottom: auto;
-  left: 0;
   width: 100%;
-  background: hsla(240, 1%, 17%, 0.75);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--jet);
-  border-radius: 0 0 12px 12px; /* 👈 改这里（原来是顶部圆角） */
-  box-shadow: var(--shadow-2);
-  z-index: 999; /* 👈 提高层级 */
+  z-index: 999;
+  border-radius: 0 0 12px 12px;
 }
 
-/* 手机端：底部导航 */
+/* 主内容下移 */
+main {
+  margin-top: 80px;
+}
+
+/* sidebar防重叠 */
+.sidebar {
+  top: 100px;
+}
+
+/* 手机恢复底部 */
 @media (max-width: 768px) {
   .navbar {
     top: auto;
     bottom: 0;
-    border-radius: 12px 12px 0 0; /* 👈 恢复底部样式 */
+    border-radius: 12px 12px 0 0;
   }
-}
 
-/* 内容防止被遮挡（很关键！） */
-body {
-  padding-top: 80px;
-}
+  main {
+    margin-top: 0;
+  }
 
-@media (max-width: 768px) {
-  body {
-    padding-top: 0;
-    padding-bottom: 80px;
+  .sidebar {
+    top: 0;
   }
 }
 
