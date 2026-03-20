@@ -22,7 +22,17 @@
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+  // 检查 html2pdf 是否加载成功，若失败则切换到国内镜像
+  if (typeof html2pdf === 'undefined') {
+    console.warn('Cloudflare CDN 加载失败，正在尝试切换至 BootCDN...');
+    document.write('<script src="https://cdn.bootcdn.net/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>');
+  }
+</script>
+
+  
 </head>
 
 <body>
@@ -42,7 +52,7 @@
       <div class="sidebar-info">
 
         <figure class="avatar-box">
-          <img src="./assets/images/favicon.svg" alt="Richard hanrick" width="80">
+          <img src="./assets/images/favicon-96x96.png" alt="Richard hanrick" width="80">
         </figure>
 
         <div class="info-content">
@@ -186,12 +196,12 @@
           </li>
 
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Systems
+            <button class="navbar-link" data-nav-link>Network
             </button>
           </li>
 
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Network
+            <button class="navbar-link" data-nav-link>Systems
             </button>
           </li>
 
@@ -218,11 +228,33 @@
 <section class="hero-quote">
   <div class="quote-box">
   
-   <p class="quote-en">Exit the logic, Enter the life.</p>
-    <p class="quote-zh">走出逻辑，进入生活。</p>
-<p class="quote-en">拒绝平庸，活出精彩。</p>
-<p class="quote-zh">Reject mediocrity, live brilliantly.</p>
-</div>
+   <style>
+  .quote {
+    font-size: 16px;
+    font-style: italic;
+    text-align: center;
+    color: #ffdb70;
+    margin: 10px 0;
+  }
+  
+  .quote-zh {
+    font-size: 16px;
+    font-style: italic;
+    text-align: center;
+    color: #ffdb76;
+    margin: 10px 0;
+  }
+</style>
+
+
+  <p class="quote-en">Exit the logic, Enter the life.</p>
+  <p class="quote-zh">走出逻辑，进入生活。</p>
+  <p class="quote-en">Reject mediocrity, live brilliantly.</p>
+  <p class="quote-zh">拒绝平庸，活出精彩。</p>
+
+
+
+
 </section>
         <header>
           <h2 class="h2 article-title">About me</h2>
@@ -283,6 +315,42 @@
 </p>
 
         </section>
+        
+        
+<header style="display: block !important; position: relative !important; margin: 20px 0 30px 0; padding-bottom: 20px; border-bottom: none !important; clear: both !important;">
+  
+  <div style="display: block !important; margin-bottom: 15px;">
+    <h2 class="h2 article-title" style="margin: 0 !important; position: static !important;">About Me</h2>
+    <div style="width: 50px; height: 5px; background: var(--orange-yellow-crayola); border-radius: 3px; margin-top: 8px;"></div>
+  </div>
+  
+  <div style="display: block !important; width: 100% !important; position: static !important;">
+    <button class="export-pdf-btn" id="download-pdf" style="
+        position: static !important; 
+        display: inline-flex !important; 
+        align-items: center; 
+        gap: 10px; 
+        padding: 10px 20px; 
+        background: #2b2b2c; 
+        border: 1px solid var(--orange-yellow-crayola); 
+        border-radius: 12px; 
+        color: var(--orange-yellow-crayola);
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 10px;
+        box-shadow: none !important;
+        transform: none !important;">
+      <ion-icon name="download-outline" style="font-size: 18px;"></ion-icon>
+      <span style="font-weight: 500;">导出完整档案 (PDF)</span>
+    </button>
+  </div>
+
+</header>
+
+
+
+
+
 
 
         <!--

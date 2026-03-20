@@ -114,3 +114,79 @@ for (let i = 0; i < navigationLinks.length; i++) {
     }
   });
 }
+
+
+document.getElementById('download-pdf').addEventListener('click', async function() {
+  
+  const btn = this;
+  btn.innerText = "⏳ 生成中...";
+  
+  try {
+    const name = document.querySelector('.sidebar .name')?.innerText || "Kingsley Qi";
+    const titles = Array.from(document.querySelectorAll('.sidebar .title'))
+      .map(t => t.innerText).join(' | ');
+    
+    let contactHTML = "";
+    document.querySelectorAll('.contact-item').forEach(item => {
+      const label = item.querySelector('.contact-title')?.innerText || "";
+      const value = item.querySelector('.contact-link')?.innerText ||
+        item.querySelector('time')?.innerText ||
+        item.querySelector('address')?.innerText || "";
+      if (label && value) {
+        contactHTML += `<div>${label}: ${value}</div>`;
+      }
+    });
+    
+    const about = document.querySelector('.about-text')?.innerText || "";
+    
+    let timelineHTML = "";
+    document.querySelectorAll('.timeline-item').forEach(item => {
+      timelineHTML += `<div>• ${item.innerText}</div>`;
+    });
+    
+    let skillsHTML = "";
+    document.querySelectorAll('.skills-list li').forEach(item => {
+      skillsHTML += `<div>• ${item.innerText}</div>`;
+    });
+    
+    // ✅ 直接写模板（关键）
+    const container = document.createElement('div');
+    container.style.width = '800px';
+    container.style.background = '#fff';
+    container.style.padding = '40px';
+    container.innerHTML = `
+      <h1>${name}</h1>
+      <p>${titles}</p>
+      <hr>
+
+      <h2>Contact</h2>
+      ${contactHTML}
+
+      <h2>About</h2>
+      <p>${about}</p>
+
+      <h2>Experience</h2>
+      ${timelineHTML}
+
+      <h2>Skills</h2>
+      ${skillsHTML}
+    `;
+    
+    document.body.appendChild(container);
+    
+    await html2pdf().set({
+      margin: 10,
+      filename: 'Kingsley_Qi_Resume.pdf',
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4' }
+    }).from(container).save();
+    
+    document.body.removeChild(container);
+    
+    btn.innerText = "✅ 完成";
+    
+  } catch (err) {
+    console.error(err);
+    btn.innerText = "❌ 失败";
+  }
+});

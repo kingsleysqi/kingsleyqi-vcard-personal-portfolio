@@ -2169,3 +2169,45 @@ textarea.form-input::-webkit-resizer { display: none; }
     max-width: 1080px;
   }
 }
+
+/* 导出按钮基础样式 */
+.export-pdf-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: var(--onyx); /* 使用你已有的变量 */
+  background: linear-gradient(to bottom right, hsl(45, 100%, 72%), hsl(35, 100%, 68%));
+  color: var(--eerie-black);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.export-pdf-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.export-pdf-btn ion-icon { font-size: 18px; }
+
+/* 打印时的微调：隐藏不需要导出的元素（如导航栏、导出按钮本身） */
+@media print {
+  .navbar, .export-pdf-btn, .sidebar-info_more-btn { display: none !important; }
+  .main-content { margin: 0; padding: 0; }
+  article { padding: 0 !important; margin: 0 !important; }
+}
+
+@media print {
+  article.active {
+    background: white !important;
+    color: black !important;
+  }
+  .article-title, h2, h3 { color: #222 !important; }
+}
