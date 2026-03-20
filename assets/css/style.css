@@ -455,7 +455,7 @@ main {
 \*-----------------------------------*/
 
 /* 新增或覆盖：桌面端改成顶部 fixed 或 sticky */
-@media (min-width: px) {   /* 或用 1024px，根据你觉得何时切换合适 */
+@media (min-width: 1024px) {   /* 或用 1024px，根据你觉得何时切换合适 */
 
   .navbar {
     position: fixed;           /* 或用 position: sticky; top: 0; */
@@ -2128,7 +2128,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   .about-text {
     font-size: 1.05rem;              /* 正文稍大一点 */
     line-height: 1.75;               /* 行距增加，阅读更舒适 */
-    max-width: 80px;                /* 别让单行太长 */
+    max-width: 800px;                /* 别让单行太长 */
     margin: 0 auto;
   }
 

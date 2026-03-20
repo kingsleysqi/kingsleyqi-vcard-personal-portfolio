@@ -202,8 +202,8 @@
       </nav>
 
 
-    </div>
-  </section>
+    
+  
 
 
 
@@ -220,7 +220,8 @@
     <p class="quote-zh">走出逻辑，进入生活。</p>
 <p class="quote-en">拒绝平庸，活出精彩。</p>
 <p class="quote-zh">Reject mediocrity, live brilliantly.</p>
-
+</div>
+</section>
         <header>
           <h2 class="h2 article-title">About me</h2>
         </header>
@@ -704,7 +705,7 @@
         - #PORTFOLIO
       -->
 
-      <article class="Network" data-page="network">
+      <article class="network" data-page="network">
 
         <header>
           <h2 class="h2 article-title">Kingsley Network</h2>
@@ -713,62 +714,92 @@
         <section class="projects">
 
           <ul class="filter-list">
-
-            <li class="filter-item">
-              <button class="active" data-filter-btn>All</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Web design</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Applications</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Web development</button>
-            </li>
-
-          </ul>
+  
+  <li class="filter-item">
+    <button class="active" data-filter-btn data-filter="all">
+      All / 全部
+    </button>
+  </li>
+  
+  <li class="filter-item">
+    <button data-filter-btn data-filter="Personal Sites">
+      Personal Sites / 个人站
+    </button>
+  </li>
+  
+  <li class="filter-item">
+    <button data-filter-btn data-filter="Content">
+      Content / 内容输出
+    </button>
+  </li>
+  
+  <li class="filter-item">
+    <button data-filter-btn data-filter="Projects">
+      Projects / 项目
+    </button>
+  </li>
+  
+  <li class="filter-item">
+    <button data-filter-btn data-filter="Experiments">
+      Experiments / 折腾
+    </button>
+  </li>
+  
+</ul>
 
           <div class="filter-select-box">
 
-            <button class="filter-select" data-select>
+  <button class="filter-select" data-select>
 
-              <div class="select-value" data-selecct-value>Select category</div>
+    <div class="select-value" data-select-value>
+      Select category
+    </div>
 
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
+    <div class="select-icon">
+      <ion-icon name="chevron-down"></ion-icon>
+    </div>
 
-            </button>
+  </button>
 
-            <ul class="select-list">
+  <ul class="select-list">
 
-              <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
+    <li class="select-item">
+      <button data-select-item data-filter="all">
+        All / 全部
+      </button>
+    </li>
 
-              <li class="select-item">
-                <button data-select-item>Web design</button>
-              </li>
+    <li class="select-item">
+      <button data-select-item data-filter="Personal Sites">
+        Personal Sites / 个人站
+      </button>
+    </li>
 
-              <li class="select-item">
-                <button data-select-item>Applications</button>
-              </li>
+    <li class="select-item">
+      <button data-select-item data-filter="Content">
+        Content / 内容输出
+      </button>
+    </li>
 
-              <li class="select-item">
-                <button data-select-item>Web development</button>
-              </li>
+    <li class="select-item">
+      <button data-select-item data-filter="Projects">
+        Projects / 项目
+      </button>
+    </li>
 
-            </ul>
+    <li class="select-item">
+      <button data-select-item data-filter="Experiments">
+        Experiments / 折腾
+      </button>
+    </li>
 
-          </div>
+  </ul>
+
+</div>
 
           <ul class="project-list">
 
-            <li class="project-item  active" data-filter-item data-category="Web development">
+            <li class="project-item  active" data-filter-item data-category="Personal Sites">
               <a href="https://kingsleyqi.com">
 
                 <figure class="project-img">
@@ -786,7 +817,7 @@
               </a>
             </li>
 
-            <li class="project-item  active" data-filter-item data-category="Web development">
+            <li class="project-item  active" data-filter-item data-category="Personal Sites">
               <a href="https://kingsleyqi.cn">
 
                 <figure class="project-img">
@@ -1324,16 +1355,16 @@
             </button>
 
           </form>
-
         </section>
+        
 
       </article>
 
 
   </div>
-</section>
 
-    </div>
+
+    
   </main>
 
 
