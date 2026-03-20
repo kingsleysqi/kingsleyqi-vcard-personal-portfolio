@@ -454,17 +454,48 @@ main {
   #NAVBAR
 \*-----------------------------------*/
 
-.navbar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: hsla(240, 1%, 17%, 0.75);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--jet);
-  border-radius: 12px 12px 0 0;
-  box-shadow: var(--shadow-2);
-  z-index: 5;
+/* 新增或覆盖：桌面端改成顶部 fixed 或 sticky */
+@media (min-width: px) {   /* 或用 1024px，根据你觉得何时切换合适 */
+
+  .navbar {
+    position: fixed;           /* 或用 position: sticky; top: 0; */
+    top: 0;
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;        /* 自适应内容宽度 */
+    max-width: 90%;
+    min-width: 600px;          /* 防止太窄 */
+    border-radius: 0 0 20px 20px;
+    border-top: none;
+    border-bottom: 1px solid var(--jet);
+    padding: 0 2rem;
+    backdrop-filter: blur(12px);
+    background: hsla(240, 1%, 17%, 0.88); /* 稍微不透明一点更好看 */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  }
+
+  .navbar-list {
+    display: flex;
+    gap: 2.5rem;               /* 菜单项间距更大，更舒适 */
+    padding: 1rem 0;
+  }
+
+  .navbar-link {
+    font-size: 1.05rem;        /* 稍大一点 */
+    padding: 0.8rem 1rem;
+    font-weight: 500;
+  }
+
+  /* 让 main-content 往下挪，避免被导航遮挡 */
+  .main-content {
+    margin-top: 90px;          /* 根据你的导航高度调整，建议 80\~110px */
+  }
+
+  /* sidebar 也跟着往下一点（可选） */
+  .sidebar {
+    margin-top: 90px;
+  }
 }
 
 .navbar-list {
@@ -1879,4 +1910,262 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .timeline-text { max-width: 700px; }
 
+}
+
+.hero-quote {
+  margin-bottom: 2.5rem;          /* 与下面内容拉开距离 */
+  text-align: center;
+}
+
+.quote-box {
+  padding: 2rem 1.5rem;
+  background: var(--border-gradient-onyx);
+  border-radius: 16px;
+  border: 1px solid var(--jet);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-2);
+}
+
+.quote-en {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--orange-yellow-crayola);
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.5px;
+}
+
+.quote-zh {
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--light-gray);
+  margin-bottom: 2.2rem;          /* 与 About me 拉开距离 */
+  opacity: 0.92;
+}
+
+/* 手机端（默认）：底部固定导航 */
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: hsla(240, 1%, 17%, 0.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--jet);
+  border-radius: 12px 12px 0 0;
+  box-shadow: var(--shadow-2);
+  z-index: 5;
+}
+
+.navbar-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.navbar-link {
+  color: var(--light-gray);
+  font-size: var(--fs-8);
+  padding: 20px 7px;
+  transition: color var(--transition-1);
+}
+
+/* 大屏（≥768px）：切换成顶部居中导航 */
+@media (min-width: 768px) {
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    min-width: 480px;               /* 防止太窄 */
+    max-width: 90vw;
+    padding: 0 1.8rem;
+    border-radius: 0 0 20px 20px;   /* 下方圆角 */
+    border-top: none;
+    border-bottom: 1px solid var(--jet);
+    background: hsla(240, 1%, 17%, 0.92);  /* 更不透明一点 */
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  .navbar-list {
+    gap: 2rem;                      /* 菜单项间距更大 */
+    padding: 1rem 0;
+  }
+
+  .navbar-link {
+    font-size: 1.05rem;             /* 字体稍大 */
+    padding: 0.8rem 1.2rem;
+    font-weight: 500;
+  }
+
+  /* 重要：内容区往下挪，避免被顶部导航遮挡 */
+  .main-content {
+    margin-top: 100px;              /* 根据实际导航高度调整，80\~120px 都行 */
+    padding-top: 0;                 /* 如果有其他 padding 可以清零 */
+  }
+
+  /* sidebar 也跟着往下一点（可选，但推荐） */
+  .sidebar {
+    margin-top: 100px;
+  }
+
+  /* 手机端不需要的 margin 归零 */
+  main {
+    margin-top: 0;                  /* 大屏时不要额外上边距 */
+  }
+}
+
+/* 可选：超大屏（≥1024px）再优化成更圆润的胶囊风格 */
+@media (min-width: 1024px) {
+
+  .navbar {
+    top: 1.5rem;                    /* 离顶部一点距离，更高级 */
+    border-radius: 999px;           /* 超圆润胶囊形 */
+    padding: 0.8rem 2.5rem;
+    background: hsla(240, 2%, 15%, 0.95);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  }
+
+  .main-content {
+    margin-top: 130px;              /* 相应加大上边距 */
+  }
+
+  .sidebar {
+    margin-top: 130px;
+  }
+}
+
+@media (max-width: 767px) {
+
+  /* 给整个页面顶部留出安全区（手机刘海/状态栏） */
+  body {
+    padding-top: env(safe-area-inset-top);   /* 适配 iPhone 等刘海屏 */
+  }
+
+  .sidebar {
+    margin: 10px 12px 15px;          /* 加大四周间距，看起来更呼吸 */
+    border-radius: 16px;             /* 稍微圆一点更现代 */
+    padding: 16px;                   /* 内部 padding 加大 */
+    max-height: 140px;               /* 未展开时高度适中，别太高 */
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .sidebar.active {
+    max-height: 480px;               /* 展开后足够容纳所有联系方式 */
+  }
+
+  .sidebar-info {
+    gap: 12px;                       /* 头像和文字间距别太大 */
+  }
+
+  .avatar-box img {
+    width: 70px;                     /* 手机上头像别太大 */
+    height: 70px;
+  }
+
+  .info-content .name {
+    font-size: 1.35rem;              /* 名字稍小点 */
+  }
+
+  .info-content .title {
+    font-size: 0.78rem;
+    padding: 4px 10px;
+  }
+
+  /* 下拉按钮位置调整，避免贴边 */
+  .info_more-btn {
+    top: -12px;
+    right: -12px;
+    padding: 8px 10px;
+  }
+}
+
+/* ==========================================
+   大屏优化 - 减少空旷感，内容更饱满
+   ========================================== */
+
+@media (min-width: 1024px) {
+
+  /* 整体容器拉宽，利用更多横向空间 */
+  main {
+    max-width: 1350px;               /* 或 1280px / 1400px，根据你喜好 */
+    margin-left: auto;
+    margin-right: auto;
+    gap: 20px;                       /* sidebar 和 main-content 间距缩小 */
+    padding: 0 15px;                 /* 整体左右留白别太大 */
+  }
+
+  /* sidebar 宽度固定或稍宽，减少浪费 */
+  .sidebar {
+    width: 340px;                    /* 原版可能太窄，调到 320–360px 更平衡 */
+    min-width: 320px;
+    flex-shrink: 0;
+    margin-top: 80px;                /* 与顶部导航保持协调 */
+    padding: 25px 20px;              /* 内部再松一点 */
+  }
+
+  /* 主内容区宽度撑开 */
+  .main-content {
+    width: calc(100% - 360px);       /* 自动计算剩余宽度 */
+    max-width: 1000px;               /* 内容区别超过这个，阅读最舒服 */
+    margin-top: 60px;                /* 与顶部导航协调 */
+    padding: 0 30px 40px;            /* 左右内边距缩小，内容更靠边 */
+  }
+
+  /* 文章内部卡片/文本区域拉宽 */
+  article {
+    padding: 30px 40px;              /* 加大内部空间感 */
+    border-radius: 24px;
+  }
+
+  /* 关于我页面具体优化 */
+  .about-text {
+    font-size: 1.05rem;              /* 正文稍大一点 */
+    line-height: 1.75;               /* 行距增加，阅读更舒适 */
+    max-width: 80px;                /* 别让单行太长 */
+    margin: 0 auto;
+  }
+
+  .hero-quote,
+  .quote-box {
+    max-width: 900px;                /* 引言区也别太窄 */
+    margin: 0 auto 3rem;
+    padding: 2.5rem 3rem;            /* 内部更宽松 */
+  }
+
+  .quote-en {
+    font-size: 2.4rem;               /* 大屏可以更醒目 */
+  }
+
+  .quote-zh {
+    font-size: 1.9rem;
+  }
+
+  /* 服务/项目/博客列表每行多放点 */
+  .service-list,
+  .project-list,
+  .blog-posts-list {
+    grid-template-columns: repeat(2, 1fr);   /* 或 repeat(3, 1fr) 如果卡片够小 */
+    gap: 30px;
+  }
+}
+
+@media (min-width: 1400px) {
+  main {
+    max-width: 1480px;
+  }
+  
+  .sidebar {
+    width: 380px;
+  }
+  
+  .main-content {
+    max-width: 1080px;
+  }
 }
