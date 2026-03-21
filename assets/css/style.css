@@ -2113,128 +2113,72 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 }
 
-/* ==========================================
-   大屏优化 - 减少空旷感，内容更饱满
-   ========================================== */
 
-@media (min-width: 1024px) {
-
-  /* 整体容器拉宽，利用更多横向空间 */
-  main {
-    max-width: 1350px;               /* 或 1280px / 1400px，根据你喜好 */
-    margin-left: auto;
-    margin-right: auto;
-    gap: 20px;                       /* sidebar 和 main-content 间距缩小 */
-    padding: 0 15px;                 /* 整体左右留白别太大 */
-  }
-
-  /* sidebar 宽度固定或稍宽，减少浪费 */
-  .sidebar {
-    width: 340px;                    /* 原版可能太窄，调到 320–360px 更平衡 */
-    min-width: 320px;
-    flex-shrink: 0;
-    margin-top: 80px;                /* 与顶部导航保持协调 */
-    padding: 25px 20px;              /* 内部再松一点 */
-  }
-
-  /* 主内容区宽度撑开 */
-  .main-content {
-    width: calc(100% - 360px);       /* 自动计算剩余宽度 */
-    max-width: 1000px;               /* 内容区别超过这个，阅读最舒服 */
-    margin-top: 60px;                /* 与顶部导航协调 */
-    padding: 0 30px 40px;            /* 左右内边距缩小，内容更靠边 */
-  }
-
-  /* 文章内部卡片/文本区域拉宽 */
-  article {
-    padding: 30px 40px;              /* 加大内部空间感 */
-    border-radius: 24px;
-  }
-
-  /* 关于我页面具体优化 */
-  .about-text {
-    font-size: 1.05rem;              /* 正文稍大一点 */
-    line-height: 1.75;               /* 行距增加，阅读更舒适 */
-    max-width: 800px;                /* 别让单行太长 */
-    margin: 0 auto;
-  }
-
-  .hero-quote,
-  .quote-box {
-    max-width: 900px;                /* 引言区也别太窄 */
-    margin: 0 auto 3rem;
-    padding: 2.5rem 3rem;            /* 内部更宽松 */
-  }
-
-  .quote-en {
-    font-size: 2.4rem;               /* 大屏可以更醒目 */
-  }
-
-  .quote-zh {
-    font-size: 1.9rem;
-  }
-
-  /* 服务/项目/博客列表每行多放点 */
-  .service-list,
-  .project-list,
-  .blog-posts-list {
-    grid-template-columns: repeat(2, 1fr);   /* 或 repeat(3, 1fr) 如果卡片够小 */
-    gap: 30px;
-  }
-}
-
-@media (min-width: 1400px) {
-  main {
-    max-width: 1480px;
-  }
-  
-  .sidebar {
-    width: 380px;
-  }
-  
-  .main-content {
-    max-width: 1080px;
-  }
-}
-
-/* 导出按钮基础样式 */
 .export-pdf-btn {
-  position: absolute;
-  right: 0;
-  top: 0;
-  background: var(--onyx); /* 使用你已有的变量 */
-  background: linear-gradient(to bottom right, hsl(45, 100%, 72%), hsl(35, 100%, 68%));
-  color: var(--eerie-black);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 500;
-  transition: 0.25s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
+  background: #1e2937 !important;           /* 深灰底 */
+  color: #fbbf24 !important;
+  border: 2px solid #fbbf24 !important;
+  box-shadow: 0 6px 20px rgba(251,191,36,0.3) !important;
 }
 
 .export-pdf-btn:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
+  background: #334155 !important;
+  transform: translateY(-3px);
 }
 
-.export-pdf-btn ion-icon { font-size: 18px; }
 
-/* 打印时的微调：隐藏不需要导出的元素（如导航栏、导出按钮本身） */
-@media print {
-  .navbar, .export-pdf-btn, .sidebar-info_more-btn { display: none !important; }
-  .main-content { margin: 0; padding: 0; }
-  article { padding: 0 !important; margin: 0 !important; }
+
+/* ==================== 最终统一版：桌面完美居中 + 无遮挡（复制替换旧的全部 navbar media） ==================== */
+.navbar {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: hsla(240, 2%, 15%, 0.95);
+  backdrop-filter: blur(16px);
+  border-radius: 999px;
+  padding: 14px 32px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  min-width: 520px;
 }
 
-@media print {
-  article.active {
-    background: white !important;
-    color: black !important;
+.main-content,
+.sidebar {
+  margin-top: 140px !important;   /* 关键！增加高度彻底解决遮挡 */
+}
+
+main {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* 大屏自动完美居中 */
+@media (min-width: 1024px) {
+  .sidebar { 
+    width: 340px; 
+    flex-shrink: 0; 
+    position: sticky; 
+    top: 160px; 
   }
-  .article-title, h2, h3 { color: #222 !important; }
+  .main-content {
+    flex: 1;
+    max-width: 980px;
+    margin-top: 120px !important;
+  }
+  article {
+    padding: 40px 50px;
+    border-radius: 28px;
+  }
+}
+
+/* 超大屏更舒服 */
+@media (min-width: 1400px) {
+  main { max-width: 1480px; }
+  .sidebar { width: 360px; }
 }
