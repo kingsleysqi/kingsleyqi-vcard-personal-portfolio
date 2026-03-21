@@ -119,60 +119,119 @@ for (let i = 0; i < navigationLinks.length; i++) {
 document.getElementById('download-pdf').addEventListener('click', async function() {
   const btn = this;
   const originalText = btn.innerHTML;
-  btn.innerHTML = '⏳ 生成中，请稍等...';
+  btn.innerHTML = '⏳ 生成简洁美观版 PDF...';
   btn.disabled = true;
 
   try {
-    // 确保 html2pdf 已加载（如果没加载就动态加）
-    if (typeof html2pdf === 'undefined') {
+    // 确保 jsPDF 已加载（如果没加，动态加载）
+    if (typeof jspdf === 'undefined') {
       const script = document.createElement('script');
-      script.src = 'https://cdn.bootcdn.net/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
       document.head.appendChild(script);
-      await new Promise(resolve => { script.onload = resolve; });
+      await new Promise(r => { script.onload = r; });
     }
 
-    const element = document.querySelector('article.active') || document.querySelector('.main-content');
-    if (!element) throw new Error('找不到要导出的内容');
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({
+      unit: 'mm',
+      format: 'a4',
+      orientation: 'portrait'
+    });
 
-    const opt = {
-      margin: [15, 10, 15, 10],
-      filename: 'Kingsley_Qi_简历.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-  scale: 2.8,
-  useCORS: true,
-  allowTaint: true,
-  logging: true,
-  backgroundColor: '#ffffff', // 强制白底，避免黑背景问题
-  ignoreElements: (el) => {
-    // 已有的忽略
-    if (el.tagName === 'ION-ICON' || el.shadowRoot) return true;
-    if (el.tagName === 'IFRAME' && el.src.includes('google.com/maps')) return true;
-    
-    // 新增：忽略任何带有 gradient 的背景元素（这是罪魁祸首）
-    const bgImage = getComputedStyle(el).backgroundImage;
-    if (bgImage && (bgImage.includes('gradient') || bgImage.includes('linear-gradient') || bgImage.includes('radial-gradient'))) {
-      return true;
-    }
-    
-    // 可选：忽略所有 background-image 非 none 的元素（如果上面还不够）
-    // if (bgImage && bgImage !== 'none') return true;
-    
-    return false;
-  }
-},
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
+    // 设置字体（支持中文需用支持的字体，这里用系统默认 + Helvetica 后备）
+    doc.setFont('helvetica'); // 默认支持英文；中文显示可能方块，可换 Noto Sans 等 CDN 字体
+    doc.setFontSize(12);
 
-    await html2pdf().set(opt).from(element).save();
+    let y = 20; // 当前 Y 坐标
+
+    // 标题
+    doc.setFontSize(24);
+    doc.setTextColor(220, 90, 0); // 橙色
+    doc.text('KINGSLEY QI', 105, y, { align: 'center' });
+    y += 12;
+
+    doc.setFontSize(14);
+    doc.setTextColor(80);
+    doc.text('自动化工程师 | 架构师 | IT工程师', 105, y, { align: 'center' });
+    doc.text('Automation Engineer • Architect • IT Engineer', 105, y + 6, { align: 'center' });
+    y += 18;
+
+    // 分隔线
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(251, 191, 36);
+    doc.line(20, y, 190, y);
+    y += 12;
+
+    // 联系方式
+    doc.setFontSize(14);
+    doc.setTextColor(220, 90, 0);
+    doc.text('联系方式', 20, y);
+    y += 8;
+
+    doc.setFontSize(12);
+    doc.setTextColor(0);
+    const contacts = [
+      `Email: i@kingsleyqi.com`,
+      `Phone: +63 960864508*`,
+      `Birthday: Aug 29, 1992`,
+      `Location: Batangas, Philippines`
+    ];
+    contacts.forEach(line => {
+      doc.text(line, 25, y);
+      y += 7;
+    });
+    y += 10;
+
+    // 核心能力 / About
+    doc.setFontSize(14);
+    doc.setTextColor(220, 90, 0);
+    doc.text('核心能力 & 关于我', 20, y);
+    y += 8;
+
+    doc.setFontSize(11);
+    doc.setTextColor(40);
+    const aboutText = document.querySelector('.about-text')?.innerText.trim() || '专注工业自动化、工业物联网与办公自动化 15 年+...（内容已提取）';
+    const aboutLines = doc.splitTextToSize(aboutText, 170); // 自动换行，宽度170mm
+    doc.text(aboutLines, 20, y);
+    y += aboutLines.length * 6 + 10; // 估算高度
+
+    // 项目列表（简化版）
+    doc.setFontSize(14);
+    doc.setTextColor(220, 90, 0);
+    doc.text('代表项目', 20, y);
+    y += 8;
+
+    doc.setFontSize(11);
+    const projects = document.querySelectorAll('.blog-post-item');
+    projects.forEach((proj, i) => {
+      if (y > 270) { // 接近页底，换页
+        doc.addPage();
+        y = 20;
+      }
+      const title = proj.querySelector('.blog-item-title')?.innerText.trim() || '';
+      const desc = proj.querySelector('.blog-text')?.innerText.trim().substring(0, 200) + '...' || '';
+      doc.setTextColor(0);
+      doc.text(`${i+1}. ${title}`, 20, y);
+      y += 7;
+      const descLines = doc.splitTextToSize(desc, 160);
+      doc.text(descLines, 25, y);
+      y += descLines.length * 6 + 10;
+    });
+
+    // 页脚
+    doc.setFontSize(10);
+    doc.setTextColor(120);
+    doc.text('Generated from Kingsley Qi Portfolio • 2026', 105, 290, { align: 'center' });
+
+    doc.save('Kingsley_Qi_专业简历.pdf');
 
     btn.innerHTML = '✅ 下载完成！';
     setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 3000);
 
   } catch (err) {
     console.error('PDF 生成失败：', err);
-    btn.innerHTML = '❌ 生成失败';
+    btn.innerHTML = '❌ 失败，重试';
     btn.disabled = false;
-    alert('PDF 导出出错：' + err.message + '\n请检查控制台，或尝试去掉地图/图标后再试');
+    alert('生成出错：' + err.message + '\n请检查控制台，或用下面备用方案');
   }
 });
