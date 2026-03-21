@@ -21,6 +21,7 @@ const testimonialsModalFunc = function () {
   overlay.classList.toggle("active");
 }
 
+
 if (testimonialsItem.length > 0) {
   for (let i = 0; i < testimonialsItem.length; i++) {
     testimonialsItem[i].addEventListener("click", function () {
@@ -138,11 +139,13 @@ document.getElementById('download-pdf').addEventListener('click', async function
       orientation: 'portrait'
     });
 
-    // 设置字体（支持中文需用支持的字体，这里用系统默认 + Helvetica 后备）
-    doc.setFont('helvetica'); // 默认支持英文；中文显示可能方块，可换 Noto Sans 等 CDN 字体
-    doc.setFontSize(12);
-    doc.addFont('https://fonts.gstatic.com/s/notosanssc/v26/k3kIo84MPvpLmixcA63oeALhLOEP.ttf', 'NotoSansSC', 'normal');
-doc.setFont('NotoSansSC');
+    // 尝试调用系统常见中文字体（按顺序 fallback）
+doc.setFont("helvetica"); // 默认英文
+// 如果浏览器支持，以下可能生效（测试时看 PDF 是否有中文）
+// doc.setFont("SimSun", "normal");       // Windows 宋体
+// doc.setFont("Microsoft YaHei", "normal"); // Windows 微软雅黑
+// doc.setFont("PingFang SC", "normal");   // macOS/iOS 苹方
+// doc.setFont("Noto Sans CJK SC", "normal"); // Android/Chrome 常见
 
     let y = 20; // 当前 Y 坐标
 
