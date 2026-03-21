@@ -139,22 +139,28 @@ document.getElementById('download-pdf').addEventListener('click', async function
       filename: 'Kingsley_Qi_简历.pdf',
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: {
-        scale: 2.8,                    // 清晰度更高
-        useCORS: true,                 // 允许跨域图片
-        allowTaint: true,
-        logging: true,                 // 调试用，可改 false
-        backgroundColor: '#ffffff',    // 强制白底
-        // 关键：忽略引起报错的元素
-        ignoreElements: (el) => {
-          // 忽略所有 ion-icon（Shadow DOM 问题源头）
-          if (el.tagName === 'ION-ICON' || el.shadowRoot) return true;
-          // 忽略 Google Maps iframe（不支持的 image type）
-          if (el.tagName === 'IFRAME' && el.src.includes('google.com/maps')) return true;
-          // 可选：忽略有渐变的背景元素
-          if (el.style.backgroundImage && el.style.backgroundImage.includes('gradient')) return true;
-          return false;
-        }
-      },
+  scale: 2.8,
+  useCORS: true,
+  allowTaint: true,
+  logging: true,
+  backgroundColor: '#ffffff', // 强制白底，避免黑背景问题
+  ignoreElements: (el) => {
+    // 已有的忽略
+    if (el.tagName === 'ION-ICON' || el.shadowRoot) return true;
+    if (el.tagName === 'IFRAME' && el.src.includes('google.com/maps')) return true;
+    
+    // 新增：忽略任何带有 gradient 的背景元素（这是罪魁祸首）
+    const bgImage = getComputedStyle(el).backgroundImage;
+    if (bgImage && (bgImage.includes('gradient') || bgImage.includes('linear-gradient') || bgImage.includes('radial-gradient'))) {
+      return true;
+    }
+    
+    // 可选：忽略所有 background-image 非 none 的元素（如果上面还不够）
+    // if (bgImage && bgImage !== 'none') return true;
+    
+    return false;
+  }
+}
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
