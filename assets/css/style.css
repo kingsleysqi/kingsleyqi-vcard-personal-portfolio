@@ -2128,57 +2128,72 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 
 
-/* ==================== 最终统一版：桌面完美居中 + 无遮挡（复制替换旧的全部 navbar media） ==================== */
-.navbar {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999;
-  background: hsla(240, 2%, 15%, 0.95);
-  backdrop-filter: blur(16px);
-  border-radius: 999px;
-  padding: 14px 32px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-  min-width: 520px;
-}
-
-.main-content,
-.sidebar {
-  margin-top: 140px !important;   /* 关键！增加高度彻底解决遮挡 */
-}
-
-main {
-  max-width: 1380px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  gap: 30px;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-/* 大屏自动完美居中 */
-@media (min-width: 1024px) {
-  .sidebar { 
-    width: 340px; 
-    flex-shrink: 0; 
-    position: sticky; 
-    top: 160px; 
+/* === 手机端强制底部导航 + 禁止大屏规则误触发 === */
+@media (max-width: 767px) {
+  .navbar {
+    position: fixed !important;
+    bottom: 0 !important;           /* 强制底部 */
+    top: auto !important;           /* 禁用顶部 */
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;        /* 禁用 min-width */
+    max-width: none !important;
+    transform: none !important;     /* 禁用居中 transform */
+    border-radius: 16px 16px 0 0 !important;  /* 温和圆角，非999px */
+    padding: 12px 10px !important;
+    background: hsla(240, 2%, 13%, 0.92) !important;
+    backdrop-filter: blur(10px) !important;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.5) !important;
+    z-index: 1000 !important;
   }
-  .main-content {
-    flex: 1;
-    max-width: 980px;
-    margin-top: 120px !important;
+
+  .navbar-list {
+    display: flex;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;    /* 允许横向滚动 */
+    gap: 1rem !important;
+    justify-content: space-around !important;
+    padding: 0 8px !important;
   }
+
+  .navbar-link {
+    font-size: 0.95rem !important;
+    padding: 10px 12px !important;
+    white-space: nowrap !important;
+  }
+
+  /* 内容区强制避开底部导航 */
+  .main-content,
   article {
-    padding: 40px 50px;
-    border-radius: 28px;
+    margin-bottom: 90px !important;  /* 底部留出导航空间 */
+    padding-bottom: 40px !important;
+  }
+
+  /* 禁用任何顶部相关的 margin（防止误触发） */
+  .main-content,
+  .sidebar {
+    margin-top: 20px !important;     /* 手机端顶部少量间距即可 */
   }
 }
 
-/* 超大屏更舒服 */
-@media (min-width: 1400px) {
-  main { max-width: 1480px; }
-  .sidebar { width: 360px; }
+/* 大屏才允许顶部胶囊（≥768px） */
+@media (min-width: 768px) {
+  .navbar {
+    position: fixed !important;
+    top: 16px !important;
+    bottom: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: max-content !important;
+    min-width: 520px !important;
+    border-radius: 999px !important;
+    padding: 14px 32px !important;
+    z-index: 9999 !important;
+  }
+
+  .main-content,
+  .sidebar {
+    margin-top: 160px !important;    /* 大屏足够避开顶部导航 */
+  }
 }

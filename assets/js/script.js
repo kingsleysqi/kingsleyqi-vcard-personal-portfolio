@@ -116,50 +116,36 @@ for (let i = 0; i < navigationLinks.length; i++) {
 }
 
 
-// ============ 最终稳定版 PDF（复制替换旧的）============
 document.getElementById('download-pdf').addEventListener('click', async function() {
   const btn = this;
-  const oldHTML = btn.innerHTML;
-  btn.innerHTML = '⏳ 生成中（请稍等10秒）...';
-  btn.disabled = true;
+  const original = btn.innerHTML;
+  btn.innerHTML = '⏳ 生成中...'; btn.disabled = true;
 
   try {
-    // 双重保险加载
+    // 确保库加载（如果 CDN 问题，可换本地文件）
     if (typeof html2pdf === 'undefined') {
-      const s = document.createElement('script');
-      s.src = 'https://cdn.bootcdn.net/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-      document.head.appendChild(s);
-      await new Promise(r => s.onload = r);
+      console.warn('html2pdf 未加载，尝试备用');
+      // 可选：这里加备用 script 动态加载
     }
 
-    const fullResume = `
-      <div style="font-family:Poppins,sans-serif;padding:40px 50px;background:#fff;color:#1f2937;line-height:1.75;max-width:800px;margin:20px auto;border:1px solid #e5e7eb;">
-        <h1 style="text-align:center;color:#ea580c;font-size:42px;margin:0;">KINGSLEY QI</h1>
-        <p style="text-align:center;font-size:19px;color:#64748b;">自动化工程师 | 架构师 | IT工程师<br>现居菲律宾八大雁省</p>
-        <hr style="border:3px solid #f97316;margin:30px 0;">
-        ${document.querySelector('.about-text').outerHTML}
-        ${document.querySelectorAll('.timeline, .skill, .blog-posts-list').length ? 
-          Array.from(document.querySelectorAll('.timeline, .skill, .blog-posts-list')).map(e => e.outerHTML).join('') : ''}
-        <p style="text-align:center;margin-top:40px;color:#64748b;">© 2026 Kingsley Qi • 完整档案导出</p>
-      </div>`;
+    const element = document.querySelector('article.active') || document.querySelector('.main-content');
+    if (!element) throw new Error('未找到内容元素');
 
-    await html2pdf()
-      .set({
-        margin: 15,
-        filename: 'Kingsley_Qi_完整简历_2026.pdf',
-        html2canvas: { scale: 3, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      })
-      .from(fullResume)
-      .save();
+    const opt = {
+      margin: 15,
+      filename: 'Kingsley_Qi_完整档案.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2.5, useCORS: true, logging: false },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
 
-    btn.innerHTML = '✅ 下载完成！';
-    setTimeout(() => { btn.innerHTML = oldHTML; btn.disabled = false; }, 4000);
-
+    await html2pdf().set(opt).from(element).save();
+    btn.innerHTML = '✅ 下载完成';
+    setTimeout(() => { btn.innerHTML = original; btn.disabled = false; }, 3000);
   } catch (err) {
-    console.error("PDF错误：", err);
-    alert("PDF生成失败\n请按 F12 → Console 截图发给我，我继续帮你");
-    btn.innerHTML = '❌ 重试';
+    console.error('PDF 失败:', err);
+    btn.innerHTML = '❌ 失败，重试';
     btn.disabled = false;
+    alert('PDF 生成出错：' + err.message + '\n请 F12 Console 看错误，或换 Chrome/Edge 重试');
   }
 });
