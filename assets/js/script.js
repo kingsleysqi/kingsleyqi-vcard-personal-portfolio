@@ -160,7 +160,7 @@ document.getElementById('download-pdf').addEventListener('click', async function
     
     return false;
   }
-}
+},
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
