@@ -141,6 +141,8 @@ document.getElementById('download-pdf').addEventListener('click', async function
     // 设置字体（支持中文需用支持的字体，这里用系统默认 + Helvetica 后备）
     doc.setFont('helvetica'); // 默认支持英文；中文显示可能方块，可换 Noto Sans 等 CDN 字体
     doc.setFontSize(12);
+    doc.addFont('https://fonts.gstatic.com/s/notosanssc/v26/k3kIo84MPvpLmixcA63oeALhLOEP.ttf', 'NotoSansSC', 'normal');
+doc.setFont('NotoSansSC');
 
     let y = 20; // 当前 Y 坐标
 
