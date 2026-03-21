@@ -118,34 +118,55 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
 document.getElementById('download-pdf').addEventListener('click', async function() {
   const btn = this;
-  const original = btn.innerHTML;
-  btn.innerHTML = '⏳ 生成中...'; btn.disabled = true;
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '⏳ 生成中，请稍等...';
+  btn.disabled = true;
 
   try {
-    // 确保库加载（如果 CDN 问题，可换本地文件）
+    // 确保 html2pdf 已加载（如果没加载就动态加）
     if (typeof html2pdf === 'undefined') {
-      console.warn('html2pdf 未加载，尝试备用');
-      // 可选：这里加备用 script 动态加载
+      const script = document.createElement('script');
+      script.src = 'https://cdn.bootcdn.net/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+      document.head.appendChild(script);
+      await new Promise(resolve => { script.onload = resolve; });
     }
 
     const element = document.querySelector('article.active') || document.querySelector('.main-content');
-    if (!element) throw new Error('未找到内容元素');
+    if (!element) throw new Error('找不到要导出的内容');
 
     const opt = {
-      margin: 15,
-      filename: 'Kingsley_Qi_完整档案.pdf',
+      margin: [15, 10, 15, 10],
+      filename: 'Kingsley_Qi_简历.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2.5, useCORS: true, logging: false },
+      html2canvas: {
+        scale: 2.8,                    // 清晰度更高
+        useCORS: true,                 // 允许跨域图片
+        allowTaint: true,
+        logging: true,                 // 调试用，可改 false
+        backgroundColor: '#ffffff',    // 强制白底
+        // 关键：忽略引起报错的元素
+        ignoreElements: (el) => {
+          // 忽略所有 ion-icon（Shadow DOM 问题源头）
+          if (el.tagName === 'ION-ICON' || el.shadowRoot) return true;
+          // 忽略 Google Maps iframe（不支持的 image type）
+          if (el.tagName === 'IFRAME' && el.src.includes('google.com/maps')) return true;
+          // 可选：忽略有渐变的背景元素
+          if (el.style.backgroundImage && el.style.backgroundImage.includes('gradient')) return true;
+          return false;
+        }
+      },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
     await html2pdf().set(opt).from(element).save();
-    btn.innerHTML = '✅ 下载完成';
-    setTimeout(() => { btn.innerHTML = original; btn.disabled = false; }, 3000);
+
+    btn.innerHTML = '✅ 下载完成！';
+    setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 3000);
+
   } catch (err) {
-    console.error('PDF 失败:', err);
-    btn.innerHTML = '❌ 失败，重试';
+    console.error('PDF 生成失败：', err);
+    btn.innerHTML = '❌ 生成失败';
     btn.disabled = false;
-    alert('PDF 生成出错：' + err.message + '\n请 F12 Console 看错误，或换 Chrome/Edge 重试');
+    alert('PDF 导出出错：' + err.message + '\n请检查控制台，或尝试去掉地图/图标后再试');
   }
 });
