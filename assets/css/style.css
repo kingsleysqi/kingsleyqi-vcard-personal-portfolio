@@ -450,36 +450,63 @@ main {
 
 
 
-/*-----------------------------------*\
-  #NAVBAR
-\*-----------------------------------*/
+/* ==================== 统一后的导航 + 大屏布局（直接替换所有旧的 navbar media）==================== */
+.navbar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: hsla(240, 1%, 17%, 0.95);
+  backdrop-filter: blur(12px);
+  z-index: 999;
+  border-top: 1px solid var(--jet);
+}
 
-/* 新增或覆盖：桌面端改成顶部 fixed 或 sticky */
-@media (min-width: 1024px) {   /* 或用 1024px，根据你觉得何时切换合适 */
-
+@media (min-width: 768px) {
   .navbar {
-    position: fixed;           /* 或用 position: sticky; top: 0; */
-    top: 0;
+    top: 20px;
     bottom: auto;
     left: 50%;
     transform: translateX(-50%);
-    width: max-content;        /* 自适应内容宽度 */
-    max-width: 90%;
-    min-width: 600px;          /* 防止太窄 */
-    border-radius: 0 0 20px 20px;
-    border-top: none;
-    border-bottom: 1px solid var(--jet);
-    padding: 0 2rem;
-    backdrop-filter: blur(12px);
-    background: hsla(240, 1%, 17%, 0.88); /* 稍微不透明一点更好看 */
-    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    width: max-content;
+    min-width: 520px;
+    border-radius: 999px;
+    padding: 12px 30px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
   }
+  .main-content { margin-top: 110px !important; }
+  .sidebar { margin-top: 110px !important; }
+}
 
-  .navbar-list {
+@media (min-width: 1024px) {
+  main {
+    max-width: 1380px;
+    margin: 0 auto;
     display: flex;
-    gap: 2.5rem;               /* 菜单项间距更大，更舒适 */
-    padding: 1rem 0;
+    gap: 30px;
+    padding: 0 20px;
   }
+  .sidebar {
+    width: 340px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+  }
+  .main-content {
+    flex: 1;
+    max-width: 980px;
+    margin-top: 40px !important;
+  }
+  article { padding: 35px 45px; border-radius: 28px; }
+  .hero-quote { font-size: 2.1rem; }
+}
+
+/* 额外美观增强（基于你现有变量，不新增内容） */
+.hero-quote { box-shadow: var(--shadow-3); }
+.quote-box { background: var(--bg-gradient-yellow-2) !important; }
+.export-pdf-btn { 
+  background: linear-gradient(135deg, #fbbf24, #f97316) !important;
+  box-shadow: 0 6px 20px rgba(251,191,36,0.4) !important;
+}
 
   .navbar-link {
     font-size: 1.05rem;        /* 稍大一点 */
@@ -496,7 +523,7 @@ main {
   .sidebar {
     margin-top: 90px;
   }
-}
+
 
 .navbar-list {
   display: flex;
