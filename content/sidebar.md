@@ -1,7 +1,7 @@
 ![avatar](./assets/images/01.png)
 Kingsley Qi
 自动化工程师 | IT工程师
-Automation Engineer<br> Architect | IT Engineer
+Automation Engineer<br> | IT Engineer
 
 - Email: i@kingsleyqi.com
 - Phone: +63 960864508*
