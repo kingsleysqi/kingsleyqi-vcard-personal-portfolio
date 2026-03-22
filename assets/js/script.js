@@ -681,7 +681,7 @@ function initPDFExport() {
           <body>
             <div class="header">
               <h1>KINGSLEY QI</h1>
-              <p>自动化工程师 | 架构师 | IT工程师</p>
+              <p>自动化 & IT工程师</p>
               <p>Automation Engineer | Architect | IT Engineer</p>
             </div>
             
