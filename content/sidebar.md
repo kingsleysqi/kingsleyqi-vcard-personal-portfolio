@@ -1,6 +1,6 @@
-![avatar](./assets/images/favicon-96x96.png)
+![avatar](./assets/images/01.png)
 Kingsley Qi
-自动化工程师 | 架构师 | IT工程师
+自动化工程师 | IT工程师
 Automation Engineer<br> Architect | IT Engineer
 
 - Email: i@kingsleyqi.com
