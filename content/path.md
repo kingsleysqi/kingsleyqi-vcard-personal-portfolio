@@ -3,7 +3,7 @@
 - 聊城大学 | 2021 — 2023 | 教育学 本科  
   Liaocheng University | 2021 — 2023 | Bachelor’s Degree in Education
 
-- 山东交通职业学院 | 2010 — 2013 | 计算机网络技术 全日制专科  
+- 山东交通职业学院 | 2010 — 2013 | 计算机网络技术 专科  
   Shandong Transport Vocational College | 2010 — 2013 | Full-time Diploma in Computer Network Technology
 
 ## 职场生涯
