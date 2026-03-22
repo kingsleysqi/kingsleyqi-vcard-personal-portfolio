@@ -35,12 +35,8 @@ let mdContents = {
   systems: ''
 };
 
-// ========== 获取当前地理位置（从侧边栏读取）==========
+// ========== 获取当前地理位置 ==========
 function getLocation() {
-  const locationElement = document.querySelector('.contact-info address');
-  if (locationElement) {
-    return locationElement.innerText.trim();
-  }
   return 'Batangas, Philippines';
 }
 
@@ -271,12 +267,10 @@ function renderSystems(html, rawMarkdown) {
   `).join('')}</ul>`;
 }
 
-// ========== Contact 页面（无地图，无表单标题）==========
+// ========== Contact 页面 ==========
 function renderContact() {
-  const location = getLocation();
   return `
     <header><h2 class="h2 article-title">Contact</h2></header>
-    
     <section class="contact-form">
       <form action="#" class="form" data-form>
         <div class="input-wrapper">
@@ -293,26 +287,34 @@ function renderContact() {
   `;
 }
 
-// ========== PDF 专用的侧边栏内容（只包含联系方式，不含姓名职位）==========
+// ========== PDF 专用的侧边栏内容 ==========
 function getPDFSidebarContent(rawSidebarHTML) {
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = rawSidebarHTML;
   
-  // 只提取联系方式，不提取姓名和职位
+  // 移除所有图片
+  const images = tempDiv.querySelectorAll('img');
+  images.forEach(img => img.remove());
+  
+  // 移除所有社交链接元素
+  const socialItems = tempDiv.querySelectorAll('.social-item');
+  socialItems.forEach(item => item.remove());
+  
+  // 提取联系方式文本
   const contacts = [];
-const contactItems = tempDiv.querySelectorAll('.contact-item');
-contactItems.forEach(item => {
-  const label = item.querySelector('.contact-title')?.innerText || '';
-  const value = item.querySelector('.contact-link, time, address')?.innerText || '';
-  if (label && value) contacts.push({ label, value });
-});
-
-let contactsHTML = '';
-if (contacts.length) {
-  contactsHTML = contacts.map(c => `<p><strong>${c.label}:</strong> ${c.value}</p>`).join('');
-}
-
-return `
+  const contactItems = tempDiv.querySelectorAll('.contact-item');
+  contactItems.forEach(item => {
+    const label = item.querySelector('.contact-title')?.innerText || '';
+    const value = item.querySelector('.contact-link, time, address')?.innerText || '';
+    if (label && value) contacts.push({ label, value });
+  });
+  
+  let contactsHTML = '';
+  if (contacts.length) {
+    contactsHTML = contacts.map(c => `<p><strong>${c.label}:</strong> ${c.value}</p>`).join('');
+  }
+  
+  return `
     <div class="sidebar-text">
       <div class="pdf-contacts">
         ${contactsHTML}
@@ -321,18 +323,15 @@ return `
   `;
 }
 
-// ========== 移除 HTML 中的所有超链接 ==========
-function removeLinks(html) {
-  const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = html;
-  const links = tempDiv.querySelectorAll('a');
-  links.forEach(link => {
-    const text = link.innerText;
-    const span = document.createElement('span');
-    span.innerText = text;
-    link.parentNode.replaceChild(span, link);
-  });
-  return tempDiv.innerHTML;
+// ========== 彻底清理 HTML 中的图片和链接 ==========
+function cleanHtml(html) {
+  // 移除所有 img 标签
+  html = html.replace(/<img[^>]*>/g, '');
+  // 移除所有 a 标签，保留文本
+  html = html.replace(/<a[^>]*>([^<]*)<\/a>/g, '$1');
+  // 移除所有 src 和 href 属性
+  html = html.replace(/\s*(src|href)=["'][^"']*["']/g, '');
+  return html;
 }
 
 // ========== 加载所有内容 ==========
@@ -434,7 +433,7 @@ function initFormValidation() {
   });
 }
 
-// ========== PDF 导出（保留大标题，无侧边栏姓名职位，无超链接）==========
+// ========== PDF 导出 ==========
 function initPDFExport() {
   const btn = document.getElementById('download-pdf');
   if (!btn) return;
@@ -447,30 +446,42 @@ function initPDFExport() {
     try {
       const location = getLocation();
       
-      // 获取侧边栏原始 HTML 并生成只包含联系方式的侧边栏内容
+      // 获取侧边栏内容
       const currentSidebar = document.querySelector('.sidebar');
       const rawSidebarHTML = currentSidebar ? currentSidebar.innerHTML : '';
       const sidebarContent = getPDFSidebarContent(rawSidebarHTML);
       
-      // 渲染各部分内容并移除超链接
+      // 渲染各部分内容并清理
       let aboutHtml = marked.parse(mdContents.about);
       let pathHtml = marked.parse(mdContents.path);
       let networkHtml = marked.parse(mdContents.network);
       let systemsHtml = marked.parse(mdContents.systems);
       
-      aboutHtml = removeLinks(aboutHtml);
-      pathHtml = removeLinks(pathHtml);
-      networkHtml = removeLinks(networkHtml);
-      systemsHtml = removeLinks(systemsHtml);
+      // 清理所有图片和链接
+      aboutHtml = cleanHtml(aboutHtml);
+      pathHtml = cleanHtml(pathHtml);
+      networkHtml = cleanHtml(networkHtml);
+      systemsHtml = cleanHtml(systemsHtml);
       
-      // PDF 模板（包含大标题，无侧边栏姓名职位，无 Contact 章节）
+      // 额外清理可能残留的图片路径文本
+      const cleanText = (text) => {
+        return text.replace(/\.\/assets\/images\/[^\s]+\.(jpg|png|svg)/g, '')
+                   .replace(/http[s]?:\/\/[^\s]+\.(jpg|png|svg)/g, '')
+                   .replace(/\[[^\]]*\]\([^)]*\)/g, '');
+      };
+      
+      aboutHtml = cleanText(aboutHtml);
+      pathHtml = cleanText(pathHtml);
+      networkHtml = cleanText(networkHtml);
+      systemsHtml = cleanText(systemsHtml);
+      
+      // PDF 模板（只有一条分割线）
       const pdfPreview = `
         <!DOCTYPE html>
         <html>
           <head>
             <meta charset="UTF-8">
             <title>Kingsley Qi - Resume</title>
-            /
             <style>
               * {
                 margin: 0;
@@ -530,8 +541,6 @@ function initPDFExport() {
                 color: #1c1c1e;
                 border-bottom: 1px solid #e5e5ea;
                 padding-bottom: 6px;
-              }
-              
               }
               .about-text p {
                 margin-bottom: 1em;
@@ -614,14 +623,6 @@ function initPDFExport() {
                 border: none;
                 border-bottom: 1px solid #e5e5ea;
                 padding-bottom: 20px;
-              }
-              .project-img img, .blog-banner-box img {
-                width: 100%;
-                height: auto;
-                max-height: 160px;
-                object-fit: cover;
-                border-radius: 8px;
-                margin-bottom: 12px;
               }
               .project-title, .blog-item-title {
                 font-size: 17px;
