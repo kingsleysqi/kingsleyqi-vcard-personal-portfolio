@@ -7,38 +7,36 @@ Reject mediocrity, live brilliantly.
 
 ## 关于我
 
-专注工业自动化、工业物联网与办公自动化 15 年+，现居菲律宾八大雁省。
+长期深耕工业自动化、工业物联网与办公自动化领域 15 年+，现居菲律宾八大雁省，聚焦制造企业在数字化转型过程中的系统重构与效率跃迁。  
+以工程为基础、以系统为核心、以结果为导向，持续为制造型组织提供从底层基础设施到业务流程体系的整体优化与落地能力。
 
-拥有网络工程与机械工程双重背景，聚焦企业级信息基础设施、非标自动化设备研发与产线落地，以及办公自动化系统的构建与部署。
-
-15+ years of experience in Industrial Automation, Industrial IoT, and Office Automation, currently based in Cavite, Philippines.
-
-With a dual background in Network Engineering and Mechanical Engineering, focusing on enterprise infrastructure, custom automation systems, and end-to-end production line implementation.
+15+ years of experience across Industrial Automation, Industrial IoT, and Office Automation, currently based in Cavite, Philippines, focusing on system-level transformation and efficiency scaling for manufacturing organizations.  
+Engineering-driven, system-oriented, and outcome-focused, delivering end-to-end optimization from foundational infrastructure to business process architecture.
 
 **核心能力：**  
-• 项目全链路独立交付：立项 → 规划 → 设计 → 研发 → 样机 / 系统搭建 → 量产/上线 → 持续优化  
-• 企业级服务器集群 / 网络高可用架构设计与多类型矩阵运维  
-• 非标自动化设备结构优化、现场调试、产线导入与效率提升  
-• 办公自动化（OA）系统搭建：需求调研、流程引擎设计、表单/审批自动化、低代码/开源平台选型与私有化部署、与ERP/CRM/网络基础设施集成
+- 以业务结果为导向的全链路交付能力：从问题定义、系统建模到架构设计与工程落地，构建可持续演进的解决方案体系  
+- 企业级基础设施与高可用网络体系设计，支撑复杂制造环境下的稳定运行与业务连续性  
+- 非标自动化系统的系统级设计与产线重构能力，从单点优化升级为整体效率提升与产能释放  
+- 办公自动化（OA）系统的体系化建设：将流程、规则与组织协同抽象为可执行系统，实现标准化、自动化与可扩展  
 
 **Core Competencies:**  
-• Full-stack independent project delivery: Initiation → Planning → Design → R&D → Prototype / System Build → Mass Production/Go-Live → Continuous Optimization  
-• Enterprise server cluster / High-availability network architecture design and multi-type matrix operations & maintenance  
-• Non-standard automation equipment: structural optimization, on-site debugging, production line導入 and efficiency improvement  
-• Office Automation (OA) system implementation: requirements analysis, process engine design, form/approval automation, low-code/open-source platform selection & private deployment, integration with ERP/CRM/network infrastructure
+- Outcome-driven, end-to-end delivery: from problem definition and system modeling to architecture design and execution, building scalable and evolvable solutions  
+- Enterprise infrastructure and high-availability network architecture to ensure stability and business continuity in complex manufacturing environments  
+- System-level design of non-standard automation, transforming isolated improvements into holistic efficiency and throughput gains  
+- Office Automation (OA) as a system: abstracting workflows, rules, and collaboration into executable, scalable architectures  
 
 **为制造企业、海外工厂提供：**  
-• 信息化全栈落地（网络 + 服务器 + OA + 工业互联网）  
-• 高可用服务器/网络集群建设  
-• 非标自动化产线改造、瓶颈突破与成本优化  
-• OA办公自动化系统从0搭建/升级（审批流程自动化、协同办公、无纸化、移动端集成）
+- 制造业数字化整体解决方案（从网络、计算到OA与工业互联网的统一规划与落地）  
+- 面向关键业务的高可用架构设计，降低系统风险与不可控停机成本  
+- 产线级自动化重构与效率优化，解决瓶颈、提升节拍并优化整体成本结构  
+- OA系统从“工具”升级为“系统”，实现流程驱动组织、自动化驱动效率  
 
 **Services for Manufacturing Enterprises & Overseas Factories in Southeast Asia:**  
-• Full-stack informationization implementation (Network + Server + OA + Industrial Internet)  
-• High-availability server/network cluster construction  
-• Non-standard automation production line transformation, bottleneck resolution & cost optimization  
-• OA office automation system build from scratch / upgrade (approval workflow automation, collaborative office, paperless, mobile integration)
+- End-to-end digital transformation solutions for manufacturing (integrated planning across Network, Compute, OA, and Industrial Internet)  
+- High-availability architecture design for mission-critical operations, minimizing risk and downtime cost  
+- Production line re-engineering and automation optimization to unlock throughput and improve cost structure  
+- Transforming OA from a tool into a system—where workflows drive organizations and automation drives efficiency  
 
-擅长解决工厂常见的“网络不稳、设备卡顿、办公低效”三大痛点，欢迎讨论技术深度或落地挑战的项目。
+不以“修问题”为目标，而以“重构系统”为方法，专注解决制造企业中长期存在的结构性低效问题，包括网络不稳定、系统性能瓶颈与流程割裂，通过系统级设计实现可持续的效率提升与能力进化。
 
-Specialized in solving the three major pain points commonly found in factories: “unstable network, equipment stuttering, inefficient office workflows”. Welcome to discuss technically in-depth or challenging implementation projects.
+Not focused on fixing isolated issues, but on redesigning systems. Specialized in addressing structural inefficiencies in manufacturing—network instability, system bottlenecks, and fragmented workflows—through architecture-driven transformation that enables sustainable performance and capability growth.
