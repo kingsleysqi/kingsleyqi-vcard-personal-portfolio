@@ -2197,3 +2197,33 @@ textarea.form-input::-webkit-resizer { display: none; }
     margin-top: 160px !important;    /* 大屏足够避开顶部导航 */
   }
 }
+
+/* --- PDF 导出专用静默样式 --- */
+@media screen {
+  .export-preparing * {
+    transition: none !important; /* 准备导出时禁用动画，防止截图模糊 */
+  }
+}
+
+/* 导出时的强制样式注入 */
+.pdf-export-container {
+  background: #121213 !important;
+  padding: 20px !important;
+  width: 794px !important; /* 标准 A4 宽度像素 */
+  margin: 0 auto !important;
+}
+
+/* 导出时隐藏 UI 杂质 */
+.export-mode .navbar,
+.export-mode .sidebar-btn,
+.export-mode #download-pdf,
+.export-mode .filter-list,
+.export-mode .contact-form {
+  display: none !important;
+}
+
+/* 解决乱码的最终保险：强制无衬线字体渲染 */
+.export-mode * {
+  font-family: "Microsoft YaHei", sans-serif !important;
+  -webkit-print-color-adjust: exact !important;
+}

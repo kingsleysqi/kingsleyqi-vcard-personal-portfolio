@@ -1,0 +1,7 @@
+## 系统与基础设施
+
+- [制造业集团 · 数字化办公转型](https://www.kingsleyqi.cn/article/30fb6394-e3f5-8042-aacd-f14d06d3420b) | Systems & Infrastructure<br>系统与基础设施 | 2025 · CN / Shandong | 为山东某制造业集团（2园区/5子公司）构建无纸化办公体系，涵盖机房建设、企业网络架构、钉钉流程集成及跨园区互联。 | ./assets/images/blog-1.jpg
+- [房地产集团 · 无纸化办公转型](https://www.kingsleyqi.cn/article/30fb6394-e3f5-80aa-a924-e465c2ff1b23) | Organization & Workflow<br>组织与流程 | 2025 · CN / Shandong | 为山东某房地产集团（8子公司）设计并实施泛微OA无纸化办公转型升级。完成基础设施建设、审批流程标准化、流程逻辑重构及角色权限体系设计，服务器机房的标准化管理。 | ./assets/images/blog-2.jpg
+- [教育集团 · 数字化生态体系设计](#) | Business Architecture<br>业务架构 | 2024 · CN / Shandong | 设计山东某教育集团全链路数字化体系，整合金蝶ERP、有赞电商、抖音平台，打通营销、销售、网课与物流（项目因战略变动止于选型阶段）。 | ./assets/images/blog-3.jpg
+- [省属院校 · 校园信息化综合管理体系](#) | Education & Campus Management<br>教育与校园管理 | 2025 · CN / Shandong | 带领精英团队，为山东省属某院校建立全方位校园信息化管理体系，整合行政办公、多媒体教室、机房设施、监控设施及桌面办公环境等，进行全方位管理。协调校园治理、管理流程及基础设施，实现管理流程优化，提高资源利用率，并支持高效的教学与行政运作。 | ./assets/images/blog-5.jpg
+- [高端连接器项目 · 设备调试与产品导入](#) | Advanced Manufacturing & Automation<br>高端制造与自动化 | 2026 · PH / Foreign Enterprise | 携核心团队为世界五百强连接器制造公司菲律宾工厂提供技术支持。从样品到量产的全生命周期做支撑，涵盖自动化生产线调试、样机及设备调试运行、产品不良处理、工艺优化及产能提升。通过携手团队亲身操作与优化，确保设备稳定运行、流程高效顺畅及产能可扩展，实现工程设计与实际制造的有效衔接。 | ./assets/images/blog-4.jpg

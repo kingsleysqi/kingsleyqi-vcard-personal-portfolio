@@ -2,241 +2,744 @@
 
 const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
 
-// 1. Sidebar 逻辑
-const sidebar = document.querySelector("[data-sidebar]");
-const sidebarBtn = document.querySelector("[data-sidebar-btn]");
-sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
-
-// 2. Testimonials 逻辑 (保持原样，增加防御检查)
-const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
-const modalContainer = document.querySelector("[data-modal-container]");
-const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
-const overlay = document.querySelector("[data-overlay]");
-const modalImg = document.querySelector("[data-modal-img]");
-const modalTitle = document.querySelector("[data-modal-title]");
-const modalText = document.querySelector("[data-modal-text]");
-
-const testimonialsModalFunc = function () {
-  modalContainer.classList.toggle("active");
-  overlay.classList.toggle("active");
-}
-
-
-if (testimonialsItem.length > 0) {
-  for (let i = 0; i < testimonialsItem.length; i++) {
-    testimonialsItem[i].addEventListener("click", function () {
-      modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
-      modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
-      modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
-      modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
-      testimonialsModalFunc();
-    });
-  }
-}
-modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-overlay.addEventListener("click", testimonialsModalFunc);
-
-// 3. 筛选逻辑修正 (重点)
-const select = document.querySelector("[data-select]");
-const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-select-value]");
-const filterBtn = document.querySelectorAll("[data-filter-btn]");
-const filterItems = document.querySelectorAll("[data-filter-item]");
-
-select.addEventListener("click", function () { elementToggleFunc(this); });
-
-const filterFunc = function (selectedValue) {
-  for (let i = 0; i < filterItems.length; i++) {
-    const category = filterItems[i].dataset.category;
-    if (selectedValue === "all" || selectedValue === category) {
-      filterItems[i].classList.add("active");
-    } else {
-      filterItems[i].classList.remove("active");
-    }
-  }
-}
-
-// 下拉菜单项点击
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
-    let value = this.dataset.filter; // 获取 data-filter 属性
-    selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
-    filterFunc(value);
-  });
-}
-
-// 桌面端按钮点击
-let lastClickedBtn = filterBtn[0];
-for (let i = 0; i < filterBtn.length; i++) {
-  filterBtn[i].addEventListener("click", function () {
-    let selectedValue = this.dataset.filter;
-    selectValue.innerText = this.innerText;
-    filterFunc(selectedValue);
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
-  });
-}
-
-// 4. 表单验证
-const form = document.querySelector("[data-form]");
-const formInputs = document.querySelectorAll("[data-form-input]");
-const formBtn = document.querySelector("[data-form-btn]");
-
-for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function () {
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
-    }
-  });
-}
-
-// 5. 导航逻辑修正 (提高容错率)
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
-
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
-    // 强制转换为小写并去除空格
-    const targetPage = this.innerText.trim().toLowerCase();
-    
-    for (let j = 0; j < pages.length; j++) {
-      if (targetPage === pages[j].dataset.page) {
-        pages[j].classList.add("active");
-        navigationLinks[j].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[j].classList.remove("active");
-        navigationLinks[j].classList.remove("active");
-      }
-    }
-  });
-}
-
-
-document.getElementById('download-pdf').addEventListener('click', async function() {
-  const btn = this;
-  const originalText = btn.innerHTML;
-  btn.innerHTML = '⏳ 生成简洁美观版 PDF...';
-  btn.disabled = true;
-
-  try {
-    // 确保 jsPDF 已加载（如果没加，动态加载）
-    if (typeof jspdf === 'undefined') {
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-      document.head.appendChild(script);
-      await new Promise(r => { script.onload = r; });
-    }
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({
-      unit: 'mm',
-      format: 'a4',
-      orientation: 'portrait'
-    });
-
-    // 尝试调用系统常见中文字体（按顺序 fallback）
-doc.setFont("helvetica"); // 默认英文
-// 如果浏览器支持，以下可能生效（测试时看 PDF 是否有中文）
-// doc.setFont("SimSun", "normal");       // Windows 宋体
-// doc.setFont("Microsoft YaHei", "normal"); // Windows 微软雅黑
-// doc.setFont("PingFang SC", "normal");   // macOS/iOS 苹方
-// doc.setFont("Noto Sans CJK SC", "normal"); // Android/Chrome 常见
-
-    let y = 20; // 当前 Y 坐标
-
-    // 标题
-    doc.setFontSize(24);
-    doc.setTextColor(220, 90, 0); // 橙色
-    doc.text('KINGSLEY QI', 105, y, { align: 'center' });
-    y += 12;
-
-    doc.setFontSize(14);
-    doc.setTextColor(80);
-    doc.text('自动化工程师 | 架构师 | IT工程师', 105, y, { align: 'center' });
-    doc.text('Automation Engineer • Architect • IT Engineer', 105, y + 6, { align: 'center' });
-    y += 18;
-
-    // 分隔线
-    doc.setLineWidth(0.5);
-    doc.setDrawColor(251, 191, 36);
-    doc.line(20, y, 190, y);
-    y += 12;
-
-    // 联系方式
-    doc.setFontSize(14);
-    doc.setTextColor(220, 90, 0);
-    doc.text('联系方式', 20, y);
-    y += 8;
-
-    doc.setFontSize(12);
-    doc.setTextColor(0);
-    const contacts = [
-      `Email: i@kingsleyqi.com`,
-      `Phone: +63 960864508*`,
-      `Birthday: Aug 29, 1992`,
-      `Location: Batangas, Philippines`
-    ];
-    contacts.forEach(line => {
-      doc.text(line, 25, y);
-      y += 7;
-    });
-    y += 10;
-
-    // 核心能力 / About
-    doc.setFontSize(14);
-    doc.setTextColor(220, 90, 0);
-    doc.text('核心能力 & 关于我', 20, y);
-    y += 8;
-
-    doc.setFontSize(11);
-    doc.setTextColor(40);
-    const aboutText = document.querySelector('.about-text')?.innerText.trim() || '专注工业自动化、工业物联网与办公自动化 15 年+...（内容已提取）';
-    const aboutLines = doc.splitTextToSize(aboutText, 170); // 自动换行，宽度170mm
-    doc.text(aboutLines, 20, y);
-    y += aboutLines.length * 6 + 10; // 估算高度
-
-    // 项目列表（简化版）
-    doc.setFontSize(14);
-    doc.setTextColor(220, 90, 0);
-    doc.text('代表项目', 20, y);
-    y += 8;
-
-    doc.setFontSize(11);
-    const projects = document.querySelectorAll('.blog-post-item');
-    projects.forEach((proj, i) => {
-      if (y > 270) { // 接近页底，换页
-        doc.addPage();
-        y = 20;
-      }
-      const title = proj.querySelector('.blog-item-title')?.innerText.trim() || '';
-      const desc = proj.querySelector('.blog-text')?.innerText.trim().substring(0, 200) + '...' || '';
-      doc.setTextColor(0);
-      doc.text(`${i+1}. ${title}`, 20, y);
-      y += 7;
-      const descLines = doc.splitTextToSize(desc, 160);
-      doc.text(descLines, 25, y);
-      y += descLines.length * 6 + 10;
-    });
-
-    // 页脚
-    doc.setFontSize(10);
-    doc.setTextColor(120);
-    doc.text('Generated from Kingsley Qi Portfolio • 2026', 105, 290, { align: 'center' });
-
-    doc.save('Kingsley_Qi_专业简历.pdf');
-
-    btn.innerHTML = '✅ 下载完成！';
-    setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 3000);
-
-  } catch (err) {
-    console.error('PDF 生成失败：', err);
-    btn.innerHTML = '❌ 失败，重试';
-    btn.disabled = false;
-    alert('生成出错：' + err.message + '\n请检查控制台，或用下面备用方案');
-  }
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+  headerIds: false,
+  mangle: false
 });
+
+async function loadMarkdown(file, containerId, customRender = null) {
+  try {
+    const response = await fetch(`content/${file}`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const text = await response.text();
+    let html = marked.parse(text);
+    if (customRender) {
+      html = customRender(html, text);
+    }
+    document.getElementById(containerId).innerHTML = html;
+    return { html, text };
+  } catch (err) {
+    console.error(err);
+    document.getElementById(containerId).innerHTML = `<p style="color:#ff6b6b; padding:40px; text-align:center;">加载失败: ${file}</p>`;
+    return null;
+  }
+}
+
+// ========== 存储所有 MD 文件原始内容 ==========
+let mdContents = {
+  about: '',
+  path: '',
+  network: '',
+  systems: ''
+};
+
+// ========== 获取当前地理位置（从侧边栏读取）==========
+function getLocation() {
+  const locationElement = document.querySelector('.contact-info address');
+  if (locationElement) {
+    return locationElement.innerText.trim();
+  }
+  return 'Batangas, Philippines';
+}
+
+// ========== About 页面渲染 ==========
+function renderAbout(html, rawMarkdown) {
+  const lines = rawMarkdown.split('\n');
+  let enQuotes = [], zhQuotes = [];
+  let inQuote = false;
+  
+  for (let line of lines) {
+    if (line.includes('## 引言')) { inQuote = true; continue; }
+    if (line.includes('## 关于我')) { inQuote = false; break; }
+    if (inQuote && line.trim() && !line.startsWith('##')) {
+      const l = line.trim();
+      if (l.startsWith('Exit') || l.startsWith('Reject')) enQuotes.push(l);
+      else if (l.startsWith('走出') || l.startsWith('拒绝')) zhQuotes.push(l);
+    }
+  }
+  
+  let quoteHtml = '';
+  if (enQuotes.length || zhQuotes.length) {
+    quoteHtml = `
+      <div class="hero-quote">
+        <div class="quote-box">
+          ${enQuotes.map(q => `<p class="quote-en">${q}</p>`).join('')}
+          ${zhQuotes.map(q => `<p class="quote-zh">${q}</p>`).join('')}
+        </div>
+      </div>
+    `;
+  }
+  
+  let aboutMarkdown = '';
+  let inAbout = false;
+  for (let line of lines) {
+    if (line.includes('## 关于我')) { inAbout = true; continue; }
+    if (line.startsWith('##') && inAbout) break;
+    if (inAbout && line.trim()) aboutMarkdown += line + '\n';
+  }
+  if (!aboutMarkdown.trim()) aboutMarkdown = rawMarkdown;
+  const aboutHtml = marked.parse(aboutMarkdown);
+  
+  mdContents.about = rawMarkdown;
+  
+  return `
+    ${quoteHtml}
+    <header><h2 class="h2 article-title">About Me</h2></header>
+    <div class="about-text">${aboutHtml}</div>
+    <div class="pdf-button-wrapper">
+      <button class="export-pdf-btn" id="download-pdf">
+        <ion-icon name="download-outline"></ion-icon>
+        <span>导出 PDF</span>
+      </button>
+    </div>
+  `;
+}
+
+// ========== Path 页面渲染 ==========
+function renderPath(html, rawMarkdown) {
+  const lines = rawMarkdown.split('\n');
+  let education = [], experience = [], skills = [];
+  let currentSection = '';
+
+  for (let line of lines) {
+    line = line.trim();
+    if (line.startsWith('## ')) {
+      const title = line.substring(3);
+      if (title.includes('学院时代')) currentSection = 'education';
+      else if (title.includes('职场生涯')) currentSection = 'experience';
+      else if (title.includes('专业技能')) currentSection = 'skills';
+      else currentSection = '';
+    } else if (line.startsWith('- ') && currentSection) {
+      const content = line.substring(2);
+      if (currentSection === 'education') {
+        const parts = content.split('|').map(p => p.trim());
+        if (parts.length >= 3) education.push({ title: parts[0], period: parts[1], desc: parts[2] });
+      } else if (currentSection === 'experience') {
+        const parts = content.split('|').map(p => p.trim());
+        if (parts.length >= 3) experience.push({ title: parts[0], period: parts[1], desc: parts[2] });
+      } else if (currentSection === 'skills') {
+        const match = content.match(/^(.*?):\s*(\d+)%/);
+        if (match) skills.push({ name: match[1], level: parseInt(match[2], 10) });
+      }
+    }
+  }
+
+  let eduHTML = '', expHTML = '', skillsHTML = '';
+  
+  if (education.length) {
+    eduHTML = `
+      <div class="title-wrapper">
+        <h3 class="h3">学院时代</h3>
+      </div>
+      <ol class="timeline-list">
+        ${education.map(item => `<li class="timeline-item"><h4 class="h4 timeline-item-title">${item.title}</h4><span>${item.period}</span><p class="timeline-text">${item.desc}</p></li>`).join('')}
+      </ol>
+    `;
+  }
+  
+  if (experience.length) {
+    expHTML = `
+      <div class="title-wrapper">
+        <h3 class="h3">职场生涯</h3>
+      </div>
+      <ol class="timeline-list">
+        ${experience.map(item => `<li class="timeline-item"><h4 class="h4 timeline-item-title">${item.title}</h4><span>${item.period}</span><p class="timeline-text">${item.desc}</p></li>`).join('')}
+      </ol>
+    `;
+  }
+  
+  if (skills.length) {
+    skillsHTML = `
+      <h3 class="h3 skills-title">专业技能</h3>
+      <ul class="skills-list">
+        ${skills.map(skill => `<li class="skills-item"><div class="title-wrapper"><h5 class="h5">${skill.name}</h5><data value="${skill.level}">${skill.level}%</data></div><div class="skill-progress-bg"><div class="skill-progress-fill" style="width: ${skill.level}%;"></div></div></li>`).join('')}
+      </ul>
+    `;
+  }
+
+  mdContents.path = rawMarkdown;
+
+  return `<header><h2 class="h2 article-title">人生轨迹</h2></header><div class="path-content">${eduHTML}${expHTML}${skillsHTML}</div>`;
+}
+
+// ========== Network 页面 ==========
+function renderNetwork(html, rawMarkdown) {
+  const lines = rawMarkdown.split('\n');
+  const projects = [];
+  for (let line of lines) {
+    line = line.trim();
+    if (line.startsWith('- ')) {
+      const content = line.substring(2);
+      const parts = content.split('|').map(p => p.trim());
+      if (parts.length >= 4) {
+        const titleMatch = parts[0].match(/\[(.*?)\]\((.*?)\)/);
+        const title = titleMatch ? titleMatch[1] : parts[0];
+        const link = titleMatch ? titleMatch[2] : '#';
+        const category = parts[1];
+        const description = parts[2];
+        const image = parts[3];
+        projects.push({ title, link, category, description, image });
+      }
+    }
+  }
+
+  mdContents.network = rawMarkdown;
+
+  const uniqueCategories = [...new Set(projects.map(p => p.category))];
+  const filterButtons = `
+    <li class="filter-item"><button class="active" data-filter-btn data-filter="all">全部 / All</button></li>
+    ${uniqueCategories.map(cat => `
+      <li class="filter-item"><button data-filter-btn data-filter="${cat}">${cat}</button></li>
+    `).join('')}
+  `;
+  
+  const selectOptions = `
+    <li class="select-item"><button data-select-item data-filter="all">全部 / All</button></li>
+    ${uniqueCategories.map(cat => `
+      <li class="select-item"><button data-select-item data-filter="${cat}">${cat}</button></li>
+    `).join('')}
+  `;
+  
+  const projectCards = projects.map(proj => `
+    <li class="project-item active" data-filter-item data-category="${proj.category}">
+      <a href="${proj.link}">
+        <figure class="project-img">
+          <div class="project-item-icon-box"><ion-icon name="eye-outline"></ion-icon></div>
+          <img src="${proj.image}" alt="${proj.title}" loading="lazy">
+        </figure>
+        <h3 class="project-title">${proj.title}</h3>
+        <p class="project-category">${proj.description}</p>
+      </a>
+    </li>
+  `).join('');
+  
+  return `
+    <header><h2 class="h2 article-title">Kingsley Network</h2></header>
+    <ul class="filter-list">${filterButtons}</ul>
+    <div class="filter-select-box">
+      <button class="filter-select" data-select>
+        <div class="select-value" data-select-value>选择分类 / Select category</div>
+        <div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div>
+      </button>
+      <ul class="select-list">${selectOptions}</ul>
+    </div>
+    <ul class="project-list">${projectCards}</ul>
+  `;
+}
+
+// ========== Systems 页面 ==========
+function renderSystems(html, rawMarkdown) {
+  const lines = rawMarkdown.split('\n');
+  const posts = [];
+  for (let line of lines) {
+    line = line.trim();
+    if (line.startsWith('- ')) {
+      const content = line.substring(2);
+      const parts = content.split('|').map(p => p.trim());
+      if (parts.length >= 5) {
+        const titleMatch = parts[0].match(/\[(.*?)\]\((.*?)\)/);
+        const title = titleMatch ? titleMatch[1] : parts[0];
+        const link = titleMatch ? titleMatch[2] : '#';
+        const category = parts[1];
+        const date = parts[2];
+        const description = parts[3];
+        const image = parts[4];
+        posts.push({ title, link, category, date, description, image });
+      }
+    }
+  }
+
+  mdContents.systems = rawMarkdown;
+
+  return `<header><h2 class="h2 article-title">Systems & Infrastructure</h2></header><ul class="blog-posts-list">${posts.map(post => `
+    <li class="blog-post-item">
+      <a href="${post.link}">
+        <figure class="blog-banner-box"><img src="${post.image}" alt="${post.title}" loading="lazy"></figure>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <p class="blog-category">${post.category}</p>
+            <span class="dot"></span>
+            <time datetime="${post.date.split('·')[0].trim()}">${post.date}</time>
+          </div>
+          <h3 class="h3 blog-item-title">${post.title}</h3>
+          <p class="blog-text">${post.description.substring(0, 200)}${post.description.length > 200 ? '...' : ''}</p>
+        </div>
+      </a>
+    </li>
+  `).join('')}</ul>`;
+}
+
+// ========== Contact 页面（无地图，无表单标题）==========
+function renderContact() {
+  const location = getLocation();
+  return `
+    <header><h2 class="h2 article-title">Contact</h2></header>
+    
+    <section class="contact-form">
+      <form action="#" class="form" data-form>
+        <div class="input-wrapper">
+          <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
+          <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
+        </div>
+        <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+        <button class="form-btn" type="submit" disabled data-form-btn>
+          <ion-icon name="paper-plane"></ion-icon>
+          <span>Send Message</span>
+        </button>
+      </form>
+    </section>
+  `;
+}
+
+// ========== PDF 专用的侧边栏内容（只包含联系方式，不含姓名职位）==========
+function getPDFSidebarContent(rawSidebarHTML) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = rawSidebarHTML;
+  
+  // 只提取联系方式，不提取姓名和职位
+  const contacts = [];
+const contactItems = tempDiv.querySelectorAll('.contact-item');
+contactItems.forEach(item => {
+  const label = item.querySelector('.contact-title')?.innerText || '';
+  const value = item.querySelector('.contact-link, time, address')?.innerText || '';
+  if (label && value) contacts.push({ label, value });
+});
+
+let contactsHTML = '';
+if (contacts.length) {
+  contactsHTML = contacts.map(c => `<p><strong>${c.label}:</strong> ${c.value}</p>`).join('');
+}
+
+return `
+    <div class="sidebar-text">
+      <div class="pdf-contacts">
+        ${contactsHTML}
+      </div>
+    </div>
+  `;
+}
+
+// ========== 移除 HTML 中的所有超链接 ==========
+function removeLinks(html) {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = html;
+  const links = tempDiv.querySelectorAll('a');
+  links.forEach(link => {
+    const text = link.innerText;
+    const span = document.createElement('span');
+    span.innerText = text;
+    link.parentNode.replaceChild(span, link);
+  });
+  return tempDiv.innerHTML;
+}
+
+// ========== 加载所有内容 ==========
+async function loadAllContent() {
+  await loadMarkdown('about.md', 'about-container', renderAbout);
+  await loadMarkdown('path.md', 'path-container', renderPath);
+  await loadMarkdown('network.md', 'network-container', renderNetwork);
+  await loadMarkdown('systems.md', 'systems-container', renderSystems);
+  document.getElementById('contact-container').innerHTML = renderContact();
+  
+  setTimeout(() => {
+    initFilters();
+    initFormValidation();
+    initNavbar();
+    initPDFExport();
+  }, 200);
+}
+
+// ========== 导航栏 ==========
+function initNavbar() {
+  const pages = document.querySelectorAll('article');
+  const navLinks = document.querySelectorAll("[data-nav-link]");
+  navLinks.forEach(link => {
+    link.addEventListener("click", function () {
+      const targetPage = this.dataset.navLink;
+      pages.forEach(page => {
+        if (targetPage === page.dataset.page) {
+          page.classList.add("active");
+          this.classList.add("active");
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          page.classList.remove("active");
+          const otherLink = Array.from(navLinks).find(l => l.dataset.navLink === page.dataset.page);
+          if (otherLink) otherLink.classList.remove("active");
+        }
+      });
+    });
+  });
+}
+
+// ========== 筛选 ==========
+function initFilters() {
+  const select = document.querySelector("[data-select]");
+  const selectItems = document.querySelectorAll("[data-select-item]");
+  const selectValue = document.querySelector("[data-select-value]");
+  const filterBtn = document.querySelectorAll("[data-filter-btn]");
+  const filterItems = document.querySelectorAll("[data-filter-item]");
+  if (!select || !selectItems.length) return;
+  
+  select.addEventListener("click", function () { elementToggleFunc(this); });
+  
+  const filterFunc = function (selectedValue) {
+    filterItems.forEach(item => {
+      const category = item.dataset.category;
+      if (selectedValue === "all" || selectedValue === category) {
+        item.classList.add("active");
+      } else {
+        item.classList.remove("active");
+      }
+    });
+  };
+  
+  selectItems.forEach(item => {
+    item.addEventListener("click", function () {
+      let value = this.dataset.filter;
+      selectValue.innerText = this.innerText;
+      elementToggleFunc(select);
+      filterFunc(value);
+    });
+  });
+  
+  let lastClickedBtn = filterBtn[0];
+  filterBtn.forEach(btn => {
+    btn.addEventListener("click", function () {
+      let selectedValue = this.dataset.filter;
+      selectValue.innerText = this.innerText;
+      filterFunc(selectedValue);
+      lastClickedBtn.classList.remove("active");
+      this.classList.add("active");
+      lastClickedBtn = this;
+    });
+  });
+}
+
+// ========== 表单验证 ==========
+function initFormValidation() {
+  const form = document.querySelector("[data-form]");
+  const formInputs = document.querySelectorAll("[data-form-input]");
+  const formBtn = document.querySelector("[data-form-btn]");
+  if (!form || !formInputs.length) return;
+  formInputs.forEach(input => {
+    input.addEventListener("input", function () {
+      if (form.checkValidity()) {
+        formBtn.removeAttribute("disabled");
+      } else {
+        formBtn.setAttribute("disabled", "");
+      }
+    });
+  });
+}
+
+// ========== PDF 导出（保留大标题，无侧边栏姓名职位，无超链接）==========
+function initPDFExport() {
+  const btn = document.getElementById('download-pdf');
+  if (!btn) return;
+  
+  btn.addEventListener('click', async function() {
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ 生成预览中...';
+    btn.disabled = true;
+    
+    try {
+      const location = getLocation();
+      
+      // 获取侧边栏原始 HTML 并生成只包含联系方式的侧边栏内容
+      const currentSidebar = document.querySelector('.sidebar');
+      const rawSidebarHTML = currentSidebar ? currentSidebar.innerHTML : '';
+      const sidebarContent = getPDFSidebarContent(rawSidebarHTML);
+      
+      // 渲染各部分内容并移除超链接
+      let aboutHtml = marked.parse(mdContents.about);
+      let pathHtml = marked.parse(mdContents.path);
+      let networkHtml = marked.parse(mdContents.network);
+      let systemsHtml = marked.parse(mdContents.systems);
+      
+      aboutHtml = removeLinks(aboutHtml);
+      pathHtml = removeLinks(pathHtml);
+      networkHtml = removeLinks(networkHtml);
+      systemsHtml = removeLinks(systemsHtml);
+      
+      // PDF 模板（包含大标题，无侧边栏姓名职位，无 Contact 章节）
+      const pdfPreview = `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="UTF-8">
+            <title>Kingsley Qi - Resume</title>
+            /
+            <style>
+              * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+              } 
+              body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                background: #ffffff;
+                color: #1c1c1e;
+                line-height: 1.5;
+                padding: 48px 32px;
+                max-width: 900px;
+                margin: 0 auto;
+              }
+              h1, h2, h3, h4 {
+                font-weight: 600;
+                letter-spacing: -0.02em;
+              }
+              .header {
+                text-align: center;
+                border-bottom: 1px solid #e5e5ea;
+                padding-bottom: 24px;
+                margin-bottom: 32px;
+              }
+              .header h1 {
+                font-size: 36px;
+                font-weight: 700;
+                color: #1c1c1e;
+                margin-bottom: 8px;
+              }
+              .header p {
+                font-size: 15px;
+                color: #8e8e93;
+                margin: 4px 0;
+              }
+              .sidebar-text {
+                margin-bottom: 32px;
+              }
+              .pdf-contacts {
+                margin-top: 8px;
+                padding-top: 12px;
+                border-top: 1px solid #e5e5ea;
+              }
+              .pdf-contacts p {
+                margin: 6px 0;
+                font-size: 14px;
+                color: #3a3a3c;
+              }
+              .section {
+                margin-bottom: 32px;
+              }
+              .section-title {
+                font-size: 22px;
+                font-weight: 600;
+                margin: 28px 0 16px;
+                color: #1c1c1e;
+                border-bottom: 1px solid #e5e5ea;
+                padding-bottom: 6px;
+              }
+              
+              }
+              .about-text p {
+                margin-bottom: 1em;
+              }
+              .about-text h1, .about-text h2, .about-text h3 {
+                font-size: 18px;
+                font-weight: 600;
+                margin: 24px 0 12px;
+                color: #1c1c1e;
+              }
+              .about-text strong {
+                font-weight: 600;
+              }
+              .about-text ul, .about-text ol {
+                margin: 12px 0 16px 28px;
+              }
+              .about-text li {
+                margin: 6px 0;
+              }
+              .title-wrapper {
+                margin: 20px 0 12px;
+              }
+              .title-wrapper h3 {
+                font-size: 18px;
+                font-weight: 600;
+              }
+              .timeline-list {
+                margin-left: 24px;
+                list-style: none;
+              }
+              .timeline-item {
+                margin-bottom: 20px;
+              }
+              .timeline-item h4 {
+                font-size: 16px;
+                font-weight: 600;
+                margin-bottom: 4px;
+              }
+              .timeline-item span {
+                font-size: 13px;
+                color: #8e8e93;
+                display: block;
+                margin-bottom: 6px;
+              }
+              .timeline-text {
+                font-size: 14px;
+                color: #3a3a3c;
+              }
+              .skills-list {
+                list-style: none;
+                padding: 0;
+              }
+              .skills-item {
+                margin: 14px 0;
+              }
+              .skills-item .title-wrapper {
+                margin: 0 0 4px;
+                display: flex;
+                justify-content: space-between;
+              }
+              .skill-progress-bg {
+                background: #e5e5ea;
+                height: 4px;
+                border-radius: 2px;
+                overflow: hidden;
+              }
+              .skill-progress-fill {
+                background: #1c1c1e;
+                height: 100%;
+                border-radius: 2px;
+              }
+              .project-list, .blog-posts-list {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                list-style: none;
+                padding: 0;
+              }
+              .project-item, .blog-post-item {
+                border: none;
+                border-bottom: 1px solid #e5e5ea;
+                padding-bottom: 20px;
+              }
+              .project-img img, .blog-banner-box img {
+                width: 100%;
+                height: auto;
+                max-height: 160px;
+                object-fit: cover;
+                border-radius: 8px;
+                margin-bottom: 12px;
+              }
+              .project-title, .blog-item-title {
+                font-size: 17px;
+                font-weight: 600;
+                margin: 0 0 8px;
+              }
+              .project-category, .blog-category {
+                font-size: 13px;
+                color: #8e8e93;
+                margin-bottom: 8px;
+              }
+              .blog-text {
+                font-size: 14px;
+                color: #3a3a3c;
+              }
+              .footer {
+                margin-top: 48px;
+                padding-top: 20px;
+                border-top: 1px solid #e5e5ea;
+                text-align: center;
+                font-size: 12px;
+                color: #8e8e93;
+              }
+              .pdf-actions {
+                position: fixed;
+                bottom: 24px;
+                right: 24px;
+                display: flex;
+                gap: 12px;
+                z-index: 1000;
+              }
+              .pdf-actions button {
+                padding: 8px 20px;
+                border: none;
+                border-radius: 30px;
+                font-size: 13px;
+                font-weight: 500;
+                cursor: pointer;
+                background: #f2f2f5;
+                color: #1c1c1e;
+                transition: 0.2s;
+              }
+              .pdf-actions button:hover {
+                background: #e5e5ea;
+              }
+              @media print {
+                .pdf-actions {
+                  display: none;
+                }
+                body {
+                  padding: 20px;
+                }
+              }
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <h1>KINGSLEY QI</h1>
+              <p>自动化工程师 | 架构师 | IT工程师</p>
+              <p>Automation Engineer | Architect | IT Engineer</p>
+            </div>
+            
+            ${sidebarContent}
+            
+            <div class="section">
+              <div class="section-title">About Me</div>
+              <div class="about-text">${aboutHtml}</div>
+            </div>
+            
+            <div class="section">
+              <div class="section-title">人生轨迹</div>
+              <div class="path-content">${pathHtml}</div>
+            </div>
+            
+            <div class="section">
+              <div class="section-title">Kingsley Network</div>
+              ${networkHtml}
+            </div>
+            
+            <div class="section">
+              <div class="section-title">Systems & Infrastructure</div>
+              ${systemsHtml}
+            </div>
+            
+            <div class="footer">
+              <p>📍 ${location} | i@kingsleyqi.com | +63 960864508*</p>
+              <p>Me.Kingsleyqi.com · Kingsleyqi.com · Kingsleyqi.cn</p>
+              <p>Kingsley Qi · 2026</p>
+            </div>
+            
+            <div class="pdf-actions">
+              <button class="btn-print" onclick="window.print();">📄 保存为 PDF</button>
+              <button class="btn-close" onclick="window.close();">✖ 关闭预览</button>
+            </div>
+          </body>
+        </html>
+      `;
+      
+      const previewWindow = window.open('', '_blank');
+      previewWindow.document.write(pdfPreview);
+      previewWindow.document.close();
+      
+      btn.innerHTML = '✓ 预览已打开';
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }, 2000);
+      
+    } catch (err) {
+      console.error('PDF 生成失败:', err);
+      btn.innerHTML = '✗ 失败';
+      btn.disabled = false;
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+      }, 1500);
+      alert('PDF 生成失败: ' + err.message);
+    }
+  });
+}
+
+loadAllContent();
