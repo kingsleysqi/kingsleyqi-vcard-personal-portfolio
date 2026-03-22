@@ -4,14 +4,38 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>KINGSLEY QI</title>
+  <title>KINGSLEY QI | 自动化工程师</title>
   <link rel="shortcut icon" href="./assets/images/favicon.svg" type="image/x-icon">
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
+  <!-- 使用国内 CDN 加速 marked.js -->
+  <script>
+    // 优先使用国内 CDN
+    const loadScript = (src, fallback) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onerror = () => {
+        if (fallback) {
+          const fallbackScript = document.createElement('script');
+          fallbackScript.src = fallback;
+          document.head.appendChild(fallbackScript);
+        }
+      };
+      document.head.appendChild(script);
+    };
+    
+    // 加载 marked.js - 多 CDN 备用
+    loadScript('https://cdn.bootcdn.net/ajax/libs/marked/4.3.0/marked.min.js', 
+               'https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js');
+    // 加载 html2pdf
+    loadScript('https://cdn.bootcdn.net/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js',
+               'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js');
+  </script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     .loading-tip {
       text-align: center;
@@ -20,223 +44,97 @@
       font-size: 16px;
     }
     
-    /* 侧边栏样式 */
-    .sidebar {
-      transition: all 0.3s ease;
-    }
-    .sidebar.active .sidebar-info_more {
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-    .sidebar-info_more {
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    .info_more-btn {
-      cursor: pointer;
-      background: transparent;
-      border: 1px solid rgba(255,219,112,0.3);
-      padding: 6px 14px;
-      border-radius: 20px;
-      color: #ffdb70;
-      font-size: 12px;
-      transition: all 0.3s ease;
-    }
-    .info_more-btn:hover {
-      background: rgba(255,219,112,0.1);
-    }
-    
-    /* 引言卡片样式 */
-    .hero-quote {
-      margin-bottom: 35px;
-    }
-    .quote-box {
-      background: rgba(255,219,112,0.05);
-      border: 1px solid rgba(255,219,112,0.2);
-      border-radius: 16px;
-      padding: 24px 20px;
-      text-align: center;
-    }
-    .quote-en {
-      font-size: 16px;
-      color: #ffdb70;
-      font-style: italic;
-      margin: 6px 0;
-    }
-    .quote-zh {
-      font-size: 14px;
-      color: #aaa;
-      font-style: italic;
-      margin: 6px 0;
-    }
-    
-    /* About 文本样式 */
-    .about-text {
-      color: #ccc;
-      font-size: 15px;
-      line-height: 1.8;
-    }
-    .about-text p {
-      margin-bottom: 16px;
-    }
-    .about-text strong {
-      color: #ffdb70;
-      font-weight: 600;
-    }
-    .about-text h1 {
-      font-size: 24px;
-      color: #ffdb70;
-      margin: 28px 0 16px 0;
-      padding-bottom: 8px;
-      border-bottom: 2px solid rgba(255,219,112,0.3);
-    }
-    .about-text h2 {
-      font-size: 20px;
-      color: #ffdb70;
-      margin: 24px 0 12px 0;
-    }
-    .about-text h3 {
-      font-size: 18px;
-      color: #ddd;
-      margin: 20px 0 10px 0;
-    }
-    .about-text ul, .about-text ol {
-      margin: 12px 0 16px 28px;
-    }
-    .about-text li {
-      margin: 8px 0;
-      line-height: 1.7;
-    }
-    
-    /* 修复标题行布局 */
-    .title-wrapper {
+    /* 侧边栏文字换行修复 */
+    .sidebar-info {
       display: flex !important;
-      align-items: center !important;
       gap: 12px !important;
-      margin-bottom: 20px !important;
+      align-items: flex-start !important;
+      flex-wrap: wrap !important;
     }
-    .title-wrapper .icon-box {
-      margin: 0 !important;
+    .avatar-box {
       flex-shrink: 0 !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
     }
-    .title-wrapper h3 {
-      margin: 0 !important;
-      line-height: 1 !important;
+    .info-content {
+      flex: 1 !important;
+      min-width: 0 !important;
     }
-    .timeline-list {
-      margin-left: 45px !important;
-    }
-    
-    /* PDF 按钮样式 */
-    .pdf-button-wrapper {
-      margin-top: 40px;
-      text-align: center;
-    }
-    .export-pdf-btn {
-      display: inline-flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      background: #2a2a2a !important;
-      border: 1px solid #ffdb70 !important;
-      border-radius: 30px !important;
-      color: #ffdb70 !important;
-      cursor: pointer !important;
-      font-size: 14px !important;
-      padding: 10px 24px !important;
-      transition: all 0.3s ease !important;
-    }
-    .export-pdf-btn:hover {
-      background: #ffdb70 !important;
-      color: #1a1a1a !important;
+    .info-content .title {
+      white-space: normal !important;
+      word-break: break-word !important;
+      line-height: 1.4 !important;
+      width: auto !important;
+      max-width: 100% !important;
+      font-size: 11px !important;
     }
     
-    /* 手机端样式 */
-    @media (max-width: 767px) {
+    /* 电脑端菜单栏优化 - 更小更紧凑 */
+    @media (min-width: 768px) {
       .navbar {
-        position: fixed !important;
-        bottom: 0 !important;
-        top: auto !important;
-        left: 0 !important;
-        right: 0 !important;
-        width: 100% !important;
-        background: rgba(20, 20, 25, 0.95) !important;
-        backdrop-filter: blur(10px) !important;
-        border-radius: 16px 16px 0 0 !important;
-        padding: 8px 12px !important;
-        z-index: 1000 !important;
-        border-top: 1px solid rgba(255,219,112,0.2) !important;
+        top: 12px !important;
+        padding: 6px 20px !important;
+        min-width: auto !important;
+        background: rgba(25, 25, 30, 0.92) !important;
       }
       .navbar-list {
-        display: flex !important;
+        gap: 8px !important;
+      }
+      .navbar-link {
+        font-size: 13px !important;
+        padding: 6px 14px !important;
+      }
+      .main-content {
+        margin-top: 80px !important;
+      }
+      .sidebar {
+        margin-top: 80px !important;
+      }
+    }
+    
+    /* 手机端菜单栏优化 */
+    @media (max-width: 767px) {
+      .navbar {
+        padding: 6px 8px !important;
+      }
+      .navbar-list {
         justify-content: space-around !important;
         gap: 0 !important;
       }
       .navbar-link {
-        font-size: 12px !important;
-        padding: 6px 8px !important;
-      }
-      .main-content {
-        margin-bottom: 70px !important;
-      }
-      .sidebar {
-        margin-top: 15px !important;
+        font-size: 11px !important;
+        padding: 6px 4px !important;
       }
     }
     
-    /* 电脑端样式 - 半透明毛玻璃菜单，不遮挡内容 */
-    @media (min-width: 768px) {
-      .navbar {
-        position: fixed !important;
-        top: 20px !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        width: auto !important;
-        background: rgba(25, 25, 30, 0.85) !important;
-        backdrop-filter: blur(12px) !important;
-        border-radius: 50px !important;
-        padding: 6px 20px !important;
-        z-index: 1000 !important;
-        border: 1px solid rgba(255,219,112,0.25) !important;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
-      }
-      .navbar-list {
-        display: flex !important;
-        gap: 20px !important;
-      }
-      .navbar-link {
-        font-size: 13px !important;
-        padding: 8px 16px !important;
-        border-radius: 30px !important;
-        transition: all 0.2s ease !important;
-      }
-      .navbar-link.active {
-        background: rgba(255,219,112,0.2) !important;
-      }
-      .navbar-link:hover {
-        background: rgba(255,219,112,0.1) !important;
-      }
-      .main-content {
-        margin-top: 100px !important;
-      }
-      .sidebar {
-        margin-top: 100px !important;
-      }
+    .quote-box {
+      background: rgba(255,219,112,0.05);
+      border: 1px solid rgba(255,219,112,0.2);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
     }
-    
-    .icon-box ion-icon {
-      font-size: 18px;
+    .quote-en {
+      font-size: 14px;
       color: #ffdb70;
+      font-style: italic;
     }
-    .social-link ion-icon {
-      font-size: 18px;
-      color: #888;
+    .quote-zh {
+      font-size: 12px;
+      color: #aaa;
+      font-style: italic;
     }
-    .social-link:hover ion-icon {
+    .export-pdf-btn {
+      background: #2b2b2c;
+      border: 1px solid #ffdb70;
+      border-radius: 30px;
       color: #ffdb70;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 8px 20px;
+      transition: all 0.3s ease;
+    }
+    .export-pdf-btn:hover {
+      background: #ffdb70;
+      color: #1a1a1a;
     }
   </style>
 </head>
@@ -245,12 +143,12 @@
     <aside class="sidebar" data-sidebar>
       <div class="sidebar-info">
         <figure class="avatar-box">
-          <img src="./assets/images/01.png" alt="Kingsley Qi" width="80">
+          <img src="./assets/images/favicon-96x96.png" alt="Kingsley Qi" width="80">
         </figure>
         <div class="info-content">
           <h1 class="name">Kingsley Qi</h1>
-          <p class="title">工业自动化 × IT</p>
-          <p class="title">Industrial Automation × IT</p>
+          <p class="title">自动化工程师 | 架构师 | IT工程师</p>
+          <p class="title">Industrial Automation × IT Infrastructure<br>System Solutions</p>
         </div>
         <button class="info_more-btn" data-sidebar-btn>
           <span>展开联系方式</span>
@@ -292,7 +190,7 @@
         </ul>
         <div class="separator"></div>
         <ul class="social-list">
-          <li class="social-item"><a href="./assets/images/wechat-kq.png" class="social-link"><ion-icon src="./assets/images/wechat.svg"></ion-icon></a></li>
+          <li class="social-item"><a href="./assets/images/wechat-kq.png" class="social-link"><ion-icon src="./assets/images/wechat-kq.png"></ion-icon></a></li>
           <li class="social-item"><a href="https://www.facebook.com/share/17jWndEeLo/" class="social-link"><ion-icon name="logo-facebook"></ion-icon></a></li>
           <li class="social-item"><a href="https://x.com/QiKingsley" class="social-link"><ion-icon name="logo-twitter"></ion-icon></a></li>
           <li class="social-item"><a href="https://www.instagram.com/kingsley_qi" class="social-link"><ion-icon name="logo-instagram"></ion-icon></a></li>
@@ -331,15 +229,33 @@
           e.stopPropagation();
           sidebar.classList.toggle("active");
           const span = this.querySelector('span');
-          if (sidebar.classList.contains('active')) {
-            span.textContent = '收起联系方式';
-          } else {
-            span.textContent = '展开联系方式';
-          }
+          span.textContent = sidebar.classList.contains('active') ? '收起联系方式' : '展开联系方式';
         });
       }
     })();
+    
+    // 等待 marked 加载完成
+    const waitForMarked = setInterval(() => {
+      if (typeof marked !== 'undefined') {
+        clearInterval(waitForMarked);
+        console.log('marked.js 加载完成');
+        // 加载 script.js
+        const script = document.createElement('script');
+        script.src = './assets/js/script.js';
+        document.body.appendChild(script);
+      }
+    }, 100);
+    
+    // 5秒超时，如果 marked 还没加载，显示错误提示
+    setTimeout(() => {
+      if (typeof marked === 'undefined') {
+        clearInterval(waitForMarked);
+        document.querySelectorAll('.loading-tip').forEach(el => {
+          el.innerHTML = '⚠️ 资源加载超时，请刷新页面重试<br><small>如持续失败，请检查网络连接</small>';
+          el.style.color = '#ff6b6b';
+        });
+      }
+    }, 8000);
   </script>
-  <script src="./assets/js/script.js"></script>
 </body>
 </html>
