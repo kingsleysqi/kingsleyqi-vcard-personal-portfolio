@@ -13,25 +13,29 @@ Reject mediocrity, live brilliantly.
 15+ years of experience across Industrial Automation, Industrial IoT, and Office Automation, currently based in Cavite, Philippines, focusing on system-level transformation and efficiency scaling for manufacturing organizations.  
 Engineering-driven, system-oriented, and outcome-focused, delivering end-to-end optimization from foundational infrastructure to business process architecture.
 
-**核心能力：**  
+## 核心能力
+
 - 以业务结果为导向的全链路交付能力：从问题定义、系统建模到架构设计与工程落地，构建可持续演进的解决方案体系  
 - 企业级基础设施与高可用网络体系设计，支撑复杂制造环境下的稳定运行与业务连续性  
 - 非标自动化系统的系统级设计与产线重构能力，从单点优化升级为整体效率提升与产能释放  
 - 办公自动化（OA）系统的体系化建设：将流程、规则与组织协同抽象为可执行系统，实现标准化、自动化与可扩展  
 
-**Core Competencies:**  
+## Core Competencies
+
 - Outcome-driven, end-to-end delivery: from problem definition and system modeling to architecture design and execution, building scalable and evolvable solutions  
 - Enterprise infrastructure and high-availability network architecture to ensure stability and business continuity in complex manufacturing environments  
 - System-level design of non-standard automation, transforming isolated improvements into holistic efficiency and throughput gains  
 - Office Automation (OA) as a system: abstracting workflows, rules, and collaboration into executable, scalable architectures  
 
-**为制造企业、海外工厂提供：**  
+## 为制造企业、海外工厂提供
+
 - 制造业数字化整体解决方案（从网络、计算到OA与工业互联网的统一规划与落地）  
 - 面向关键业务的高可用架构设计，降低系统风险与不可控停机成本  
 - 产线级自动化重构与效率优化，解决瓶颈、提升节拍并优化整体成本结构  
 - OA系统从“工具”升级为“系统”，实现流程驱动组织、自动化驱动效率  
 
-**Services for Manufacturing Enterprises & Overseas Factories in Southeast Asia:**  
+## Services for Manufacturing Enterprises & Overseas Factories in Southeast Asia
+
 - End-to-end digital transformation solutions for manufacturing (integrated planning across Network, Compute, OA, and Industrial Internet)  
 - High-availability architecture design for mission-critical operations, minimizing risk and downtime cost  
 - Production line re-engineering and automation optimization to unlock throughput and improve cost structure  
