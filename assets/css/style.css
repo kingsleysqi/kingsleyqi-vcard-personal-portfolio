@@ -1899,7 +1899,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
   .navbar-link {
     font-size: 11px !important;
-    padding: 6px 4px !important;
+    padding: 20px 4px !important;
     white-space: nowrap !important;
   }
 }
