@@ -1,335 +1,161 @@
-'use strict';
+<!DOCTYPE html>
+<html lang="en">
 
-// 导航栏切换
-function initNavbar() {
-  const pages = document.querySelectorAll('article');
-  const navLinks = document.querySelectorAll("[data-nav-link]");
-  navLinks.forEach(link => {
-    link.addEventListener("click", function () {
-      const targetPage = this.dataset.navLink;
-      pages.forEach(page => {
-        if (targetPage === page.dataset.page) {
-          page.classList.add("active");
-          this.classList.add("active");
-          window.scrollTo(0, 0);
-        } else {
-          page.classList.remove("active");
-          const otherLink = Array.from(navLinks).find(l => l.dataset.navLink === page.dataset.page);
-          if (otherLink) otherLink.classList.remove("active");
-        }
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>KINGSLEY QI | 自动化 & IT工程师</title>
+
+  <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    .loading-tip {
+      text-align: center;
+      padding: 50px;
+      color: #ffdb70;
+      font-size: 16px;
+    }
+    .error-tip {
+      color: #ff6b6b;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <aside class="sidebar" data-sidebar>
+      <div class="sidebar-info">
+        <figure class="avatar-box">
+          <img src="./assets/images/my-avatar.png" alt="Kingsley Qi" width="80">
+        </figure>
+        <div class="info-content">
+          <h1 class="name">Kingsley Qi</h1>
+          <p class="title">工业自动化 × IT基础设施<br>系统解决方案</p>
+        </div>
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
+      </div>
+
+      <div class="sidebar-info_more">
+        <div class="separator"></div>
+        <ul class="contacts-list">
+          <li class="contact-item">
+            <div class="icon-box"><ion-icon name="mail-outline"></ion-icon></div>
+            <div class="contact-info"><p class="contact-title">Email</p><a href="mailto:i@kingsleyqi.com" class="contact-link">i@kingsleyqi.com</a></div>
+          </li>
+          <li class="contact-item">
+            <div class="icon-box"><ion-icon name="phone-portrait-outline"></ion-icon></div>
+            <div class="contact-info"><p class="contact-title">Phone</p><a href="tel:+63960864508" class="contact-link">+63 960864508*</a></div>
+          </li>
+          <li class="contact-item">
+            <div class="icon-box"><ion-icon name="calendar-outline"></ion-icon></div>
+            <div class="contact-info"><p class="contact-title">Birthday</p><time datetime="1992-08-29">Aug 29, 1992</time></div>
+          </li>
+          <li class="contact-item">
+            <div class="icon-box"><ion-icon name="location-outline"></ion-icon></div>
+            <div class="contact-info"><p class="contact-title">Location</p><address>Batangas, Philippines</address></div>
+          </li>
+        </ul>
+        <div class="separator"></div>
+        <ul class="social-list">
+          <li class="social-item"><a href="./assets/images/wechat-kq.png" class="social-link"><ion-icon src="./assets/images/wechat-kq.png"></ion-icon></a></li>
+          <li class="social-item"><a href="https://www.facebook.com/share/17jWndEeLo/" class="social-link"><ion-icon name="logo-facebook"></ion-icon></a></li>
+          <li class="social-item"><a href="https://x.com/QiKingsley" class="social-link"><ion-icon name="logo-twitter"></ion-icon></a></li>
+          <li class="social-item"><a href="https://www.instagram.com/kingsley_qi" class="social-link"><ion-icon name="logo-instagram"></ion-icon></a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item"><button class="navbar-link active" data-nav-link="about">About</button></li>
+          <li class="navbar-item"><button class="navbar-link" data-nav-link="path">Path</button></li>
+          <li class="navbar-item"><button class="navbar-link" data-nav-link="network">Network</button></li>
+          <li class="navbar-item"><button class="navbar-link" data-nav-link="systems">Systems</button></li>
+          <li class="navbar-item"><button class="navbar-link" data-nav-link="contact">Contact</button></li>
+        </ul>
+      </nav>
+
+      <article class="about active" data-page="about" id="about-container"><div class="loading-tip">加载中...</div></article>
+      <article class="resume" data-page="path" id="path-container"><div class="loading-tip">加载中...</div></article>
+      <article class="portfolio" data-page="network" id="network-container"><div class="loading-tip">加载中...</div></article>
+      <article class="blog" data-page="systems" id="systems-container"><div class="loading-tip">加载中...</div></article>
+      <article class="contact" data-page="contact" id="contact-container"><div class="loading-tip">加载中...</div></article>
+    </div>
+  </main>
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    // 侧边栏折叠（增强版）
+    function initSidebar() {
+      const sidebar = document.querySelector("[data-sidebar]");
+      const sidebarBtn = document.querySelector("[data-sidebar-btn]");
+      if (sidebarBtn && sidebar) {
+        const newBtn = sidebarBtn.cloneNode(true);
+        sidebarBtn.parentNode.replaceChild(newBtn, sidebarBtn);
+        newBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          sidebar.classList.toggle("active");
+          const span = this.querySelector('span');
+          if (span) {
+            span.textContent = sidebar.classList.contains('active') ? 'Hide Contacts' : 'Show Contacts';
+          }
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSidebar);
+    } else {
+      initSidebar();
+    }
+    setTimeout(initSidebar, 500);
+
+    // 动态加载 marked 和 html2pdf，优先本地，回退 CDN
+    function loadScript(src, fallbackSrc) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = () => {
+          if (fallbackSrc) {
+            const fallbackScript = document.createElement('script');
+            fallbackScript.src = fallbackSrc;
+            fallbackScript.onload = resolve;
+            fallbackScript.onerror = reject;
+            document.head.appendChild(fallbackScript);
+          } else {
+            reject();
+          }
+        };
+        document.head.appendChild(script);
+      });
+    }
+
+    Promise.all([
+      loadScript('./assets/js/marked.min.js', 'https://cdn.jsdelivr.net/npm/marked/marked.min.js'),
+      loadScript('./assets/js/html2pdf.bundle.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js')
+    ]).then(() => {
+      const script = document.createElement('script');
+      script.src = './assets/js/script.js';
+      document.body.appendChild(script);
+    }).catch(err => {
+      console.error('库加载失败', err);
+      document.querySelectorAll('.loading-tip').forEach(el => {
+        el.innerHTML = '⚠️ 关键资源加载失败，请刷新页面重试<br><small>如持续失败，请检查网络连接</small>';
+        el.style.color = '#ff6b6b';
       });
     });
-  });
-}
-
-// 表单验证
-function initFormValidation() {
-  const form = document.querySelector("[data-form]");
-  const formInputs = document.querySelectorAll("[data-form-input]");
-  const formBtn = document.querySelector("[data-form-btn]");
-  if (!form || !formInputs.length) return;
-  formInputs.forEach(input => {
-    input.addEventListener("input", function () {
-      if (form.checkValidity()) {
-        formBtn.removeAttribute("disabled");
-      } else {
-        formBtn.setAttribute("disabled", "");
-      }
-    });
-  });
-}
-
-// 带超时的 fetch
-async function fetchWithTimeout(url, timeout = 5000) {
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
-  try {
-    const response = await fetch(url, { signal: controller.signal });
-    clearTimeout(id);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return response;
-  } catch (err) {
-    clearTimeout(id);
-    throw err;
-  }
-}
-
-// 直接加载 Markdown 并用 marked 渲染
-async function loadMarkdown(file, containerId, customRender = null, retries = 2) {
-  const container = document.getElementById(containerId);
-  for (let i = 0; i <= retries; i++) {
-    try {
-      const response = await fetchWithTimeout(`content/${file}`, 5000);
-      const text = await response.text();
-      // 直接使用 marked 解析整个文件
-      let html = marked.parse(text);
-      // 如果提供了自定义渲染函数，则调用
-      if (customRender) {
-        html = customRender(html, text);
-      }
-      container.innerHTML = html;
-      return { html, text };
-    } catch (err) {
-      console.warn(`加载 ${file} 失败 (尝试 ${i+1}/${retries+1}):`, err);
-      if (i === retries) {
-        container.innerHTML = `<p style="color:#ff6b6b; padding:40px;">⚠️ 内容加载失败: ${file}<br>请检查网络或刷新页面重试</p>`;
-        return null;
-      }
-      await new Promise(r => setTimeout(r, 1000));
-    }
-  }
-}
-
-// 存储原始 MD 内容
-let mdContents = { about: '', path: '', network: '', systems: '' };
-
-// About 页面自定义渲染（添加引言卡片）
-function renderAbout(html, rawMarkdown) {
-  // 提取引言部分
-  const lines = rawMarkdown.split('\n');
-  let enQuotes = [], zhQuotes = [];
-  let inQuote = false;
-
-  for (let line of lines) {
-    if (line.includes('## 引言')) { inQuote = true; continue; }
-    if (line.includes('## 关于我')) { inQuote = false; break; }
-    if (inQuote && line.trim() && !line.startsWith('##')) {
-      const l = line.trim();
-      if (l.startsWith('Exit') || l.startsWith('Reject')) enQuotes.push(l);
-      else if (l.startsWith('走出') || l.startsWith('拒绝')) zhQuotes.push(l);
-    }
-  }
-
-  let quoteHtml = '';
-  if (enQuotes.length || zhQuotes.length) {
-    quoteHtml = `
-      <div class="hero-quote">
-        <div class="quote-box">
-          ${enQuotes.map(q => `<p class="quote-en">${q}</p>`).join('')}
-          ${zhQuotes.map(q => `<p class="quote-zh">${q}</p>`).join('')}
-        </div>
-      </div>
-    `;
-  }
-
-  // 提取关于我部分
-  let aboutMarkdown = '';
-  let inAbout = false;
-  for (let line of lines) {
-    if (line.includes('## 关于我')) { inAbout = true; continue; }
-    if (line.startsWith('##') && inAbout) break;
-    if (inAbout && line.trim()) aboutMarkdown += line + '\n';
-  }
-  if (!aboutMarkdown.trim()) aboutMarkdown = rawMarkdown;
-  const aboutHtml = marked.parse(aboutMarkdown);
-  mdContents.about = rawMarkdown;
-
-  return `
-    ${quoteHtml}
-    <header><h2 class="h2 article-title">About Me</h2></header>
-    <div class="about-text">${aboutHtml}</div>
-    <div class="pdf-button-wrapper">
-      <button class="export-pdf-btn" id="download-pdf">
-        <ion-icon name="download-outline"></ion-icon>
-        <span>导出 PDF</span>
-      </button>
-    </div>
-  `;
-}
-
-// Path 页面：直接渲染 Markdown，但包裹在官方卡片结构中
-function renderPath(html, rawMarkdown) {
-  mdContents.path = rawMarkdown;
-  // 直接返回 Markdown 渲染的 HTML，但保留标题结构
-  return `
-    <header><h2 class="h2 article-title">人生轨迹</h2></header>
-    <div class="path-content">${html}</div>
-  `;
-}
-
-// Network 页面：直接渲染 Markdown
-function renderNetwork(html, rawMarkdown) {
-  mdContents.network = rawMarkdown;
-  return `
-    <header><h2 class="h2 article-title">Kingsley Network</h2></header>
-    <div class="network-content">${html}</div>
-  `;
-}
-
-// Systems 页面：直接渲染 Markdown
-function renderSystems(html, rawMarkdown) {
-  mdContents.systems = rawMarkdown;
-  return `
-    <header><h2 class="h2 article-title">Systems & Infrastructure</h2></header>
-    <div class="systems-content">${html}</div>
-  `;
-}
-
-// Contact 页面：固定 HTML
-function renderContact() {
-  return `
-    <header><h2 class="h2 article-title">Contact</h2></header>
-    <div class="quote-box">
-      <p><strong>Email:</strong> i@kingsleyqi.com</p>
-      <p><strong>Phone:</strong> +63 960864508*</p>
-      <p><strong>Location:</strong> Batangas, Philippines</p>
-    </div>
-    <section class="contact-form">
-      <h3 class="h3 form-title">Contact Form</h3>
-      <form action="#" class="form" data-form>
-        <div class="input-wrapper">
-          <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
-          <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
-        </div>
-        <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
-        <button class="form-btn" type="submit" disabled data-form-btn>
-          <ion-icon name="paper-plane"></ion-icon>
-          <span>Send Message</span>
-        </button>
-      </form>
-    </section>
-  `;
-}
-
-// PDF 导出
-function initPDFExport() {
-  const btn = document.getElementById('download-pdf');
-  if (!btn) return;
-
-  btn.addEventListener('click', async function() {
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '⏳ 生成预览中...';
-    btn.disabled = true;
-
-    try {
-      const location = 'Batangas, Philippines';
-      const sidebar = document.querySelector('.sidebar');
-      let sidebarContent = '';
-      if (sidebar) {
-        const clone = sidebar.cloneNode(true);
-        const moreBtn = clone.querySelector('.info_more-btn');
-        if (moreBtn) moreBtn.remove();
-        const socials = clone.querySelectorAll('.social-item');
-        socials.forEach(s => s.remove());
-        const contacts = clone.querySelectorAll('.contact-item');
-        let contactsHTML = '';
-        contacts.forEach(c => {
-          const label = c.querySelector('.contact-title')?.innerText || '';
-          const value = c.querySelector('.contact-link, time, address')?.innerText || '';
-          if (label && value) contactsHTML += `<p><strong>${label}:</strong> ${value}</p>`;
-        });
-        sidebarContent = `<div class="sidebar-text"><div class="pdf-contacts">${contactsHTML}</div></div>`;
-      }
-
-      // 直接使用 marked 解析所有内容
-      let aboutHtml = marked.parse(mdContents.about);
-      let pathHtml = marked.parse(mdContents.path);
-      let networkHtml = marked.parse(mdContents.network);
-      let systemsHtml = marked.parse(mdContents.systems);
-
-      // 清理图片和链接
-      const clean = (html) => {
-        html = html.replace(/<img[^>]*>/g, '');
-        html = html.replace(/<a[^>]*>([^<]*)<\/a>/g, '$1');
-        html = html.replace(/\.\/assets\/images\/[^\s]+\.(jpg|png|svg)/g, '');
-        return html;
-      };
-      aboutHtml = clean(aboutHtml);
-      pathHtml = clean(pathHtml);
-      networkHtml = clean(networkHtml);
-      systemsHtml = clean(systemsHtml);
-
-      const pdfPreview = `
-        <!DOCTYPE html>
-        <html>
-          <head><meta charset="UTF-8"><title>Kingsley Qi - Resume</title>
-          <style>
-            * { margin:0; padding:0; box-sizing:border-box; }
-            body {
-              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-              background: #fff; color: #1c1c1e; line-height:1.5; padding:48px 32px; max-width:900px; margin:0 auto;
-            }
-            .header { text-align:center; border-bottom:1px solid #e5e5ea; padding-bottom:24px; margin-bottom:32px; }
-            .header h1 { font-size:36px; font-weight:700; color:#1c1c1e; margin-bottom:8px; }
-            .header p { font-size:15px; color:#8e8e93; margin:4px 0; }
-            .sidebar-text { margin-bottom:32px; }
-            .pdf-contacts { margin-top:8px; padding-top:12px; border-top:1px solid #e5e5ea; }
-            .pdf-contacts p { margin:6px 0; font-size:14px; color:#3a3a3c; }
-            .section { margin-bottom:32px; }
-            .section-title { font-size:22px; font-weight:600; margin:28px 0 16px; color:#1c1c1e; border-bottom:1px solid #e5e5ea; padding-bottom:6px; }
-            .about-text p { margin-bottom:1em; }
-            .about-text h1, .about-text h2, .about-text h3 { font-size:18px; font-weight:600; margin:24px 0 12px; color:#1c1c1e; }
-            .about-text strong { font-weight:600; }
-            .about-text ul, .about-text ol { margin:12px 0 16px 28px; }
-            .footer { margin-top:48px; padding-top:20px; border-top:1px solid #e5e5ea; text-align:center; font-size:12px; color:#8e8e93; }
-            .pdf-actions { position:fixed; bottom:24px; right:24px; display:flex; gap:12px; z-index:1000; }
-            .pdf-actions button { padding:8px 20px; border:none; border-radius:30px; font-size:13px; font-weight:500; cursor:pointer; background:#f2f2f5; color:#1c1c1e; transition:0.2s; }
-            .pdf-actions button:hover { background:#e5e5ea; }
-            .quote-box { background: rgba(255,219,112,0.05); border: 1px solid rgba(255,219,112,0.2); border-radius: 16px; padding: 20px; text-align: center; margin: 20px 0; }
-            .quote-box p { color: #3a3a3c; margin: 8px 0; }
-            .quote-box strong { color: #ffdb70; }
-            @media print { .pdf-actions { display:none; } body { padding:20px; } }
-          </style>
-          </head>
-          <body>
-            <div class="header"><h1>KINGSLEY QI</h1><p>工业自动化 × IT基础设施 × 系统解决方案</p><p>Industrial Automation × IT Infrastructure × System Solutions</p></div>
-            ${sidebarContent}
-            <div class="section"><div class="section-title">About Me</div><div class="about-text">${aboutHtml}</div></div>
-            <div class="section"><div class="section-title">人生轨迹</div>${pathHtml}</div>
-            <div class="section"><div class="section-title">Kingsley Network</div>${networkHtml}</div>
-            <div class="section"><div class="section-title">Systems & Infrastructure</div>${systemsHtml}</div>
-            <div class="footer"><p>📍 ${location} | i@kingsleyqi.com | +63 960864508*</p><p>Me.Kingsleyqi.com · Kingsleyqi.com · Kingsleyqi.cn</p><p>Kingsley Qi · 2026</p></div>
-            <div class="pdf-actions"><button class="btn-print" onclick="window.print();">📄 保存为 PDF</button><button class="btn-close" onclick="window.close();">✖ 关闭预览</button></div>
-          </body>
-        </html>
-      `;
-
-      const w = window.open('', '_blank');
-      w.document.write(pdfPreview);
-      w.document.close();
-      btn.innerHTML = '✓ 预览已打开';
-      setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 2000);
-    } catch (err) {
-      console.error(err);
-      btn.innerHTML = '✗ 失败';
-      btn.disabled = false;
-      setTimeout(() => { btn.innerHTML = originalText; }, 1500);
-      alert('PDF生成失败: ' + err.message);
-    }
-  });
-}
-
-// Network 筛选
-function initFilters() {
-  // 简化版，暂时不实现筛选，确保页面先显示
-  console.log('Network 筛选功能待实现');
-}
-
-// 加载所有内容
-async function loadAllContent() {
-  // 先清空加载提示
-  const containers = ['about-container', 'path-container', 'network-container', 'systems-container', 'contact-container'];
-  containers.forEach(id => {
-    const el = document.getElementById(id);
-    if (el && (!el.innerHTML || el.innerHTML.includes('加载失败'))) {
-      el.innerHTML = '<div class="loading-tip">加载中...</div>';
-    }
-  });
-
-  // 加载所有页面
-  await loadMarkdown('about.md', 'about-container', renderAbout);
-  await loadMarkdown('path.md', 'path-container', renderPath);
-  await loadMarkdown('network.md', 'network-container', renderNetwork);
-  await loadMarkdown('systems.md', 'systems-container', renderSystems);
-  document.getElementById('contact-container').innerHTML = renderContact();
-
-  // 初始化交互
-  setTimeout(() => {
-    initNavbar();
-    initFormValidation();
-    initPDFExport();
-  }, 100);
-}
-
-// 启动
-loadAllContent();
+  </script>
+</body>
+</html>
