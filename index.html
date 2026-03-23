@@ -28,7 +28,6 @@
 
 <body>
   <main>
-    <!-- SIDEBAR（官方原版结构，内容已替换为您的个人信息） -->
     <aside class="sidebar" data-sidebar>
       <div class="sidebar-info">
         <figure class="avatar-box">
@@ -97,12 +96,11 @@
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
   <script>
-    // 侧边栏折叠（增强版，确保事件绑定成功）
+    // 侧边栏折叠（增强版）
     function initSidebar() {
       const sidebar = document.querySelector("[data-sidebar]");
       const sidebarBtn = document.querySelector("[data-sidebar-btn]");
       if (sidebarBtn && sidebar) {
-        // 移除可能存在的旧事件，避免重复绑定
         const newBtn = sidebarBtn.cloneNode(true);
         sidebarBtn.parentNode.replaceChild(newBtn, sidebarBtn);
         newBtn.addEventListener("click", function (e) {
@@ -121,7 +119,6 @@
     } else {
       initSidebar();
     }
-    // 延迟重试，以防动态内容干扰
     setTimeout(initSidebar, 500);
 
     // 动态加载 marked 和 html2pdf，优先本地，回退 CDN
@@ -145,12 +142,10 @@
       });
     }
 
-    // 首先尝试本地库，如果失败再尝试 CDN
     Promise.all([
       loadScript('./assets/js/marked.min.js', 'https://cdn.jsdelivr.net/npm/marked/marked.min.js'),
       loadScript('./assets/js/html2pdf.bundle.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js')
     ]).then(() => {
-      // 库加载成功，再加载主脚本
       const script = document.createElement('script');
       script.src = './assets/js/script.js';
       document.body.appendChild(script);
