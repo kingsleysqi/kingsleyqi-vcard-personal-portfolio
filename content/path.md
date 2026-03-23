@@ -14,7 +14,7 @@
   在项目实施过程中，通过设备调优与流程重构，持续提升产线稳定性与产能表现，推动项目由“可运行”向“高效稳定运行”转化。  
   Led end-to-end delivery of automation projects from initial equipment introduction to mass production. Improved production stability and throughput through equipment optimization and process restructuring, ensuring a transition from functional deployment to high-efficiency operations.
 
-- 自动化设备工程师 | 2018年7月 — 2024年3月 | 歌尔声学股份有限公司 
+- 自动化设备工程师 | 2018年7月 — 2024年3月 | 歌尔声学股份有限公司  
   Equipment Maintenance & Commissioning Engineer | Jul 2018 — Mar 2024 | Goertek Inc. (Weifang)  
   负责自动化产线核心设备的稳定运行与持续优化，涵盖自动上下料系统、点胶设备、筛料系统、电机驱动烘干设备及气动压合模组等。  
   通过系统化故障分析与预防性维护策略，显著降低设备故障率与停机时间，并提升产线整体运行效率与稳定性。  
@@ -23,16 +23,7 @@
 ## 专业技能
 
 - 工业自动化 & 智能产线: 90%  
-  Industrial Automation & Smart Production Lines
-
 - 非标自动化机械设备调试维护: 85%  
-  Non-standard Automation Equipment Commissioning & Maintenance
-
 - 工业互联网 & 网络工程 & IT基础设施: 85%  
-  Industrial Internet, Network Engineering & IT Infrastructure
-
 - 控制系统 & PLC基础: 75%  
-  Control Systems & PLC Fundamentals
-
-- 气动点胶设备调试与维护: 90%  
-  Pneumatic Dispensing Equipment Commissioning & Maintenance
+- 气动点胶设备调试与维护: 90%
