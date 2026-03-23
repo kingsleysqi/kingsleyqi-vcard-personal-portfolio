@@ -2015,3 +2015,87 @@ textarea.form-input::-webkit-resizer { display: none; }
   margin: 0.5rem 0;
   line-height: 1.6;
 }
+
+/* ========== 引言卡片美化 ========== */
+.hero-quote {
+  margin-bottom: 30px;
+}
+
+.quote-box {
+  background: rgba(255,219,112,0.08) !important;  /* 更明显的背景 */
+  border: 1px solid rgba(255,219,112,0.4) !important;  /* 更明显的边框 */
+  border-radius: 20px !important;
+  padding: 28px 20px !important;
+  text-align: center !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.quote-en {
+  font-size: 16px !important;
+  color: #ffdb70 !important;
+  font-style: italic !important;
+  margin: 8px 0 !important;
+  font-weight: 500;
+}
+
+.quote-zh {
+  font-size: 14px !important;
+  color: #ccc !important;
+  font-style: italic !important;
+  margin: 6px 0 !important;
+}
+
+/* ========== About 页面内容美化 ========== */
+.about-text {
+  font-size: 15px !important;
+  line-height: 1.8 !important;
+  color: #e0e0e0 !important;
+}
+
+.about-text p {
+  margin-bottom: 1.2em !important;
+}
+
+/* 一级标题（## 核心能力） */
+.about-text h2 {
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  color: #ffdb70 !important;
+  margin: 1.8rem 0 0.8rem 0 !important;
+  padding-bottom: 0.5rem !important;
+  border-bottom: 2px solid rgba(255,219,112,0.4) !important;
+}
+
+/* 二级标题 */
+.about-text h3 {
+  font-size: 1.3rem !important;
+  font-weight: 500 !important;
+  color: #ffdb70 !important;
+  margin: 1.5rem 0 0.6rem 0 !important;
+}
+
+/* 加粗文字 */
+.about-text strong {
+  color: #ffdb70 !important;
+  font-weight: 600 !important;
+}
+
+/* 列表样式 */
+.about-text ul, .about-text ol {
+  margin: 0.8rem 0 1.2rem 1.8rem !important;
+  padding-left: 0.5rem !important;
+}
+
+.about-text li {
+  margin: 0.5rem 0 !important;
+  line-height: 1.7 !important;
+}
+
+/* 分隔线 */
+.about-text hr {
+  margin: 1.5rem 0;
+  border: none;
+  height: 1px;
+  background: rgba(255,219,112,0.2);
+}
+
