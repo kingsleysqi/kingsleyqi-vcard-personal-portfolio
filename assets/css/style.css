@@ -2,6 +2,7 @@
   #style.css
 \*-----------------------------------*/
 
+
 /**
  * copyright 2022 @codewithsadee
  */
@@ -1880,14 +1881,12 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 }
 
-/* ========== 以下为追加样式 ========== */
-
-/* 头像下移 */
+/* ========== 头像下移 ========== */
 .sidebar-info {
   margin-top: 8px;
 }
 
-/* 手机端菜单禁止滚动 */
+/* ========== 手机端菜单禁止滚动 ========== */
 @media (max-width: 767px) {
   .navbar {
     overflow-x: hidden !important;
@@ -1905,7 +1904,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 }
 
-/* PDF 按钮样式优化 */
+/* ========== PDF 按钮样式优化 ========== */
 .export-pdf-btn {
   display: inline-flex !important;
   align-items: center !important;
@@ -1939,7 +1938,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 }
 
-/* 引言卡片和联系方式卡片样式 */
+/* ========== 引言卡片和联系方式卡片样式 ========== */
 .quote-box {
   background: rgba(255,219,112,0.05);
   border: 1px solid rgba(255,219,112,0.2);
@@ -1966,7 +1965,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   font-style: italic;
 }
 
-/* Path 页面中英文上下结构 */
+/* ========== Path 页面中英文上下结构 ========== */
 .timeline-item-en {
   font-size: 0.9rem;
   color: #aaa;
@@ -1974,11 +1973,14 @@ textarea.form-input::-webkit-resizer { display: none; }
   line-height: 1.5;
 }
 .title-en, .skill-en {
+  font-size: 0.75rem;
+  color: #aaa;
   line-height: 1.2;
+  margin-top: 2px;
   margin-bottom: 0;
 }
 
-/* 修复标题图标与文字对齐 */
+/* ========== 修复标题图标与文字对齐 ========== */
 .title-wrapper {
   display: flex;
   align-items: center;
@@ -1991,7 +1993,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   flex: 1;
 }
 
-/* 让 Markdown 渲染的内容适配官方卡片样式 */
+/* ========== 让 Markdown 渲染的内容适配官方卡片样式 ========== */
 .path-content h3 {
   font-size: 1.2rem;
   color: var(--orange-yellow-crayola);
@@ -2005,7 +2007,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   margin: 0.8rem 0 1rem 1.8rem;
 }
 
-/* 网络和系统页面内容样式 */
+/* ========== 网络和系统页面内容样式 ========== */
 .network-content ul, .systems-content ul {
   margin: 0.8rem 0 1rem 1.8rem;
 }
