@@ -1,35 +1,84 @@
 'use strict';
 
-const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
+// 导航栏切换
+function initNavbar() {
+  const pages = document.querySelectorAll('article');
+  const navLinks = document.querySelectorAll("[data-nav-link]");
+  navLinks.forEach(link => {
+    link.addEventListener("click", function () {
+      const targetPage = this.dataset.navLink;
+      pages.forEach(page => {
+        if (targetPage === page.dataset.page) {
+          page.classList.add("active");
+          this.classList.add("active");
+          window.scrollTo(0, 0);
+        } else {
+          page.classList.remove("active");
+          const otherLink = Array.from(navLinks).find(l => l.dataset.navLink === page.dataset.page);
+          if (otherLink) otherLink.classList.remove("active");
+        }
+      });
+    });
+  });
+}
 
-marked.setOptions({
-  breaks: true,
-  gfm: true,
-  headerIds: false,
-  mangle: false
-});
+// 表单验证
+function initFormValidation() {
+  const form = document.querySelector("[data-form]");
+  const formInputs = document.querySelectorAll("[data-form-input]");
+  const formBtn = document.querySelector("[data-form-btn]");
+  if (!form || !formInputs.length) return;
+  formInputs.forEach(input => {
+    input.addEventListener("input", function () {
+      if (form.checkValidity()) {
+        formBtn.removeAttribute("disabled");
+      } else {
+        formBtn.setAttribute("disabled", "");
+      }
+    });
+  });
+}
 
-async function loadMarkdown(file, containerId, customRender = null) {
+// 带超时的 fetch
+async function fetchWithTimeout(url, timeout = 5000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
   try {
-    const res = await fetch(`content/${file}`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const text = await res.text();
-    let html = marked.parse(text);
-    if (customRender) html = customRender(html, text);
-    document.getElementById(containerId).innerHTML = html;
-    return { html, text };
+    const response = await fetch(url, { signal: controller.signal });
+    clearTimeout(id);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response;
   } catch (err) {
-    console.error(err);
-    document.getElementById(containerId).innerHTML = `<p style="color:#ff6b6b; padding:40px;">加载失败: ${file}</p>`;
-    return null;
+    clearTimeout(id);
+    throw err;
+  }
+}
+
+// 加载 Markdown 文件，增加超时和重试
+async function loadMarkdown(file, containerId, customRender = null, retries = 2) {
+  const container = document.getElementById(containerId);
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const response = await fetchWithTimeout(`content/${file}`, 5000);
+      const text = await response.text();
+      let html = marked.parse(text);
+      if (customRender) html = customRender(html, text);
+      container.innerHTML = html;
+      return { html, text };
+    } catch (err) {
+      console.warn(`加载 ${file} 失败 (尝试 ${i+1}/${retries+1}):`, err);
+      if (i === retries) {
+        container.innerHTML = `<p style="color:#ff6b6b; padding:40px;">⚠️ 内容加载失败: ${file}<br>请检查网络或刷新页面重试</p>`;
+        return null;
+      }
+      await new Promise(r => setTimeout(r, 1000));
+    }
   }
 }
 
 let mdContents = { about: '', path: '', network: '', systems: '' };
 
-function getLocation() { return 'Batangas, Philippines'; }
-
-// ========== About 页面 ==========
+// ========== About 页面渲染 ==========
 function renderAbout(html, rawMarkdown) {
   const lines = rawMarkdown.split('\n');
   let enQuotes = [], zhQuotes = [];
@@ -81,12 +130,11 @@ function renderAbout(html, rawMarkdown) {
   `;
 }
 
-// ========== Path 页面（支持中英文上下结构）==========
+// ========== Path 页面 ==========
 function renderPath(html, rawMarkdown) {
   const lines = rawMarkdown.split('\n');
   let education = [], experience = [], skills = [];
   let currentSection = '';
-  let pendingEn = '';
 
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i].trim();
@@ -96,48 +144,47 @@ function renderPath(html, rawMarkdown) {
       else if (title.includes('职场生涯')) currentSection = 'experience';
       else if (title.includes('专业技能')) currentSection = 'skills';
       else currentSection = '';
-      pendingEn = '';
       continue;
     }
 
     if (line.startsWith('- ') && currentSection !== 'skills') {
-      // 解析条目
       let content = line.substring(2);
-      // 尝试提取下一行作为英文
       let en = '';
-      if (i+1 < lines.length) {
-        let next = lines[i+1].trim();
-        // 如果下一行不是以 - 或 ## 开头，则认为是英文（可能含多行？）
+      if (i + 1 < lines.length) {
+        let next = lines[i + 1].trim();
         if (next && !next.startsWith('-') && !next.startsWith('##')) {
           en = next;
-          i++; // 跳过英文行
+          i++;
         }
       }
       if (currentSection === 'education') {
         const parts = content.split('|').map(p => p.trim());
-        if (parts.length >= 3) {
-          education.push({ zh: { title: parts[0], period: parts[1], desc: parts[2] }, en });
-        }
+        if (parts.length >= 3) education.push({ zh: { title: parts[0], period: parts[1], desc: parts[2] }, en });
       } else if (currentSection === 'experience') {
-        // 对于职场生涯，中文可能包含多行描述，需要将后续行继续追加到描述中，直到遇到英文行
-        // 为了简化，我们假设中文描述是单行（用户会用 <br> 换行），这里使用简单的单行解析。
-        // 如果用户确实使用多行，需要更复杂的处理，但根据用户最终确认，职场生涯描述已合并为单行（用 <br>）。
         const parts = content.split('|').map(p => p.trim());
-        if (parts.length >= 3) {
-          experience.push({ zh: { title: parts[0], period: parts[1], desc: parts[2] }, en });
-        }
+        if (parts.length >= 3) experience.push({ zh: { title: parts[0], period: parts[1], desc: parts[2] }, en });
       }
     } else if (line.startsWith('- ') && currentSection === 'skills') {
-      const match = line.substring(2).match(/^(.*?):\s*(\d+)%/);
-      if (match) skills.push({ name: match[1], level: parseInt(match[2], 10) });
+      const match = line.substring(2).match(/^(.*?):\s*(\d+)%(?:\s*\|\s*(.*))?/);
+      if (match) {
+        const nameZh = match[1].trim();
+        const level = parseInt(match[2], 10);
+        const nameEn = match[3] ? match[3].trim() : '';
+        skills.push({ nameZh, nameEn, level });
+      }
     }
   }
 
-  // 生成教育部分
   let eduHTML = '';
   if (education.length) {
     eduHTML = `
-      <div class="title-wrapper"><h3 class="h3">学院时代</h3></div>
+      <div class="title-wrapper">
+        <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
+        <div>
+          <h3 class="h3">学院时代</h3>
+          <p class="title-en" style="font-size:0.75rem; color:#aaa; margin-top:2px;">Academy Era</p>
+        </div>
+      </div>
       <ol class="timeline-list">
         ${education.map(item => `
           <li class="timeline-item">
@@ -151,11 +198,16 @@ function renderPath(html, rawMarkdown) {
     `;
   }
 
-  // 职场部分
   let expHTML = '';
   if (experience.length) {
     expHTML = `
-      <div class="title-wrapper"><h3 class="h3">职场生涯</h3></div>
+      <div class="title-wrapper">
+        <div class="icon-box"><ion-icon name="briefcase-outline"></ion-icon></div>
+        <div>
+          <h3 class="h3">职场生涯</h3>
+          <p class="title-en" style="font-size:0.75rem; color:#aaa; margin-top:2px;">Career Experience</p>
+        </div>
+      </div>
       <ol class="timeline-list">
         ${experience.map(item => `
           <li class="timeline-item">
@@ -169,15 +221,26 @@ function renderPath(html, rawMarkdown) {
     `;
   }
 
-  // 技能部分
   let skillsHTML = '';
   if (skills.length) {
     skillsHTML = `
-      <h3 class="h3 skills-title">专业技能</h3>
-      <ul class="skills-list">
+      <div class="title-wrapper">
+        <div class="icon-box"><ion-icon name="code-outline"></ion-icon></div>
+        <div>
+          <h3 class="h3">专业技能</h3>
+          <p class="title-en" style="font-size:0.75rem; color:#aaa; margin-top:2px;">Professional Skills</p>
+        </div>
+      </div>
+      <ul class="skills-list content-card">
         ${skills.map(skill => `
           <li class="skills-item">
-            <div class="title-wrapper"><h5 class="h5">${skill.name}</h5><data value="${skill.level}">${skill.level}%</data></div>
+            <div class="title-wrapper" style="justify-content: space-between;">
+              <div>
+                <h5 class="h5">${skill.nameZh}</h5>
+                ${skill.nameEn ? `<p class="skill-en" style="font-size:0.7rem; color:#aaa; margin-top:2px;">${skill.nameEn}</p>` : ''}
+              </div>
+              <data value="${skill.level}">${skill.level}%</data>
+            </div>
             <div class="skill-progress-bg"><div class="skill-progress-fill" style="width: ${skill.level}%;"></div></div>
           </li>
         `).join('')}
@@ -213,11 +276,11 @@ function renderNetwork(html, rawMarkdown) {
   mdContents.network = rawMarkdown;
   const uniqueCats = [...new Set(projects.map(p => p.category))];
   const filterBtns = `
-    <li class="filter-item"><button class="active" data-filter-btn data-filter="all">全部 / All</button></li>
+    <li class="filter-item"><button class="active" data-filter-btn data-filter="all">All</button></li>
     ${uniqueCats.map(cat => `<li class="filter-item"><button data-filter-btn data-filter="${cat}">${cat}</button></li>`).join('')}
   `;
   const selectOpts = `
-    <li class="select-item"><button data-select-item data-filter="all">全部 / All</button></li>
+    <li class="select-item"><button data-select-item data-filter="all">All</button></li>
     ${uniqueCats.map(cat => `<li class="select-item"><button data-select-item data-filter="${cat}">${cat}</button></li>`).join('')}
   `;
   const cards = projects.map(proj => `
@@ -234,7 +297,7 @@ function renderNetwork(html, rawMarkdown) {
     <header><h2 class="h2 article-title">Kingsley Network</h2></header>
     <ul class="filter-list">${filterBtns}</ul>
     <div class="filter-select-box">
-      <button class="filter-select" data-select><div class="select-value" data-select-value>选择分类 / Select category</div><div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div></button>
+      <button class="filter-select" data-select><div class="select-value" data-select-value>Select category</div><div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div></button>
       <ul class="select-list">${selectOpts}</ul>
     </div>
     <ul class="project-list">${cards}</ul>
@@ -287,7 +350,13 @@ function renderSystems(html, rawMarkdown) {
 function renderContact() {
   return `
     <header><h2 class="h2 article-title">Contact</h2></header>
+    <div class="quote-box">
+      <p><strong>Email:</strong> i@kingsleyqi.com</p>
+      <p><strong>Phone:</strong> +63 960864508*</p>
+      <p><strong>Location:</strong> Batangas, Philippines</p>
+    </div>
     <section class="contact-form">
+      <h3 class="h3 form-title">Contact Form</h3>
       <form action="#" class="form" data-form>
         <div class="input-wrapper">
           <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
@@ -303,149 +372,53 @@ function renderContact() {
   `;
 }
 
-// ========== PDF 侧边栏内容（仅联系方式）==========
-function getPDFSidebarContent(rawHTML) {
-  const div = document.createElement('div');
-  div.innerHTML = rawHTML;
-  const images = div.querySelectorAll('img');
-  images.forEach(img => img.remove());
-  const socials = div.querySelectorAll('.social-item');
-  socials.forEach(s => s.remove());
-  const contacts = [];
-  const items = div.querySelectorAll('.contact-item');
-  items.forEach(item => {
-    const label = item.querySelector('.contact-title')?.innerText || '';
-    const value = item.querySelector('.contact-link, time, address')?.innerText || '';
-    if (label && value) contacts.push({ label, value });
-  });
-  const contactsHTML = contacts.map(c => `<p><strong>${c.label}:</strong> ${c.value}</p>`).join('');
-  return `<div class="sidebar-text"><div class="pdf-contacts">${contactsHTML}</div></div>`;
-}
-
-// ========== 清理 HTML 图片和链接 ==========
-function cleanHtml(html) {
-  html = html.replace(/<img[^>]*>/g, '');
-  html = html.replace(/<a[^>]*>([^<]*)<\/a>/g, '$1');
-  html = html.replace(/\s*(src|href)=["'][^"']*["']/g, '');
-  html = html.replace(/\.\/assets\/images\/[^\s]+\.(jpg|png|svg)/g, '');
-  html = html.replace(/http[s]?:\/\/[^\s]+\.(jpg|png|svg)/g, '');
-  return html;
-}
-
-// ========== 加载所有内容 ==========
-async function loadAllContent() {
-  await loadMarkdown('about.md', 'about-container', renderAbout);
-  await loadMarkdown('path.md', 'path-container', renderPath);
-  await loadMarkdown('network.md', 'network-container', renderNetwork);
-  await loadMarkdown('systems.md', 'systems-container', renderSystems);
-  document.getElementById('contact-container').innerHTML = renderContact();
-  setTimeout(() => {
-    initFilters();
-    initFormValidation();
-    initNavbar();
-    initPDFExport();
-  }, 200);
-}
-
-// ========== 导航栏切换 ==========
-function initNavbar() {
-  const pages = document.querySelectorAll('article');
-  const navLinks = document.querySelectorAll("[data-nav-link]");
-  navLinks.forEach(link => {
-    link.addEventListener("click", function () {
-      const target = this.dataset.navLink;
-      pages.forEach(p => {
-        if (target === p.dataset.page) {
-          p.classList.add("active");
-          this.classList.add("active");
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          p.classList.remove("active");
-          const other = Array.from(navLinks).find(l => l.dataset.navLink === p.dataset.page);
-          if (other) other.classList.remove("active");
-        }
-      });
-    });
-  });
-}
-
-// ========== 筛选 ==========
-function initFilters() {
-  const select = document.querySelector("[data-select]");
-  const selectItems = document.querySelectorAll("[data-select-item]");
-  const selectValue = document.querySelector("[data-select-value]");
-  const filterBtn = document.querySelectorAll("[data-filter-btn]");
-  const filterItems = document.querySelectorAll("[data-filter-item]");
-  if (!select || !selectItems.length) return;
-
-  select.addEventListener("click", function () { elementToggleFunc(this); });
-  const filterFunc = function (val) {
-    filterItems.forEach(item => {
-      const cat = item.dataset.category;
-      if (val === "all" || val === cat) item.classList.add("active");
-      else item.classList.remove("active");
-    });
-  };
-  selectItems.forEach(item => {
-    item.addEventListener("click", function () {
-      let v = this.dataset.filter;
-      selectValue.innerText = this.innerText;
-      elementToggleFunc(select);
-      filterFunc(v);
-    });
-  });
-  let last = filterBtn[0];
-  filterBtn.forEach(btn => {
-    btn.addEventListener("click", function () {
-      let v = this.dataset.filter;
-      selectValue.innerText = this.innerText;
-      filterFunc(v);
-      last.classList.remove("active");
-      this.classList.add("active");
-      last = this;
-    });
-  });
-}
-
-// ========== 表单验证 ==========
-function initFormValidation() {
-  const form = document.querySelector("[data-form]");
-  const inputs = document.querySelectorAll("[data-form-input]");
-  const btn = document.querySelector("[data-form-btn]");
-  if (!form || !inputs.length) return;
-  inputs.forEach(i => {
-    i.addEventListener("input", () => {
-      if (form.checkValidity()) btn.removeAttribute("disabled");
-      else btn.setAttribute("disabled", "");
-    });
-  });
-}
-
 // ========== PDF 导出 ==========
 function initPDFExport() {
   const btn = document.getElementById('download-pdf');
   if (!btn) return;
 
   btn.addEventListener('click', async function() {
-    const orig = btn.innerHTML;
+    const originalText = btn.innerHTML;
     btn.innerHTML = '⏳ 生成预览中...';
     btn.disabled = true;
 
     try {
-      const location = getLocation();
+      const location = 'Batangas, Philippines';
+      // 侧边栏内容（只提取联系方式，不包含社交链接）
       const sidebar = document.querySelector('.sidebar');
-      const rawSidebar = sidebar ? sidebar.innerHTML : '';
-      const sidebarContent = getPDFSidebarContent(rawSidebar);
+      let sidebarContent = '';
+      if (sidebar) {
+        const clone = sidebar.cloneNode(true);
+        const moreBtn = clone.querySelector('.info_more-btn');
+        if (moreBtn) moreBtn.remove();
+        const socials = clone.querySelectorAll('.social-item');
+        socials.forEach(s => s.remove());
+        const contacts = clone.querySelectorAll('.contact-item');
+        let contactsHTML = '';
+        contacts.forEach(c => {
+          const label = c.querySelector('.contact-title')?.innerText || '';
+          const value = c.querySelector('.contact-link, time, address')?.innerText || '';
+          if (label && value) contactsHTML += `<p><strong>${label}:</strong> ${value}</p>`;
+        });
+        sidebarContent = `<div class="sidebar-text"><div class="pdf-contacts">${contactsHTML}</div></div>`;
+      }
 
+      // 渲染各部分内容并清理图片和链接
       let aboutHtml = marked.parse(mdContents.about);
       let pathHtml = marked.parse(mdContents.path);
       let networkHtml = marked.parse(mdContents.network);
       let systemsHtml = marked.parse(mdContents.systems);
 
-      aboutHtml = cleanHtml(aboutHtml);
-      pathHtml = cleanHtml(pathHtml);
-      networkHtml = cleanHtml(networkHtml);
-      systemsHtml = cleanHtml(systemsHtml);
+      const clean = (html) => {
+        html = html.replace(/<img[^>]*>/g, '');
+        html = html.replace(/<a[^>]*>([^<]*)<\/a>/g, '$1');
+        html = html.replace(/\.\/assets\/images\/[^\s]+\.(jpg|png|svg)/g, '');
+        return html;
+      };
+      aboutHtml = clean(aboutHtml);
+      pathHtml = clean(pathHtml);
+      networkHtml = clean(networkHtml);
+      systemsHtml = clean(systemsHtml);
 
       const pdfPreview = `
         <!DOCTYPE html>
@@ -486,6 +459,9 @@ function initPDFExport() {
             .project-title, .blog-item-title { font-size:17px; font-weight:600; margin:0 0 8px; }
             .project-category, .blog-category { font-size:13px; color:#8e8e93; margin-bottom:8px; }
             .blog-text { font-size:14px; color:#3a3a3c; }
+            .quote-box { background: rgba(255,219,112,0.05); border: 1px solid rgba(255,219,112,0.2); border-radius: 16px; padding: 20px; text-align: center; margin: 20px 0; }
+            .quote-box p { color: #3a3a3c; margin: 8px 0; }
+            .quote-box strong { color: #ffdb70; }
             .footer { margin-top:48px; padding-top:20px; border-top:1px solid #e5e5ea; text-align:center; font-size:12px; color:#8e8e93; }
             .pdf-actions { position:fixed; bottom:24px; right:24px; display:flex; gap:12px; z-index:1000; }
             .pdf-actions button { padding:8px 20px; border:none; border-radius:30px; font-size:13px; font-weight:500; cursor:pointer; background:#f2f2f5; color:#1c1c1e; transition:0.2s; }
@@ -510,15 +486,86 @@ function initPDFExport() {
       w.document.write(pdfPreview);
       w.document.close();
       btn.innerHTML = '✓ 预览已打开';
-      setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 2000);
+      setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 2000);
     } catch (err) {
       console.error(err);
       btn.innerHTML = '✗ 失败';
       btn.disabled = false;
-      setTimeout(() => { btn.innerHTML = orig; }, 1500);
+      setTimeout(() => { btn.innerHTML = originalText; }, 1500);
       alert('PDF生成失败: ' + err.message);
     }
   });
+}
+
+// ========== Network 筛选逻辑 ==========
+function initFilters() {
+  const select = document.querySelector("[data-select]");
+  const selectItems = document.querySelectorAll("[data-select-item]");
+  const selectValue = document.querySelector("[data-select-value]");
+  const filterBtn = document.querySelectorAll("[data-filter-btn]");
+  const filterItems = document.querySelectorAll("[data-filter-item]");
+  if (!select || !selectItems.length) return;
+
+  select.addEventListener("click", function () {
+    this.classList.toggle("active");
+  });
+
+  const filterFunc = function (selectedValue) {
+    filterItems.forEach(item => {
+      const category = item.dataset.category;
+      if (selectedValue === "all" || selectedValue === category) {
+        item.classList.add("active");
+      } else {
+        item.classList.remove("active");
+      }
+    });
+  };
+
+  selectItems.forEach(item => {
+    item.addEventListener("click", function () {
+      let value = this.dataset.filter;
+      selectValue.innerText = this.innerText;
+      select.classList.remove("active");
+      filterFunc(value);
+    });
+  });
+
+  let lastClickedBtn = filterBtn[0];
+  filterBtn.forEach(btn => {
+    btn.addEventListener("click", function () {
+      let selectedValue = this.dataset.filter;
+      selectValue.innerText = this.innerText;
+      filterFunc(selectedValue);
+      lastClickedBtn.classList.remove("active");
+      this.classList.add("active");
+      lastClickedBtn = this;
+    });
+  });
+}
+
+// ========== 加载所有内容 ==========
+async function loadAllContent() {
+  // 显示加载中
+  const containers = ['about-container', 'path-container', 'network-container', 'systems-container', 'contact-container'];
+  containers.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && (!el.innerHTML || el.innerHTML.includes('加载失败'))) {
+      el.innerHTML = '<div class="loading-tip">加载中...</div>';
+    }
+  });
+
+  await loadMarkdown('about.md', 'about-container', renderAbout);
+  await loadMarkdown('path.md', 'path-container', renderPath);
+  await loadMarkdown('network.md', 'network-container', renderNetwork);
+  await loadMarkdown('systems.md', 'systems-container', renderSystems);
+  document.getElementById('contact-container').innerHTML = renderContact();
+
+  setTimeout(() => {
+    initNavbar();
+    initFormValidation();
+    initFilters();
+    initPDFExport();
+  }, 100);
 }
 
 loadAllContent();
