@@ -8,7 +8,7 @@ Reject mediocrity, live brilliantly.
 ## 关于我
 
 长期深耕工业自动化、工业物联网与办公自动化领域 15 年+，现居菲律宾八大雁省，聚焦制造企业在数字化转型过程中的系统重构与效率跃迁。  
-以工程为基础、以系统为核心、以结果为导向，持续为制造型组织提供从底层基础设施到业务流程体系的整体优化与落地能力。
+以工程为基础、以系统为核心、以结果为导向，持续为制造型组织提供从底层基础设施到业务流程体系的整体优化与落地能力。<br>
 
 15+ years of experience across Industrial Automation, Industrial IoT, and Office Automation, currently based in Cavite, Philippines, focusing on system-level transformation and efficiency scaling for manufacturing organizations.  
 Engineering-driven, system-oriented, and outcome-focused, delivering end-to-end optimization from foundational infrastructure to business process architecture.
