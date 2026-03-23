@@ -2015,3 +2015,154 @@ textarea.form-input::-webkit-resizer { display: none; }
   margin: 0.5rem 0;
   line-height: 1.6;
 }
+
+/* ========== 头像下移 ========== */
+.sidebar-info {
+  margin-top: 8px;
+}
+
+/* ========== 手机端菜单禁止滚动 ========== */
+@media (max-width: 767px) {
+  .navbar {
+    overflow-x: hidden !important;
+  }
+  .navbar-list {
+    flex-wrap: nowrap !important;
+    overflow-x: hidden !important;
+    justify-content: space-around !important;
+    gap: 2px !important;
+  }
+  .navbar-link {
+    font-size: 11px !important;
+    padding: 6px 4px !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* ========== PDF 按钮样式 ========== */
+.export-pdf-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 8px 20px !important;
+  background: #2b2b2c !important;
+  border: 1px solid #ffdb70 !important;
+  border-radius: 30px !important;
+  color: #ffdb70 !important;
+  cursor: pointer;
+  font-size: 13px !important;
+  transition: all 0.3s ease;
+}
+.export-pdf-btn:hover {
+  background: #ffdb70 !important;
+  color: #1a1a1a !important;
+}
+.export-pdf-btn ion-icon {
+  margin: 0 !important;
+  font-size: 16px !important;
+  flex-shrink: 0 !important;
+}
+@media (max-width: 767px) {
+  .export-pdf-btn {
+    gap: 6px !important;
+    padding: 6px 16px !important;
+  }
+  .export-pdf-btn ion-icon {
+    font-size: 14px !important;
+  }
+}
+
+/* ========== 引言卡片样式 ========== */
+.quote-box {
+  background: rgba(255,219,112,0.05);
+  border: 1px solid rgba(255,219,112,0.2);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.quote-box p {
+  color: #aaa;
+  margin: 8px 0;
+}
+.quote-box strong {
+  color: #ffdb70;
+}
+.quote-en {
+  font-size: 14px;
+  color: #ffdb70;
+  font-style: italic;
+}
+.quote-zh {
+  font-size: 12px;
+  color: #aaa;
+  font-style: italic;
+}
+
+/* ========== Markdown 内容美化（让渲染的 Markdown 有好的排版）========== */
+.markdown-content {
+  color: var(--light-gray);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.markdown-content h1 {
+  font-size: 1.8rem;
+  color: var(--orange-yellow-crayola);
+  margin: 1.2em 0 0.6em;
+  border-bottom: 2px solid rgba(255,219,112,0.3);
+  padding-bottom: 0.3em;
+}
+
+.markdown-content h2 {
+  font-size: 1.5rem;
+  color: var(--orange-yellow-crayola);
+  margin: 1em 0 0.5em;
+  border-bottom: 1px solid rgba(255,219,112,0.3);
+  padding-bottom: 0.2em;
+}
+
+.markdown-content h3 {
+  font-size: 1.2rem;
+  color: var(--white-2);
+  margin: 0.8em 0 0.4em;
+}
+
+.markdown-content h4 {
+  font-size: 1rem;
+  color: var(--light-gray);
+  margin: 0.6em 0 0.3em;
+}
+
+.markdown-content p {
+  margin-bottom: 1em;
+  line-height: 1.7;
+}
+
+.markdown-content strong {
+  color: var(--orange-yellow-crayola);
+  font-weight: 600;
+}
+
+.markdown-content ul, .markdown-content ol {
+  margin: 0.8em 0 1em 1.8em;
+  padding-left: 0.5em;
+}
+
+.markdown-content li {
+  margin: 0.4em 0;
+  line-height: 1.6;
+}
+
+.markdown-content hr {
+  margin: 1.5em 0;
+  border: none;
+  height: 1px;
+  background: rgba(255,219,112,0.2);
+}
+
+/* 技能条样式（如果使用 Markdown 列表中的百分比）*/
+.markdown-content li:has(data) {
+  list-style: none;
+}
