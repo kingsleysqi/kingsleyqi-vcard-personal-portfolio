@@ -2099,3 +2099,69 @@ textarea.form-input::-webkit-resizer { display: none; }
   background: rgba(255,219,112,0.2);
 }
 
+
+/* ========== 强制隐藏所有技能进度条百分比数字 ========== */
+.skill .title-wrapper data,
+.skills-item data,
+[data-value] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  pointer-events: none !important;
+}
+
+/* 移除数字消失后的间隙，确保标题紧凑 */
+.skill .title-wrapper {
+  gap: 0 !important;
+}
+
+/* ========== 缩减图标框宽度 ========== */
+.title-wrapper .icon-box {
+  flex: 0 0 auto !important; /* 禁止图标框被 Flex 拉伸 */
+  width: 42px !important;    /* 缩小宽度，原 48px 在手机上显大 */
+  height: 42px !important;   /* 保持正方形 */
+}
+
+/* 移除容器多余的宽度限制 */
+.title-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: fit-content !important; /* 宽度随内容自适应，不撑满全屏 */
+}
+
+/* 调整文字与图标的间距 */
+.title-wrapper div {
+  margin-left: 12px !important;
+}
+
+
+/* ========== 修复技能部分显示不全与对齐问题 ========== */
+
+/* 1. 移除技能列表的多余内边距，让内容向左对齐 */
+.skills-list {
+  padding: 0 !important;
+  margin-top: 20px;
+}
+
+/* 2. 修正技能项的布局，确保不被压缩 */
+.skills-item {
+  width: 100% !important;
+  padding: 0 !important;
+}
+
+/* 3. 确保进度条容器占满宽度 */
+.skill-progress-bg {
+  width: 100% !important;
+}
+
+/* 4. 针对标题部分的对齐修正 */
+.skills-title {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+

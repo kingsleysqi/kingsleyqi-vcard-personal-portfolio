@@ -22,8 +22,6 @@
 
 ## 专业技能
 
-- 工业自动化 & 智能产线: 90% | Industrial Automation & Smart Production Lines
-- 非标自动化机械设备调试维护: 85% | Non-standard Automation Equipment Commissioning & Maintenance
-- 工业互联网 & 网络工程 & IT基础设施: 85% | Industrial Internet, Network Engineering & IT Infrastructure
-- 控制系统 & PLC基础: 75% | Control Systems & PLC Fundamentals
-- 气动点胶设备调试与维护: 90% | Pneumatic Dispensing Equipment Commissioning & Maintenance
+- 工业自动化 & 智能产线: 90% | Industrial Automation
+- 自动化设备 & 系统集成: 85% | Automation Systems
+- 工业互联网 & IT基础设施: 85% | Industrial IT
