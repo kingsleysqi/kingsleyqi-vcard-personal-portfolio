@@ -78,9 +78,8 @@ async function loadMarkdown(file, containerId, customRender = null, retries = 2)
 
 let mdContents = { about: '', path: '', network: '', systems: '' };
 
-// ========== About 页面渲染（添加引言卡片）==========
+// ========== About 页面渲染 ==========
 function renderAbout(html, rawMarkdown) {
-  // 提取引言
   const lines = rawMarkdown.split('\n');
   let enQuotes = [], zhQuotes = [];
   let inQuote = false;
@@ -107,7 +106,6 @@ function renderAbout(html, rawMarkdown) {
     `;
   }
 
-  // 提取关于我部分
   let aboutMarkdown = '';
   let inAbout = false;
   for (let line of lines) {
@@ -132,30 +130,252 @@ function renderAbout(html, rawMarkdown) {
   `;
 }
 
-// ========== Path 页面（直接渲染 Markdown，用 CSS 美化）==========
+// ========== Path 页面渲染（官方时间线卡片样式）==========
 function renderPath(html, rawMarkdown) {
+  const lines = rawMarkdown.split('\n');
+  let education = [], experience = [], skills = [];
+  let currentSection = '';
+  let i = 0;
+
+  while (i < lines.length) {
+    let line = lines[i].trim();
+    if (line.startsWith('## ')) {
+      const title = line.substring(3);
+      if (title.includes('学院时代')) currentSection = 'education';
+      else if (title.includes('职场生涯')) currentSection = 'experience';
+      else if (title.includes('专业技能')) currentSection = 'skills';
+      else currentSection = '';
+      i++;
+      continue;
+    }
+
+    if (line.startsWith('- ') && currentSection !== 'skills') {
+      let content = line.substring(2);
+      let parts = content.split('|').map(p => p.trim());
+      if (parts.length < 3) { i++; continue; }
+      
+      let zhTitle = parts[0];
+      let zhPeriod = parts[1];
+      let zhDesc = parts[2] || '';
+      i++;
+
+      let enTitle = '', enPeriod = '', enDesc = '';
+      if (i < lines.length) {
+        let next = lines[i].trim();
+        if (next && !next.startsWith('-') && !next.startsWith('##')) {
+          let enParts = next.split('|').map(p => p.trim());
+          if (enParts.length >= 3) {
+            enTitle = enParts[0];
+            enPeriod = enParts[1];
+            enDesc = enParts[2];
+          } else {
+            enTitle = next;
+            i++;
+            if (i < lines.length && lines[i].trim() && !lines[i].trim().startsWith('-') && !lines[i].trim().startsWith('##')) {
+              enPeriod = lines[i].trim();
+              i++;
+              if (i < lines.length && lines[i].trim() && !lines[i].trim().startsWith('-') && !lines[i].trim().startsWith('##')) {
+                enDesc = lines[i].trim();
+                i++;
+              }
+            }
+          }
+          i++;
+        }
+      }
+
+      if (currentSection === 'education') {
+        education.push({ zh: { title: zhTitle, period: zhPeriod, desc: zhDesc }, en: { title: enTitle, period: enPeriod, desc: enDesc } });
+      } else if (currentSection === 'experience') {
+        experience.push({ zh: { title: zhTitle, period: zhPeriod, desc: zhDesc }, en: { title: enTitle, period: enPeriod, desc: enDesc } });
+      }
+    } else if (line.startsWith('- ') && currentSection === 'skills') {
+      const match = line.substring(2).match(/^(.*?):\s*(\d+)%(?:\s*\|\s*(.*))?/);
+      if (match) {
+        const nameZh = match[1].trim();
+        const level = parseInt(match[2], 10);
+        const nameEn = match[3] ? match[3].trim() : '';
+        skills.push({ nameZh, nameEn, level });
+      }
+      i++;
+    } else {
+      i++;
+    }
+  }
+
+  // 教育部分
+  let eduHTML = '';
+  if (education.length) {
+    eduHTML = `
+      <div class="title-wrapper">
+        <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
+        <div>
+          <h3 class="h3">学院时代</h3>
+          <p class="title-en">Academy Era</p>
+        </div>
+      </div>
+      <ol class="timeline-list">
+        ${education.map(item => `
+          <li class="timeline-item">
+            <h4 class="h4 timeline-item-title">${item.zh.title}</h4>
+            <span>${item.zh.period}</span>
+            <p class="timeline-text">${item.zh.desc}</p>
+            ${item.en.title ? `<p class="timeline-item-en">${item.en.title} | ${item.en.period}</p>` : ''}
+            ${item.en.desc ? `<p class="timeline-item-en">${item.en.desc}</p>` : ''}
+          </li>
+        `).join('')}
+      </ol>
+    `;
+  }
+
+  // 职场部分
+  let expHTML = '';
+  if (experience.length) {
+    expHTML = `
+      <div class="title-wrapper">
+        <div class="icon-box"><ion-icon name="briefcase-outline"></ion-icon></div>
+        <div>
+          <h3 class="h3">职场生涯</h3>
+          <p class="title-en">Career Experience</p>
+        </div>
+      </div>
+      <ol class="timeline-list">
+        ${experience.map(item => `
+          <li class="timeline-item">
+            <h4 class="h4 timeline-item-title">${item.zh.title}</h4>
+            <span>${item.zh.period}</span>
+            <p class="timeline-text">${item.zh.desc}</p>
+            ${item.en.title ? `<p class="timeline-item-en">${item.en.title} | ${item.en.period}</p>` : ''}
+            ${item.en.desc ? `<p class="timeline-item-en">${item.en.desc}</p>` : ''}
+          </li>
+        `).join('')}
+      </ol>
+    `;
+  }
+
+  // 技能部分
+  let skillsHTML = '';
+  if (skills.length) {
+    skillsHTML = `
+      <div class="title-wrapper">
+        <div class="icon-box"><ion-icon name="code-outline"></ion-icon></div>
+        <div>
+          <h3 class="h3">专业技能</h3>
+          <p class="title-en">Professional Skills</p>
+        </div>
+      </div>
+      <ul class="skills-list content-card">
+        ${skills.map(skill => `
+          <li class="skills-item">
+            <div class="title-wrapper" style="justify-content: space-between;">
+              <div>
+                <h5 class="h5">${skill.nameZh}</h5>
+                ${skill.nameEn ? `<p class="skill-en">${skill.nameEn}</p>` : ''}
+              </div>
+              <data value="${skill.level}">${skill.level}%</data>
+            </div>
+            <div class="skill-progress-bg"><div class="skill-progress-fill" style="width: ${skill.level}%;"></div></div>
+          </li>
+        `).join('')}
+      </ul>
+    `;
+  }
+
   mdContents.path = rawMarkdown;
-  return `
-    <header><h2 class="h2 article-title">人生轨迹</h2></header>
-    <div class="path-content markdown-content">${html}</div>
-  `;
+  return `<header><h2 class="h2 article-title">人生轨迹</h2></header><div class="path-content">${eduHTML}${expHTML}${skillsHTML}</div>`;
 }
 
-// ========== Network 页面 ==========
+// ========== Network 页面（自动从 MD 读取分类）==========
 function renderNetwork(html, rawMarkdown) {
+  const lines = rawMarkdown.split('\n');
+  const projects = [];
+  for (let line of lines) {
+    line = line.trim();
+    if (line.startsWith('- ')) {
+      const content = line.substring(2);
+      const parts = content.split('|').map(p => p.trim());
+      if (parts.length >= 4) {
+        const titleMatch = parts[0].match(/\[(.*?)\]\((.*?)\)/);
+        const title = titleMatch ? titleMatch[1] : parts[0];
+        const link = titleMatch ? titleMatch[2] : '#';
+        const category = parts[1];
+        const description = parts[2];
+        const image = parts[3];
+        projects.push({ title, link, category, description, image });
+      }
+    }
+  }
+
   mdContents.network = rawMarkdown;
+  const uniqueCats = [...new Set(projects.map(p => p.category))];
+  const filterBtns = `
+    <li class="filter-item"><button class="active" data-filter-btn data-filter="all">All</button></li>
+    ${uniqueCats.map(cat => `<li class="filter-item"><button data-filter-btn data-filter="${cat}">${cat}</button></li>`).join('')}
+  `;
+  const selectOpts = `
+    <li class="select-item"><button data-select-item data-filter="all">All</button></li>
+    ${uniqueCats.map(cat => `<li class="select-item"><button data-select-item data-filter="${cat}">${cat}</button></li>`).join('')}
+  `;
+  const cards = projects.map(proj => `
+    <li class="project-item active" data-filter-item data-category="${proj.category}">
+      <a href="${proj.link}">
+        <figure class="project-img"><div class="project-item-icon-box"><ion-icon name="eye-outline"></ion-icon></div><img src="${proj.image}" alt="${proj.title}" loading="lazy"></figure>
+        <h3 class="project-title">${proj.title}</h3>
+        <p class="project-category">${proj.description}</p>
+      </a>
+    </li>
+  `).join('');
+
   return `
     <header><h2 class="h2 article-title">Kingsley Network</h2></header>
-    <div class="network-content markdown-content">${html}</div>
+    <ul class="filter-list">${filterBtns}</ul>
+    <div class="filter-select-box">
+      <button class="filter-select" data-select><div class="select-value" data-select-value>Select category</div><div class="select-icon"><ion-icon name="chevron-down"></ion-icon></div></button>
+      <ul class="select-list">${selectOpts}</ul>
+    </div>
+    <ul class="project-list">${cards}</ul>
   `;
 }
 
 // ========== Systems 页面 ==========
 function renderSystems(html, rawMarkdown) {
+  const lines = rawMarkdown.split('\n');
+  const posts = [];
+  for (let line of lines) {
+    line = line.trim();
+    if (line.startsWith('- ')) {
+      const content = line.substring(2);
+      const parts = content.split('|').map(p => p.trim());
+      if (parts.length >= 5) {
+        const titleMatch = parts[0].match(/\[(.*?)\]\((.*?)\)/);
+        const title = titleMatch ? titleMatch[1] : parts[0];
+        const link = titleMatch ? titleMatch[2] : '#';
+        const category = parts[1];
+        const date = parts[2];
+        const description = parts[3];
+        const image = parts[4];
+        posts.push({ title, link, category, date, description, image });
+      }
+    }
+  }
+
   mdContents.systems = rawMarkdown;
   return `
     <header><h2 class="h2 article-title">Systems & Infrastructure</h2></header>
-    <div class="systems-content markdown-content">${html}</div>
+    <ul class="blog-posts-list">
+      ${posts.map(post => `
+        <li class="blog-post-item">
+          <a href="${post.link}">
+            <figure class="blog-banner-box"><img src="${post.image}" alt="${post.title}" loading="lazy"></figure>
+            <div class="blog-content">
+              <div class="blog-meta"><p class="blog-category">${post.category}</p><span class="dot"></span><time datetime="${post.date.split('·')[0].trim()}">${post.date}</time></div>
+              <h3 class="h3 blog-item-title">${post.title}</h3>
+              <p class="blog-text">${post.description.substring(0, 200)}${post.description.length > 200 ? '...' : ''}</p>
+            </div>
+          </a>
+        </li>
+      `).join('')}
+    </ul>
   `;
 }
 
@@ -253,13 +473,30 @@ function initPDFExport() {
             .about-text h1, .about-text h2, .about-text h3 { font-size:18px; font-weight:600; margin:24px 0 12px; color:#1c1c1e; }
             .about-text strong { font-weight:600; }
             .about-text ul, .about-text ol { margin:12px 0 16px 28px; }
+            .timeline-list { margin-left:24px; list-style:none; }
+            .timeline-item { margin-bottom:20px; }
+            .timeline-item h4 { font-size:16px; font-weight:600; margin-bottom:4px; }
+            .timeline-item span { font-size:13px; color:#8e8e93; display:block; margin-bottom:6px; }
+            .timeline-text { font-size:14px; color:#3a3a3c; }
+            .timeline-item-en { font-size:13px; color:#8e8e93; margin-top:6px; }
+            .skills-list { list-style:none; padding:0; }
+            .skills-item { margin:14px 0; }
+            .skills-item .title-wrapper { display:flex; justify-content:space-between; margin-bottom:4px; }
+            .skill-progress-bg { background:#e5e5ea; height:4px; border-radius:2px; overflow:hidden; }
+            .skill-progress-fill { background:#1c1c1e; height:100%; border-radius:2px; }
+            .project-list, .blog-posts-list { display:flex; flex-direction:column; gap:20px; list-style:none; padding:0; }
+            .project-item, .blog-post-item { border:none; border-bottom:1px solid #e5e5ea; padding-bottom:20px; }
+            .project-img img, .blog-banner-box img { width:100%; height:auto; max-height:160px; object-fit:cover; border-radius:8px; margin-bottom:12px; }
+            .project-title, .blog-item-title { font-size:17px; font-weight:600; margin:0 0 8px; }
+            .project-category, .blog-category { font-size:13px; color:#8e8e93; margin-bottom:8px; }
+            .blog-text { font-size:14px; color:#3a3a3c; }
+            .quote-box { background: rgba(255,219,112,0.05); border: 1px solid rgba(255,219,112,0.2); border-radius: 16px; padding: 20px; text-align: center; margin: 20px 0; }
+            .quote-box p { color: #3a3a3c; margin: 8px 0; }
+            .quote-box strong { color: #ffdb70; }
             .footer { margin-top:48px; padding-top:20px; border-top:1px solid #e5e5ea; text-align:center; font-size:12px; color:#8e8e93; }
             .pdf-actions { position:fixed; bottom:24px; right:24px; display:flex; gap:12px; z-index:1000; }
             .pdf-actions button { padding:8px 20px; border:none; border-radius:30px; font-size:13px; font-weight:500; cursor:pointer; background:#f2f2f5; color:#1c1c1e; transition:0.2s; }
             .pdf-actions button:hover { background:#e5e5ea; }
-            .quote-box { background: rgba(255,219,112,0.05); border: 1px solid rgba(255,219,112,0.2); border-radius: 16px; padding: 20px; text-align: center; margin: 20px 0; }
-            .quote-box p { color: #3a3a3c; margin: 8px 0; }
-            .quote-box strong { color: #ffdb70; }
             @media print { .pdf-actions { display:none; } body { padding:20px; } }
           </style>
           </head>
