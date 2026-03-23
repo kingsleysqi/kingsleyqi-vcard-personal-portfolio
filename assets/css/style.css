@@ -2165,24 +2165,3 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 
-/* ========== 隐藏超链接蓝色 ========== */
-a {
-  color: inherit !important;
-  text-decoration: none !important;
-}
-
-a:hover {
-  color: #ffdb70 !important;
-  text-decoration: none !important;
-}
-
-/* 联系卡片中的邮箱链接 */
-.quote-box a {
-  color: #ffdb70 !important;
-  text-decoration: none !important;
-}
-
-.quote-box a:hover {
-  text-decoration: underline !important;
-  opacity: 0.8;
-}
