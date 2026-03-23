@@ -1,36 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>KINGSLEY QI | 工业自动化 × IT</title>
-  <link rel="shortcut icon" href="./assets/images/01.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KINGSLEY QI | 自动化 & IT工程师</title>
+
+  <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-  <!-- 国内 CDN 加速，带 fallback -->
-  <script>
-    const loadScript = (src, fallback) => {
-      const script = document.createElement('script');
-      script.src = src;
-      script.onerror = () => {
-        if (fallback) {
-          const fb = document.createElement('script');
-          fb.src = fallback;
-          document.head.appendChild(fb);
-        }
-      };
-      document.head.appendChild(script);
-    };
-    loadScript('https://cdn.bootcdn.net/ajax/libs/marked/4.3.0/marked.min.js',
-               'https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js');
-    loadScript('https://cdn.bootcdn.net/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js',
-               'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js');
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
     .loading-tip {
@@ -39,103 +20,26 @@
       color: #ffdb70;
       font-size: 16px;
     }
-
-    /* 侧边栏文字换行 */
-    .sidebar-info {
-      display: flex !important;
-      gap: 12px !important;
-      align-items: flex-start !important;
-      flex-wrap: wrap !important;
-    }
-    .avatar-box { flex-shrink: 0 !important; }
-    .info-content { flex: 1 !important; min-width: 0 !important; }
-    .info-content .title {
-      white-space: normal !important;
-      word-break: break-word !important;
-      line-height: 1.4 !important;
-      width: auto !important;
-      max-width: 100% !important;
-      font-size: 11px !important;
-      background: var(--onyx) !important;
-      padding: 3px 8px !important;
-    }
-
-    /* 电脑端菜单栏 - 半透明、小胶囊、不遮挡 */
-    @media (min-width: 768px) {
-      .navbar {
-        top: 12px !important;
-        padding: 5px 16px !important;
-        background: rgba(25, 25, 30, 0.92) !important;
-        backdrop-filter: blur(8px) !important;
-        border-radius: 40px !important;
-      }
-      .navbar-list { gap: 6px !important; }
-      .navbar-link {
-        font-size: 12px !important;
-        padding: 5px 12px !important;
-      }
-      .main-content, .sidebar { margin-top: 70px !important; }
-    }
-
-    /* 手机端菜单栏 */
-    @media (max-width: 767px) {
-      .navbar {
-        bottom: 0;
-        top: auto;
-        padding: 8px 12px;
-        background: rgba(20,20,25,0.98);
-        backdrop-filter: blur(10px);
-        border-radius: 16px 16px 0 0;
-      }
-      .navbar-list { justify-content: space-around; gap: 0; }
-      .navbar-link { font-size: 11px; padding: 6px 4px; }
-      .main-content { margin-bottom: 70px; }
-      .sidebar { margin-top: 15px; }
-    }
-
-    /* 引言卡片样式 */
-    .quote-box {
-      background: rgba(255,219,112,0.05);
-      border: 1px solid rgba(255,219,112,0.2);
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-    }
-    .quote-en { font-size: 14px; color: #ffdb70; font-style: italic; }
-    .quote-zh { font-size: 12px; color: #aaa; font-style: italic; }
-
-    /* PDF 按钮 */
-    .export-pdf-btn {
-      background: #2b2b2c;
-      border: 1px solid #ffdb70;
-      border-radius: 30px;
-      color: #ffdb70;
-      cursor: pointer;
-      font-size: 13px;
-      padding: 8px 20px;
-      transition: all 0.3s ease;
-    }
-    .export-pdf-btn:hover { background: #ffdb70; color: #1a1a1a; }
-
-    @media (max-width: 767px) {
-      .export-pdf-btn { padding: 6px 14px; font-size: 11px; min-width: 100px; }
+    .error-tip {
+      color: #ff6b6b;
     }
   </style>
 </head>
+
 <body>
   <main>
+    <!-- SIDEBAR（官方原版侧边栏，内容已替换为您的个人信息） -->
     <aside class="sidebar" data-sidebar>
       <div class="sidebar-info">
         <figure class="avatar-box">
-          <img src="./assets/images/favicon-96x96.png" alt="Kingsley Qi" width="80">
+          <img src="./assets/images/my-avatar.png" alt="Kingsley Qi" width="80">
         </figure>
         <div class="info-content">
           <h1 class="name">Kingsley Qi</h1>
           <p class="title">工业自动化 × IT基础设施<br>系统解决方案</p>
-          <p class="title">Industrial Automation × IT<br>System Solutions</p>
         </div>
         <button class="info_more-btn" data-sidebar-btn>
-          <span>展开联系方式</span>
+          <span>Show Contacts</span>
           <ion-icon name="chevron-down"></ion-icon>
         </button>
       </div>
@@ -162,7 +66,7 @@
         </ul>
         <div class="separator"></div>
         <ul class="social-list">
-          <li class="social-item"><a href="./assets/images/wechat-kq.png" class="social-link"><ion-icon src="./assets/images/wechat.svg"></ion-icon></a></li>
+          <li class="social-item"><a href="./assets/images/wechat-kq.png" class="social-link"><ion-icon src="./assets/images/wechat-kq.png"></ion-icon></a></li>
           <li class="social-item"><a href="https://www.facebook.com/share/17jWndEeLo/" class="social-link"><ion-icon name="logo-facebook"></ion-icon></a></li>
           <li class="social-item"><a href="https://x.com/QiKingsley" class="social-link"><ion-icon name="logo-twitter"></ion-icon></a></li>
           <li class="social-item"><a href="https://www.instagram.com/kingsley_qi" class="social-link"><ion-icon name="logo-instagram"></ion-icon></a></li>
@@ -182,47 +86,54 @@
       </nav>
 
       <article class="about active" data-page="about" id="about-container"><div class="loading-tip">加载中...</div></article>
-      <article class="Path" data-page="path" id="path-container"><div class="loading-tip">加载中...</div></article>
-      <article class="network" data-page="network" id="network-container"><div class="loading-tip">加载中...</div></article>
-      <article class="Systems" data-page="systems" id="systems-container"><div class="loading-tip">加载中...</div></article>
+      <article class="resume" data-page="path" id="path-container"><div class="loading-tip">加载中...</div></article>
+      <article class="portfolio" data-page="network" id="network-container"><div class="loading-tip">加载中...</div></article>
+      <article class="blog" data-page="systems" id="systems-container"><div class="loading-tip">加载中...</div></article>
       <article class="contact" data-page="contact" id="contact-container"><div class="loading-tip">加载中...</div></article>
     </div>
   </main>
 
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <script>
-    // 侧边栏折叠
-    (function() {
-      const btn = document.querySelector("[data-sidebar-btn]");
-      const sidebar = document.querySelector("[data-sidebar]");
-      if (btn && sidebar) {
-        btn.addEventListener("click", function(e) {
-          e.stopPropagation();
-          sidebar.classList.toggle("active");
-          this.querySelector('span').textContent = sidebar.classList.contains('active') ? '收起联系方式' : '展开联系方式';
-        });
-      }
-    })();
 
-    // 等待 marked 加载后执行 script.js
-    const wait = setInterval(() => {
-      if (typeof marked !== 'undefined') {
-        clearInterval(wait);
-        const s = document.createElement('script');
-        s.src = './assets/js/script.js';
-        document.body.appendChild(s);
-      }
-    }, 100);
-    setTimeout(() => {
-      if (typeof marked === 'undefined') {
-        clearInterval(wait);
-        document.querySelectorAll('.loading-tip').forEach(el => {
-          el.innerHTML = '⚠️ 资源加载超时，请刷新页面重试';
-          el.style.color = '#ff6b6b';
-        });
-      }
-    }, 8000);
+  <script>
+    // 动态加载 marked 和 html2pdf，优先本地，回退 CDN
+    function loadScript(src, fallbackSrc) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = () => {
+          if (fallbackSrc) {
+            const fallbackScript = document.createElement('script');
+            fallbackScript.src = fallbackSrc;
+            fallbackScript.onload = resolve;
+            fallbackScript.onerror = reject;
+            document.head.appendChild(fallbackScript);
+          } else {
+            reject();
+          }
+        };
+        document.head.appendChild(script);
+      });
+    }
+
+    // 首先尝试本地库，如果失败再尝试 CDN
+    Promise.all([
+      loadScript('./assets/js/marked.min.js', 'https://cdn.jsdelivr.net/npm/marked/marked.min.js'),
+      loadScript('./assets/js/html2pdf.bundle.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js')
+    ]).then(() => {
+      // 库加载成功，再加载主脚本
+      const script = document.createElement('script');
+      script.src = './assets/js/script.js';
+      document.body.appendChild(script);
+    }).catch(err => {
+      console.error('库加载失败', err);
+      document.querySelectorAll('.loading-tip').forEach(el => {
+        el.innerHTML = '⚠️ 关键资源加载失败，请刷新页面重试<br><small>如持续失败，请检查网络连接</small>';
+        el.style.color = '#ff6b6b';
+      });
+    });
   </script>
 </body>
 </html>
