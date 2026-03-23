@@ -2360,3 +2360,52 @@ textarea.form-input::-webkit-resizer { display: none; }
     margin-top: 85px !important;
   }
 }
+
+/* ========== 修复 About 页面多级标题样式 ========== */
+.about-text h2 {
+  font-size: 1.4rem !important;
+  font-weight: 600 !important;
+  color: var(--orange-yellow-crayola) !important;
+  margin: 1.5rem 0 0.8rem 0 !important;
+  padding-bottom: 0.3rem !important;
+  border-bottom: 2px solid rgba(255,219,112,0.3) !important;
+}
+.about-text h3 {
+  font-size: 1.2rem !important;
+  font-weight: 500 !important;
+  color: var(--white-2) !important;
+  margin: 1.2rem 0 0.6rem 0 !important;
+}
+.about-text strong {
+  color: var(--orange-yellow-crayola) !important;
+}
+.about-text ul, .about-text ol {
+  margin: 0.8rem 0 1rem 1.8rem !important;
+}
+.about-text li {
+  margin: 0.4rem 0 !important;
+  line-height: 1.6 !important;
+}
+.about-text p {
+  margin-bottom: 1rem !important;
+  line-height: 1.7 !important;
+}
+
+/* ========== Path 页面中英文上下结构 ========== */
+.timeline-item-en {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ========== 全局简约调整 ========== */
+.sidebar, article {
+  background: var(--eerie-black-2);
+  border-radius: 20px;
+  padding: 20px;
+}
+.article-title::after {
+  width: 40px;
+  height: 3px;
+}
