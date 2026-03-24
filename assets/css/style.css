@@ -2164,4 +2164,57 @@ textarea.form-input::-webkit-resizer { display: none; }
   padding-left: 0 !important;
 }
 
+/* ===== LOGO ===== */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
+/* Logo 图片 */
+.logo-img {
+  height: 36px;             /* 基础高度 */
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Retina / 高清屏优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .logo-img {
+    height: 36px;
+  }
+}
+
+/* 手机端自适应 */
+@media (max-width: 600px) {
+  .logo-img {
+    height: 28px;           /* 手机屏稍微小一点 */
+  }
+  .logo-text {
+    font-size: 14px;
+  }
+  .logo-sub {
+    font-size: 10px;
+  }
+}
+
+.logo-text {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.logo-sub {
+  font-size: 11px;
+  color: #888;
+  margin-top: 2px;
+}
+
+@media print {
+  .container, .card {
+    page-break-inside: avoid;  /* 避免卡片/区块被分页切断 */
+  }
+  h1, h2, h3 {
+    page-break-after: avoid;    /* 避免标题单独在页尾 */
+  }
+}
